@@ -1,0 +1,2 @@
+# tapasztaltak
+Projekt laboratórium repo
