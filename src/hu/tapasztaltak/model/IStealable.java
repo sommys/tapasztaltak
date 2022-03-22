@@ -1,6 +1,6 @@
 package hu.tapasztaltak.model;
 
-public class IStealable {
-	public abstract void remove(Inventory inv);
-	public abstract void add(Inventory inv);
+public interface IStealable {
+	void remove(Inventory inv);
+	void add(Inventory inv);
 }

@@ -1,5 +1,5 @@
 package hu.tapasztaltak.model;
 
-public class ISteppable {
-	public abstract void step();
+public interface ISteppable {
+	void step();
 }

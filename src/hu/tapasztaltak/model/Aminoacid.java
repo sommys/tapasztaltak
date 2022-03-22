@@ -1,6 +1,6 @@
 package hu.tapasztaltak.model;
 
 public class Aminoacid implements IMaterial {
-	public Boolean isCompatible(IMaterial m) {
+	public boolean isCompatible(IMaterial m) {
 	}
 }

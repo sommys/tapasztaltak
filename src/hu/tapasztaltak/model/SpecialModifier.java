@@ -1,5 +1,12 @@
 package hu.tapasztaltak.model;
 
-public class SpecialModifier {
-	public abstract void effect(Virologist v);
+/**
+ * A speciális módosítókat összefogó interfész, valamilyen hatást váltanak ki a virológusokra.
+ */
+public interface SpecialModifier {
+	/**
+	 * Kifejti a hatását a paraméterben átadott {@link Virologist}-ra
+	 * @param v {@link Virologist}, akire kifejti a hatását
+	 */
+	void effect(Virologist v);
 }
