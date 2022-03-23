@@ -30,8 +30,8 @@ public class TestSetup {
      * A virológus használja magán az ágenst
      */
     public void useAgentOnThemself(){
-        Gloves g = new Gloves(); //Miert van tobbesszam?
-        Cape c = new Cape(); //Miert nincs tobbesszam?
+        Gloves g = new Gloves();
+        Cape c = new Cape();
         Protect p = new Protect();
         Protect p2 = new Protect();
         Dance d = new Dance();
