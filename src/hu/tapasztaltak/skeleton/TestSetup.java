@@ -15,7 +15,7 @@ public class TestSetup {
      * @param o a keresett objektum
      * @return az objektumhoz tartozó azonosító [név], ha nincs benne a HashMap-ben, akkor {@code null}-t ad vissza
      */
-    static String getName(Object o){
+    public static String getName(Object o){
         for(HashMap.Entry<String, Object> e : storage.entrySet()){
             if(o == e.getValue()){
                 return e.getKey();
