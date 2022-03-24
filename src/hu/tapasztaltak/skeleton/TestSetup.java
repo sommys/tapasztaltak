@@ -25,6 +25,7 @@ public class TestSetup {
         v.move(f2);
     }
 
+
     /**
      * Virologist uses agent on themself init
      * A virológus használja magán az ágenst
