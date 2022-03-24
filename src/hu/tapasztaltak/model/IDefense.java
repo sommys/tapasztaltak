@@ -1,5 +1,8 @@
 package hu.tapasztaltak.model;
 
+/**
+ * A védelmeket összefogó interfész, valamilyen védelmet biztosítanak a virológusnak az ágensekkel szemben.
+ */
 public interface IDefense {
 	/**
 	 * Egy másik virológus által felkenni próbált ágenst próbál meg levédeni

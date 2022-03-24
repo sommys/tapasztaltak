@@ -1,14 +1,52 @@
 package hu.tapasztaltak.model;
 
+/**
+ * A felszereléseknek az összefoglaló absztrakt ősosztálya,
+ * ebből származnak le a különböző felszerelések.
+ */
 public abstract class Suite implements IStealable {
+	/**
+	 * Azt mutatja, hogy aktívan viselt-e a felszerelés
+	 */
 	private Boolean active;
+
+	/**
+	 * Aktivan viseltté teszi a felszerelést v-re.
+	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
+	 */
 	public abstract void activate(Virologist v);
-	public void deactivate(Virologist v) {
-	}
-	
+
+	/**
+	 * Leveszi, azaz megszünteti a felszerelés aktív viselését v-ről.
+	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
+	 */
+	public abstract void deactivate(Virologist v);
+
+	/**
+	 * Hozzáadja az inv suites listájához a felszerelést.
+	 * @param inv az {@link Inventory}, aminek a suites listájához adja a felszerelést.
+	 */
 	public void add(Inventory inv) {
+		inv.getSuites().Add(this);
 	}
-	
+
+	/**
+	 * Elveszi az inv suites listájából a felszerelést.
+	 * @param inv az {@link Inventory}, aminek a suites listájából elveszi a felszerelést.
+	 */
 	public void remove(Inventory inv) {
+		inv.getSuites().Remove(this);
 	}
+
+	//region GETTEREK ÉS SETTEREK
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	//endregion
 }
