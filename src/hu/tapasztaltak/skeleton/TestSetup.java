@@ -8,7 +8,7 @@ public class TestSetup {
     /**
      * Statikus HashMap az objektumok tárolására
      */
-    static HashMap<String, Object> storage = new HashMap<String, Object>();
+    static HashMap<String, Object> storage = new HashMap<>();
 
     /**
      * Egy objektumhoz tartozó azonosítót [nevet] adja meg
@@ -30,10 +30,10 @@ public class TestSetup {
      * Létre kell hozni 2 mezőt és egy virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
      * Ezek után az f1 mezőhöz hozzáadjuk a v virolőgust.
-     * A virológusnak beállítjuk az f1 mezőt.
      * A virológust az f2 mezőre mozgatjuk.
+     * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public void virologistMoves(){
+    public static void virologistMoves(){
         Field f1 = new Field();
         Field f2 = new Field();
         Virologist v = new Virologist();
@@ -44,43 +44,122 @@ public class TestSetup {
 
         f1.addVirologists(v);
 
-        //ezek nem kellenek akkor
-        // A két mezőt beállítjuk egymás szomszédjának.
-        //f1.addNeighbours(f2);
-        //f2.addNeighbours(f1);
-
         v.setField(f1);
         v.move(f2);
 
-        //ezek hová?
-        //storage.remove(v);
-        //storage.remove(f1);
-        //storage.remove(f2);
+        storage.remove(v);
+        storage.remove(f1);
+        storage.remove(f2);
     }
 
     /**
      * Virologist uses agent on themself init
      * A virológus használja magán az ágenst
-     * Létre kell hozni 1 inventoryt és egy virológust.
+     * Létre kell hozni 1 inventoryt és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus magára keni az ágenst.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     * @param a Ágens, amit felkennek
      */
-    public void useAgentOnThemself(){
-        /*
-        Gloves g = new Gloves();
-        Cape c = new Cape();
-        Protect p = new Protect();
-        Protect p2 = new Protect();
-        Dance d = new Dance();
-        Stun s = new Stun();
-        Forget f = new Forget();*/
-
+    public static void useAgentOnThemself(Agent a){
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
 
         v.setInventory(inv);
-        //inv.setVirologist(v); :(
 
         storage.put("inv", inv);
         storage.put("v", v);
+
+        v.useAgent(a, v);
+
+        storage.remove("inv", inv);
+        storage.remove("v", v);
     }
+
+    /**
+     * Virologist uses agent on other virologist init
+     * A virológus használja egy másik virológuson az ágenst
+     * Létre kell hozni 1 inventoryt és 2 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus egy másik virológusra keni az ágenst.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     * @param a Ágens, amit felkennek
+     */
+    public static void useAgentOnOtherVirologist(Agent a){
+        Inventory inv = new Inventory();
+        Virologist v1 = new Virologist();
+        Virologist v2 = new Virologist();
+
+        v1.setInventory(inv);
+
+        storage.put("inv", inv);
+        storage.put("v1", v1);
+        storage.put("v2", v2);
+
+        v1.useAgent(a, v2);
+
+        storage.remove("inv", inv);
+        storage.remove("v1", v1);
+        storage.remove("v2", v2);
+    }
+
+    /**
+     * Virologist makes agent init
+     * A virológus elkészít egy ágenst
+     * Létre kell hozni 1 inventoryt, 1 virológust és egy genetikai kódot.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus létrehozza az ágenst.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistMakesAgent(Agent a){
+        Inventory inv = new Inventory();
+        Virologist v = new Virologist();
+        Gene g = new Gene();
+
+        g.setAgent(a);
+        v.setInventory(inv);
+
+        storage.put("inv", inv);
+        storage.put("v", v);
+        storage.put("g", g);
+
+        v.makeAgent(g);
+
+        storage.remove("inv", inv);
+        storage.remove("v", v);
+        storage.remove("g", g);
+    }
+
+    /**
+     * Virologist scans warehouse init
+     * A virológus letapogatja a raktárat
+     * Létre kell hozni 1 raktárat és 1 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a tapogat függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistScansWarehouse(){
+        Warehouse w = new Warehouse();
+        Virologist v = new Virologist();
+
+        v.setField(w);
+        w.addVirologists(v);
+
+        storage.put("v", v);
+        storage.put("w", w);
+
+        v.scanning();
+
+        storage.remove("v", v);
+        storage.remove("w", w);
+    }
+
+    /**
+     *
+     *
+     * Létre kell hozni
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     *
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
 }
