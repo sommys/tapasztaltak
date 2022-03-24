@@ -11,6 +11,20 @@ public class TestSetup {
     static HashMap<String, Object> storage = new HashMap<String, Object>();
 
     /**
+     * Egy objektumhoz tartozó azonosítót [nevet] adja meg
+     * @param o a keresett objektum
+     * @return az objektumhoz tartozó azonosító [név], ha nincs benne a HashMap-ben, akkor {@code null}-t ad vissza
+     */
+    String getName(Object o){
+        for(HashMap.Entry<String, Object> e : storage.entrySet()){
+            if(o == e.getValue()){
+                return e.getKey();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Virologist moves init
      * A virológus mozgását bemutatő függvény
      * Létre kell hozni 2 mezőt és egy virológust.
