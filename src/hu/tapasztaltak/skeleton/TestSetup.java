@@ -25,6 +25,31 @@ public class TestSetup {
     }
 
     /**
+     * Hozzáadja a HashMaphez a paraméterben megadott objektumot
+     * @param o az objektum
+     * @param name az objektum neve
+     */
+    public static void addObject(Object o, String name) {
+        storage.put(name, o);
+    }
+
+    /**
+     * Eltávolítja a HashMapből a paraméterben megadott objektumot
+     * @param o az objektum
+     */
+    public static void removeObject(Object o) {
+        storage.remove(getName(o));
+    }
+
+    /**
+     * Eltávolítja a HashMapből a paraméterben megadott objektumot úgy, hogy előtte megkeresi azt a neve alapján
+     * @param name az objektum neve
+     */
+    public static void removeObject(String name) {
+        storage.remove(name);
+    }
+
+    /**
      * Virologist moves init
      * A virológus mozgását bemutatő függvény
      * Létre kell hozni 2 mezőt és egy virológust.
@@ -152,6 +177,34 @@ public class TestSetup {
 
         storage.remove("v", v);
         storage.remove("w", w);
+    }
+
+    /**
+     * Virologist scans labor init
+     * A virológus letapogatja a labort
+     * Létre kell hozni 1 labort, 1 virológust, 1 játékot és egy genetikai kódot.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     *
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistScansLabor(){
+        Labor l = new Labor();
+        Virologist v = new Virologist();
+        Gene g = new Gene();
+
+        v.setField(l);
+        l.addVirologists(v);
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!l.setGene(g);
+
+        storage.put("v", v);
+        storage.put("l", l);
+        storage.put("g", g);
+
+        v.scanning();
+
+        storage.remove("v", v);
+        storage.remove("l", l);
+        storage.remove("g", g);
     }
 
     /**
