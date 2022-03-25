@@ -21,6 +21,6 @@ public class Protect extends Agent implements IDefense {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		//todo Soma
+		v.addDefense(this);
 	}
 }

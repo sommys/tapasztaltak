@@ -98,13 +98,13 @@ public class Field implements ISteppable {
 	 * Hozzáadja a szomszédos mezőkhöz {@code neighbour}-t.
 	 * @param neighbour a hozzáadandó {@link Field}
 	 */
-	public void addNeighbours(Field neighbour) { this.neighbours.add(neighbour); }
+	public void addNeighbour(Field neighbour) { this.neighbours.add(neighbour); }
 
 	/**
 	 * Törli {@code neighbour}-t a szomszédos mezők közül
 	 * @param neighbour a törlendő {@link Field}
 	 */
-	public void removeNeighbours(Field neighbour) { this.neighbours.remove(neighbour); }
+	public void removeNeighbour(Field neighbour) { this.neighbours.remove(neighbour); }
 
 	/**
 	 * Visszaadja a mezőn tartózkodó virológusok listáját.
@@ -122,13 +122,13 @@ public class Field implements ISteppable {
 	 * Hozzáadja a mezőn tartózkodó virológusokhoz {@code virologist}-ot.
 	 * @param virologist a hozzáadandó {@link Virologist}
 	 */
-	public void addVirologists(Virologist virologist) { this.virologists.add(virologist); }
+	public void addVirologist(Virologist virologist) { this.virologists.add(virologist); }
 
 	/**
 	 * Törli {@code virologist}-ot a mezőn tartózkodó virológusok közül.
 	 * @param virologist a törlendő {@link Virologist}
 	 */
-	public void removeVirologists(Virologist virologist) { this.virologists.remove(virologist); }
+	public void removeVirologist(Virologist virologist) { this.virologists.remove(virologist); }
 
 	//endregion
 }

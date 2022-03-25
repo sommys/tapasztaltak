@@ -18,7 +18,7 @@ public class Shelter extends Field {
      */
     public void getItem(Virologist v) {
         // Todo: Peti, utólag rájöttem, hogy valszeg nem ezt kéne itt csinálni.
-        v.getInventory().addSuites(suite);
+        v.getInventory().addSuite(suite);
     }
 
     /**

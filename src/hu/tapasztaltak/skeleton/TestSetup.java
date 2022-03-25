@@ -8,7 +8,7 @@ public class TestSetup {
     /**
      * Statikus HashMap az objektumok tárolására
      */
-    static HashMap<String, Object> storage = new HashMap<>();
+    public static HashMap<String, Object> storage = new HashMap<>();
 
     /**
      * Egy objektumhoz tartozó azonosítót [nevet] adja meg
@@ -67,7 +67,7 @@ public class TestSetup {
         storage.put("f2", f2);
         storage.put("v", v);
 
-        f1.addVirologists(v);
+        f1.addVirologist(v);
 
         v.setField(f1);
         v.move(f2);
@@ -86,10 +86,11 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      * @param a Ágens, amit felkennek
      */
-    public static void useAgentOnThemself(Agent a){
+    public static void useAgentOnThemself(boolean stunned, Agent a){
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
 
+        v.setStunned(stunned);
         v.setInventory(inv);
 
         storage.put("inv", inv);
@@ -168,7 +169,7 @@ public class TestSetup {
         Virologist v = new Virologist();
 
         v.setField(w);
-        w.addVirologists(v);
+        w.addVirologist(v);
 
         storage.put("v", v);
         storage.put("w", w);
@@ -193,7 +194,7 @@ public class TestSetup {
         Gene g = new Gene();
 
         v.setField(l);
-        l.addVirologists(v);
+        l.addVirologist(v);
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!l.setGene(g);
 
         storage.put("v", v);

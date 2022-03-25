@@ -9,7 +9,11 @@ public class Dance extends Agent implements SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	public void effect(Virologist v) {
-		//todo LEGYEN TÁNC (Soma)
+		Field f = v.getField();
+		Field randField = f.getRandomNeighbour();
+		f.removeVirologist(v);
+		randField.addVirologist(v);
+		v.setMoved(true);
 	}
 
 	/**
@@ -17,6 +21,6 @@ public class Dance extends Agent implements SpecialModifier {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		//todo Soma
+		v.addModifier(this);
 	}
 }

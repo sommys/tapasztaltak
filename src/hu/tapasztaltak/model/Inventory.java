@@ -120,13 +120,13 @@ public class Inventory {
 	 * Hozzáadja {@code suite}-ot a tárolt védőfelszerelések listáját.
 	 * @param suite a hozzáadandó {@link Suite}
 	 */
-	public void addSuites(Suite suite) { suites.add(suite); }
+	public void addSuite(Suite suite) { suites.add(suite); }
 
 	/**
 	 * Törli {@code suite}-ot a tárolt védőfelszerelések listájából.
 	 * @param suite a törlendő {@link Suite}
 	 */
-	public void removeSuites(Suite suite) { suites.remove(suite); }
+	public void removeSuite(Suite suite) { suites.remove(suite); }
 
 	/**
 	 * Visszaadja a tárolt ágensek listáját.
@@ -144,13 +144,13 @@ public class Inventory {
 	 * Hozzáadja {@code agent}-et a tárolt ágensek listájához.
 	 * @param agent a hozzáadandó {@link Agent}
 	 */
-	public void addAgents(Agent agent) { agents.add(agent);	}
+	public void addAgent(Agent agent) { agents.add(agent);	}
 
 	/**
 	 * Törli {@code agent}-et a tárolt ágensek listájából
 	 * @param agent a törlendő {@link Agent}
 	 */
-	public void removeAgents(Agent agent) { agents.remove(agent); }
+	public void removeAgent(Agent agent) { agents.remove(agent); }
 
 	//endregion
 }

@@ -1,6 +1,10 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.TestSetup;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * A játékosok által irányított virológusokat reprezentáló osztály.
@@ -36,11 +40,29 @@ public class Virologist implements ISteppable {
 	private List<IDefense> defenses;
 
 	/**
-	 * A virológus az {@code f} mezőre mozog.
+	 * A virológus az {@code f} mezőre mozog, ha szomszédos a jelenlegi mezővel és nincs lebénulva.
 	 * @param f a {@link Field}, amire mozogni szeretne
 	 */
 	public void move(Field f) {
-		//todo Soma
+		System.out.print("Le van bénulva a virológus? (I/N):");
+		Scanner sc = new Scanner(System.in);
+		String stunDecision = sc.nextLine();
+		if(stunDecision.equalsIgnoreCase("I")){
+			stunned = true;
+		}
+		if(stunned) return;
+		System.out.print("Szomszédos mezőre akar lépni a virológus? (I/N):");
+		String neighbourDecision = sc.nextLine();
+		Field f2 = (Field)TestSetup.storage.get("f2");
+		if(neighbourDecision.equalsIgnoreCase("I")){
+			f.addNeighbour(f2);
+			f2.addNeighbour(f);
+		}
+		if(f.isNeighbour(f2)){
+			f.removeVirologist(this);
+			f2.addVirologist(this);
+			moved = true;
+		}
 	}
 
 	/**
@@ -48,7 +70,34 @@ public class Virologist implements ISteppable {
 	 * @param s a {@link Suite}, amit fel szeretne venni
 	 */
 	public void putOnSuite(Suite s) {
-		//todo Soma
+		System.out.print("Le van bénulva a virológus? (I/N):");
+		Scanner sc = new Scanner(System.in);
+		String stunDecision = sc.nextLine();
+		if(stunDecision.equalsIgnoreCase("I")){
+			stunned = true;
+		}
+		if(stunned) return;
+		System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+		int activeSuitesDecision = sc.nextInt();
+		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+			System.out.println("Hibás bemenet...");
+			System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+			activeSuitesDecision = sc.nextInt();
+		}
+		for(int i = 0; i < activeSuitesDecision; i++){
+			Cape c = new Cape();
+			c.setActive(true);
+			inventory.addSuite(c);
+		}
+		int activeSuites = 0;
+		for(Suite invSuite : inventory.getSuites()){
+			if(invSuite.isActive()){
+				activeSuites++;
+			}
+		}
+		if(activeSuites < 3){
+			s.activate(this);
+		}
 	}
 
 	/**
@@ -57,7 +106,14 @@ public class Virologist implements ISteppable {
 	 * @param g a {@link Gene} amiből az ágens elő tud állni
 	 */
 	public void makeAgent(Gene g) {
-		//todo Soma
+		System.out.print("Le van bénulva a virológus? (I/N):");
+		Scanner sc = new Scanner(System.in);
+		String stunDecision = sc.nextLine();
+		if(stunDecision.equalsIgnoreCase("I")){
+			stunned = true;
+		}
+		if(stunned) return;
+		g.make(this.inventory);
 	}
 
 	/**
@@ -66,7 +122,8 @@ public class Virologist implements ISteppable {
 	 * @param v a megkent {@link Virologist}
 	 */
 	public void useAgent(Agent a, Virologist v) {
-		//todo Soma
+		if(stunned) return;
+		spreadInitiation(a, v);
 	}
 
 	/**
@@ -75,23 +132,31 @@ public class Virologist implements ISteppable {
 	 * @param to a felvenni kívánt {@link Suite}
 	 */
 	public void switchSuite(Suite from, Suite to) {
-		//todo Soma
+		if(stunned) return;
+		from.deactivate(this);
+		to.activate(this);
 	}
 
 	/**
 	 * Tapogatózás, a virológus megismeri a mezőn lévő virológusokat és tárgyakat/genetikai kódot.
 	 */
 	public void scanning() {
-		//todo Soma
+		if(stunned) return;
+		field.getItem(this);
 	}
 
 	/**
 	 * A virológus kiválasztja, az[oka]t a dolgo[ka]t, amiket felvenne a mezőről
+	 * @param available a mezőn elérhető tárgyak ({@link IStealable}), amik közül választani kell
 	 * @return a kiválaszott tárgyak ({@link IStealable})
 	 */
-	public List<IStealable> chooseItem() {
-		//todo Soma
-		return null;
+	public List<IStealable> chooseItem(List<IStealable> available) {
+		List<IStealable> chosen = new ArrayList<>();
+
+		//todo itt most nem latom at hogy hova kerulnek pontosan a dontesek, elvileg itt kene, de ahhoz typecheck kene
+		// mert ugye warehouse meg shelter eseten mast kell kerdezni meg mast kell pakolaszni
+
+		return chosen;
 	}
 
 	/**
@@ -99,7 +164,24 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
-		//todo Soma
+		System.out.print("Le van bénulva a virológus? (I/N):");
+		Scanner sc = new Scanner(System.in);
+		String stunDecision = sc.nextLine();
+		if(stunDecision.equalsIgnoreCase("I")){
+			stunned = true;
+		}
+		if(stunned) return;
+		System.out.print("Tele van a virológus tárhelye? (I/N):");
+		String invFullDecision = sc.nextLine();
+		if(invFullDecision.equalsIgnoreCase("I")){
+			inventory.setSize(1);
+			inventory.addSuite(new Cape());
+		}
+		Inventory inv2 = from.getInventory();
+		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) return;
+		IStealable item = inv2.pickItem();
+		if(!from.isStunned()) return;
+		from.stolen(this, item);
 	}
 
 	/**

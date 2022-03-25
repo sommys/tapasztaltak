@@ -27,7 +27,7 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájához adja a felszerelést.
 	 */
 	public void add(Inventory inv) {
-		inv.getSuites().Add(this);
+		inv.getSuites().add(this);
 	}
 
 	/**
@@ -35,18 +35,22 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájából elveszi a felszerelést.
 	 */
 	public void remove(Inventory inv) {
-		inv.getSuites().Remove(this);
+		inv.getSuites().remove(this);
 	}
 
 	//region GETTEREK ÉS SETTEREK
 
-	public Boolean getActive() {
-		return active;
-	}
+	/**
+	 * Visszzaadja, hogy a felszerelés aktívan viselt-e
+	 * @return aktív-e?
+	 */
+	public Boolean isActive() { return active; }
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
+	/**
+	 * Beálltja hogy aktívan viselt-e a felszerelés
+	 * @param active aktívan viselt-e?
+	 */
+	public void setActive(Boolean active) { this.active = active; }
 
 	//endregion
 }

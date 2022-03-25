@@ -1,5 +1,8 @@
 package hu.tapasztaltak.model;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * A játékban lévő felejtő ágens reprezentációja.
  */
@@ -9,7 +12,7 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	public void effect(Virologist v) {
-		//todo Soma
+		v.setLearnt(Collections.emptyList());
 	}
 
 	/**
@@ -17,6 +20,6 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		//todo Soma
+		v.addModifier(this);
 	}
 }
