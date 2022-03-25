@@ -62,12 +62,11 @@ public class TestSetup {
         Field f1 = new Field();
         Field f2 = new Field();
         Virologist v = new Virologist();
-
         storage.put("f1", f1);
         storage.put("f2", f2);
         storage.put("v", v);
-
         f1.addVirologist(v);
+        Logger.log("itt kéne hogy mi történt");
 
         v.setField(f1);
         v.move(f2);

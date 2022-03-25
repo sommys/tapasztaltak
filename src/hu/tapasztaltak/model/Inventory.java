@@ -39,12 +39,12 @@ public class Inventory {
 		int id = 1;
 		System.out.println("Válassz a tárolt elemek közül:");
 
-		for (var m : materials) {
+		for (IMaterial m : materials) {
 			System.out.printf("%d. %s\n", id, TestSetup.getName(m));
 			id++;
 		}
 
-		for (var s : suites) {
+		for (Suite s : suites) {
 			System.out.printf("%d. %s\n", id, TestSetup.getName(s));
 			id++;
 		}

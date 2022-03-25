@@ -3,9 +3,11 @@ package hu.tapasztaltak.model;
 /**
  * A köpeny felszerelést reprezentáló osztály.
  * Aktív viselésével a virológusra kent ágensek hatásba lépését 82,3% valószínűséggel kivédi.
+ * beírtam egy return true-t
  */
 public class Cape extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+		return true;
 	}
 
 	/**

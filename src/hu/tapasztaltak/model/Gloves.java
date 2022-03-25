@@ -16,9 +16,10 @@ public class Gloves extends Suite implements IDefense {
 	 * @param vict a megtámadott {@link Virologist}
 	 * @param a a használt {@link Agent}
 	 * @return
+	 * return-nak beállítottam a truet
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
-
+		return true;
 	}
 
 	/**
