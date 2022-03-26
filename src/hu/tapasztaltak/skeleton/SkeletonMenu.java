@@ -13,26 +13,92 @@ public class SkeletonMenu {
 
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
+        boolean started = false;
         String input = "";
         do{
+            Logger.log("q","Válasszon menüpontot:");
             input = sc.nextLine();
             switch (input){
                 case "1":
-                    RoundManager rm = new RoundManager();
-                    Game game = new Game();
-                    Logger.log("Le van bénulva a virológus? (I/N)");
-                    input = sc.nextLine();
+                    if(!started){
+                        RoundManager rm = new RoundManager();
+                        Game game = new Game();
+                        started = true;
+                    }
+                    else{
+                        Logger.log("cm","A program már fut!");
+                    }
+                    break;
+                case "2":
                     TestSetup.virologistMoves();
                     break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    break;
+                case "8":
+                    break;
+                case "9":
+                    break;
+                case "10":
+                    break;
+                case "11":
+                    break;
+                case "12":
+                    break;
+                case "13":
+                    break;
+                case "14":
+                    break;
+                case "15":
+                    break;
+                case "16":
+                    break;
+                case "17":
+                    break;
+                case "18":
+                    break;
+                case "19":
+                    break;
+                case "20":
+                    break;
+                case "21":
+                    break;
                 case "help":
-
-                    Logger.log("help:");
+                    Logger.log("cm","A szám beírásával tudsz menüpontot választani!");
+                    Logger.log("cm","1: Start Game");
+                    Logger.log("cm","2: Virologist move");
+                    Logger.log("cm","3: Virologist uses agent on themself ");
+                    Logger.log("cm","4: Virologist uses agent on other virologist");
+                    Logger.log("cm","5: Virologist makes agent");
+                    Logger.log("cm","6: Virologist scans warehouse");
+                    Logger.log("cm","7: Virologist scans labor");
+                    Logger.log("cm","8: Virologist scans shelter");
+                    Logger.log("cm","9: Virologist steals material");
+                    Logger.log("cm","10: Virologist steals suite");
+                    Logger.log("cm","11: Virologist switches suite");
+                    Logger.log("cm","12: Shelter refresh");
+                    Logger.log("cm","13: Warehouse refresh");
+                    Logger.log("cm","14: Shelter refresh");
+                    Logger.log("cm","15: Virologist dances");
+                    Logger.log("cm","16: Virologist forgets");
+                    Logger.log("cm","17: Virologist is being stunned");
+                    Logger.log("cm","18: Virologist puts on bag");
+                    Logger.log("cm","19: Virologist puts on cape");
+                    Logger.log("cm","20: Virologist puts on gloves");
+                    Logger.log("cm","21: Virologist ends round, round manager reacts");
                     break;
                 case "endtest":
-                    Logger.log("Teszt vége!");
+                    Logger.log("cm","Teszt vége!");
                     break;
                 default:
-                    Logger.log("A 'help' paranccsal kaphat leírást a program működéséről.");
+                    Logger.log("cm","A 'help' paranccsal kaphat leírást a program működéséről.");
                     break;
             }
         }while (!input.equals("endtest"));

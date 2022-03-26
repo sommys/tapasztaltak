@@ -66,11 +66,9 @@ public class TestSetup {
         storage.put("f2", f2);
         storage.put("v", v);
         f1.addVirologist(v);
-        Logger.log("itt kéne hogy mi történt");
-
         v.setField(f1);
         v.move(f2);
-
+        Logger.log("c",getName(v)+"move"+getName(f2));
         storage.remove(v);
         storage.remove(f1);
         storage.remove(f2);

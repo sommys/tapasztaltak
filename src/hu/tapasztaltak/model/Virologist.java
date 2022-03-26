@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
@@ -165,6 +166,7 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
+		Logger.log("c", TestSetup.getName(this));
 		System.out.print("Le van bénulva a virológus? (I/N):");
 		Scanner sc = new Scanner(System.in);
 		String stunDecision = sc.nextLine();
@@ -177,6 +179,7 @@ public class Virologist implements ISteppable {
 		if(invFullDecision.equalsIgnoreCase("I")){
 			inventory.setSize(1);
 			inventory.addSuite(new Cape());
+
 		}
 		Inventory inv2 = from.getInventory();
 		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) return;
