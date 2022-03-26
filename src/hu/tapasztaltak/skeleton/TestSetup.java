@@ -498,4 +498,108 @@ public class TestSetup {
      *
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
+
+    /**
+     * Virologist put on bag init.
+     * A virológus felveszi az inventory-jában található bag-et.
+     * Létre kell hozni 1 bag-et, egy inventory-t és 1 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a putOnSuite függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistPutOnBag() {
+        System.out.println("--- Setting up Test Environment for Virologist put on bag ---");
+        Virologist v = new Virologist();
+        Inventory inv = new Inventory();
+        Bag b = new Bag();
+        b.add(inv);
+        v.setInventory(inv);
+
+        stunQuestion(v);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+        int activeSuitesDecision = sc.nextInt();
+        while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+            System.out.println("Hibás bemenet...");
+            System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+            activeSuitesDecision = sc.nextInt();
+        }
+        for(int i = 0; i < activeSuitesDecision; i++){
+            Cape c = new Cape();
+            c.setActive(true);
+            inv.addSuite(c);
+        }
+        System.out.println("--- Setup Test Environment for Virologist put on bag DONE---");
+
+        v.putOnSuite(b);
+    }
+
+    /**
+     * Virologist put on Cape init.
+     * A virológus felveszi az inventory-jában található cape-et.
+     * Létre kell hozni 1 cape-et, 1 inventory-t és 1 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a putOnSuite függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistPutOnCape() {
+        System.out.println("--- Setting up Test Environment for Virologist put on cape ---");
+        Virologist v = new Virologist();
+        Inventory inv = new Inventory();
+        Cape c = new Cape();
+        c.add(inv);
+        v.setInventory(inv);
+
+        stunQuestion(v);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+        int activeSuitesDecision = sc.nextInt();
+        while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+            System.out.println("Hibás bemenet...");
+            System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+            activeSuitesDecision = sc.nextInt();
+        }
+        for(int i = 0; i < activeSuitesDecision; i++){
+            Cape cape = new Cape();
+            cape.setActive(true);
+            inv.addSuite(cape);
+        }
+        System.out.println("--- Setup Test Environment for Virologist put on cape DONE---");
+        v.putOnSuite(c);
+    }
+
+    /**
+     * Virologist put on gloves init.
+     * A virológus felveszi az inventory-jában található gloves-ot.
+     * Létre kell hozni 1 gloves-ot, egy inventory-t és 1 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a putOnSuite függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistPutOnGloves() {
+        System.out.println("--- Setting up Test Environment for Virologist put on gloves ---");
+        Virologist v = new Virologist();
+        Inventory inv = new Inventory();
+        Gloves g = new Gloves();
+        g.add(inv);
+        v.setInventory(inv);
+
+        stunQuestion(v);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+		int activeSuitesDecision = sc.nextInt();
+		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+			System.out.println("Hibás bemenet...");
+			System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+			activeSuitesDecision = sc.nextInt();
+		}
+		for(int i = 0; i < activeSuitesDecision; i++){
+			Cape c = new Cape();
+			c.setActive(true);
+			inv.addSuite(c);
+		}
+        System.out.println("--- Setup Test Environment for Virologist put on gloves DONE---");
+        v.putOnSuite(g);
+
+    }
 }
