@@ -9,7 +9,7 @@ public class Shelter extends Field {
     /**
      * Az óvóhelyen található védőfelszerelés.
      */
-    private Suite suite;
+    private Suite suite = null;
 
     /**
      * A {@code v} virológusnak adja a rajta lévő védőfelszerelést.

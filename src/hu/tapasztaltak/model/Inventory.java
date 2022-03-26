@@ -2,6 +2,7 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.TestSetup;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,15 +17,15 @@ public class Inventory {
 	/**
 	 * A tárolt anyagok listája.
 	 */
-	private List<IMaterial> materials;
+	private List<IMaterial> materials = new ArrayList<>();
 	/**
 	 * A tárolt felszerelések listája.
 	 */
-	private List<Suite> suites;
+	private List<Suite> suites = new ArrayList<>();
 	/**
 	 * A felhasználható ágensek listája.
 	 */
-	private List<Agent> agents;
+	private List<Agent> agents = new ArrayList<>();
 
 	/**
 	 * Elem kiválasztása lopásnál.

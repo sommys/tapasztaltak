@@ -11,15 +11,15 @@ public class Field implements ISteppable {
 	/**
 	 * A mezőre létrejövő tárgyak megjelenéséig hátralévő körök száma.
 	 */
-	private int refreshCounter;
+	private int refreshCounter = -1;
 	/**
 	 * A mezővel szomszédos mezők listája.
 	 */
-	private List<Field> neighbours;
+	private List<Field> neighbours = new ArrayList<>();
 	/**
 	 * A mezőn tartózkodó virológusok listája.
 	 */
-	private List<Virologist> virologists;
+	private List<Virologist> virologists = new ArrayList<>();
 
 	/**
 	 * A {@code v} virológusnak adja, a mezőn található dolgo[ka]t.

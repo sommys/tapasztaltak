@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,11 @@ public class Gene {
 	/**
 	 * a genetikai kódhoz tartozó ágens, amit készíteni lehet.
 	 */
-	private Agent agent;
+	private Agent agent = null;
 	/**
 	 * Tárol annyi és olyan anyagot, amennyi az ágens előállításához szükséges.
 	 */
-	private List<IMaterial> materials;
+	private List<IMaterial> materials = new ArrayList<>();
 	/**
 	 * megpróbálja elkészíteni az inventory-ban található anyagokból az ágenst.
 	 * Ha van elég anyag, akkor hozzá ad egy felhasználható példányt az {@code inv} {@link Inventory}-hoz.

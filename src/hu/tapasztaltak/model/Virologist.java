@@ -13,31 +13,31 @@ public class Virologist implements ISteppable {
 	/**
 	 * A virológus mozgott-e már az aktuális körben.
 	 */
-	private boolean moved;
+	private boolean moved = false;
 	/**
 	 * A virológus jelenleg le van-e bénulva.
 	 */
-	private boolean stunned;
+	private boolean stunned = false;
 	/**
 	 * A megtanult genetikai kódok listája.
 	 */
-	private List<Gene> learnt;
+	private List<Gene> learnt = new ArrayList<>();
 	/**
 	 * A mező, amin a virológus tartózkodik.
 	 */
-	private Field field;
+	private Field field = null;
 	/**
 	 * A virológusra hatással levő speciális módosítók listája.
 	 */
-	private List<SpecialModifier> modifiers;
+	private List<SpecialModifier> modifiers = new ArrayList<>();
 	/**
 	 * A virológus tárhelye, amiben dolgokat tárol.
 	 */
-	private Inventory inventory;
+	private Inventory inventory = new Inventory();
 	/**
 	 * A virológust ágenskenéstől védelmező védőfelszerelések listája.
 	 */
-	private List<IDefense> defenses;
+	private List<IDefense> defenses = new ArrayList<>();
 
 	/**
 	 * A virológus az {@code f} mezőre mozog, ha szomszédos a jelenlegi mezővel és nincs lebénulva.

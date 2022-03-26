@@ -8,7 +8,7 @@ public class Bag extends Suite {
 	/**
 	 * A zsák mérete, ami aktív hordás alatt, ennyivel növeli meg az {@link Inventory} méretét.
 	 */
-	private int size;
+	private int size = 10;
 
 	/**
 	 * Aktív viselésre állítja a zsákot v-n.

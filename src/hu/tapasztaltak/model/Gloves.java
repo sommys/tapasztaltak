@@ -8,7 +8,7 @@ public class Gloves extends Suite implements IDefense {
 	/**
 	 * Azt mutatja, hogy egy folyamatban lévő kenésben felhasználták-e már a kesztyüt.
 	 */
-	private boolean used;
+	private boolean used = false;
 
 	/**
 	 * Visszakenhető vele egy ágens, amelyet rákentek a virológusra

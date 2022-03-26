@@ -7,6 +7,7 @@ package hu.tapasztaltak.model;
  */
 public class Cape extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+		//TODO
 		return true;
 	}
 

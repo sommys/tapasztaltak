@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +14,11 @@ public class RoundManager {
     /**
      * Léptethető példányok listája.
      */
-    private List<ISteppable> steppables;
+    private List<ISteppable> steppables = new ArrayList<>();
     /**
      * A játékban résztvevő virológusok listája.
      */
-    private List<Virologist> virologists;
+    private List<Virologist> virologists = new ArrayList<>();
 
     /**
      * Elindít egy új kört.

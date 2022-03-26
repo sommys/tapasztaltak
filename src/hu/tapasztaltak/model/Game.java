@@ -2,6 +2,7 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.TestSetup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,11 @@ public class Game {
     /**
      * Győzelemhez szükséges genetikai kódok száma.
      */
-    public static int maxAgent;
+    public static int maxAgent = 4;
     /**
      * A játék mezőinek listája.
      */
-    private List<Field> fields;
+    private List<Field> fields = new ArrayList<>();
 
     /**
      * Elindítja a játékot, létrehozza a pályát és a további szereplőket.

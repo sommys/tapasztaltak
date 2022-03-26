@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ public class Warehouse extends Field {
     /**
      * A raktárban található anyagok listája.
      */
-    private List<IMaterial> materials;
+    private List<IMaterial> materials = new ArrayList<>();
 
     /**
      * A {@code v} virológusnak adja a rajta lévő anyagat.

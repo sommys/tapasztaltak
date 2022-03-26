@@ -7,7 +7,7 @@ public class Labor extends Field {
     /**
      * Labor falán lévő genetikai kód.
      */
-    private Gene gene;
+    private Gene gene = null;
 
     /**
      * A {@code v} virológusnak adja a rajta található genetikai kódot.

@@ -8,13 +8,13 @@ public interface IMaterial extends IStealable {
 	 *
 	 */
 	default void add(Inventory inv) {
-		inv.getMaterials.add(this);
+		inv.getMaterials().add(this);
 	}
 	/**
 	 *
 	 *
 	 */
 	default void remove(Inventory inv) {
-		inv.getMaterials.remove(this);
+		inv.getMaterials().remove(this);
 	}
 }
