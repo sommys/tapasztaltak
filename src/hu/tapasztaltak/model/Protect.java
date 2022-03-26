@@ -19,7 +19,7 @@ public class Protect extends Agent implements IDefense {
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
-		Logger.log(this, "success=true", RETURN);
+		Logger.log(this, "blockingSuccess=true", RETURN);
 		return true;
 	}
 
