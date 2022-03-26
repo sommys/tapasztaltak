@@ -74,28 +74,28 @@ public class Virologist implements ISteppable {
 	 */
 	public void putOnSuite(Suite s) {
 		Logger.log(this, "putOnSuite", CALL, s);
-		System.out.print("Le van bénulva a virológus? (I/N):");
-		Scanner sc = new Scanner(System.in);
-		String stunDecision = sc.nextLine();
-		if(stunDecision.equalsIgnoreCase("I")){
-			stunned = true;
-		}
+//		System.out.print("Le van bénulva a virológus? (I/N):");
+//		Scanner sc = new Scanner(System.in);
+//		String stunDecision = sc.nextLine();
+//		if(stunDecision.equalsIgnoreCase("I")){
+//			stunned = true;
+//		}
 		if(stunned){
 			Logger.log(this, "", RETURN);
 			return;
 		}
-		System.out.print("Hány felszerelést visel már a virológus? (0...3):");
-		int activeSuitesDecision = sc.nextInt();
-		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
-			System.out.println("Hibás bemenet...");
-			System.out.print("Hány felszerelést visel már a virológus? (0...3):");
-			activeSuitesDecision = sc.nextInt();
-		}
-		for(int i = 0; i < activeSuitesDecision; i++){
-			Cape c = new Cape();
-			c.setActive(true);
-			inventory.addSuite(c);
-		}
+//		System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+//		int activeSuitesDecision = sc.nextInt();
+//		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+//			System.out.println("Hibás bemenet...");
+//			System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+//			activeSuitesDecision = sc.nextInt();
+//		}
+//		for(int i = 0; i < activeSuitesDecision; i++){
+//			Cape c = new Cape();
+//			c.setActive(true);
+//			inventory.addSuite(c);
+//		}
 		int activeSuites = 0;
 		for(Suite invSuite : inventory.getSuites()){
 			if(invSuite.isActive()){
