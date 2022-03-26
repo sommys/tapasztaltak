@@ -20,4 +20,14 @@ public class Stun extends Agent implements SpecialModifier {
 	public void spread(Virologist v) {
 		v.addModifier(this);
 	}
+
+	/**
+	 * Készít egy felhasználható másolatot az ágensből
+	 * @return felhasználható másolat
+	 */
+	public Agent clone(){
+		Stun newAgent = new Stun();
+		newAgent.setTimeLeft(3);
+		return newAgent;
+	}
 }

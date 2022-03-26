@@ -23,4 +23,14 @@ public class Protect extends Agent implements IDefense {
 	public void spread(Virologist v) {
 		v.addDefense(this);
 	}
+
+	/**
+	 * Készít egy felhasználható másolatot az ágensből
+	 * @return felhasználható másolat
+	 */
+	public Agent clone(){
+		Protect newAgent = new Protect();
+		newAgent.setTimeLeft(3);
+		return newAgent;
+	}
 }

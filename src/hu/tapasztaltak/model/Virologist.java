@@ -153,8 +153,9 @@ public class Virologist implements ISteppable {
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
 
-		//todo itt most nem latom at hogy hova kerulnek pontosan a dontesek, elvileg itt kene, de ahhoz typecheck kene
-		// mert ugye warehouse meg shelter eseten mast kell kerdezni meg mast kell pakolaszni
+		//todo itt most nem latom at hogy hova kerulnek pontosan a dontesek, elvileg itt kene,
+		// de ahhoz typecheck kene mert ugye warehouse meg shelter eseten
+		// mast kell kerdezni meg mast kell pakolaszni
 
 		return chosen;
 	}
@@ -191,7 +192,9 @@ public class Virologist implements ISteppable {
 	 * @param what az ellopni kívánt {@link IStealable}
 	 */
 	public void stolen(Virologist stealer, IStealable what) {
-		//todo Soma
+		if(!stunned) return;
+		what.remove(inventory);
+		what.add(stealer.getInventory());
 	}
 
 	/**
@@ -199,14 +202,19 @@ public class Virologist implements ISteppable {
 	 * @param g a megtanulandó {@link Gene}
 	 */
 	public void learn(Gene g) {
-		//todo Soma
+		if(!learnt.contains(g)){
+			learnt.add(g);
+		}
 	}
 
 	/**
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
 	public void step() {
-		//todo Soma
+		moved=false;
+		for(SpecialModifier m : modifiers){
+			m.effect(this);
+		}
 	}
 
 	/**
@@ -215,8 +223,7 @@ public class Virologist implements ISteppable {
 	 * @return érinthető-e
 	 */
 	public boolean canReach(Virologist v) {
-		//todo Soma
-		return false;
+		return v.getField() == field;
 	}
 
 	/**
@@ -225,14 +232,17 @@ public class Virologist implements ISteppable {
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
 	public void spreadInitiation(Agent a, Virologist v) {
-		//todo Soma
+		for(IDefense d : v.getDefenses()){
+			if(d.tryToBlock(this, v, a)) return;
+		}
+		a.spread(v);
 	}
 
 	/**
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
 	public void endRound() {
-		//todo Soma
+		RoundManager.virologistMoved();
 	}
 
 	//region GETTEREK ÉS SETTEREK

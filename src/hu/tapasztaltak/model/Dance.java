@@ -23,4 +23,14 @@ public class Dance extends Agent implements SpecialModifier {
 	public void spread(Virologist v) {
 		v.addModifier(this);
 	}
+
+	/**
+	 * Készít egy felhasználható másolatot az ágensből
+	 * @return felhasználható másolat
+	 */
+	public Agent clone(){
+		Dance newAgent = new Dance();
+		newAgent.setTimeLeft(3);
+		return newAgent;
+	}
 }

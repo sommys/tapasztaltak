@@ -22,7 +22,7 @@ public abstract class Agent implements ISteppable {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public abstract void spread(Virologist v);
-
+	public abstract Agent clone();
 	//region GETTEREK ÉS SETTEREK
 	/**
 	 * Visszadja az ágens hatásából hátralevő időt

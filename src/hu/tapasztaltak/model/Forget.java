@@ -22,4 +22,14 @@ public class Forget extends Agent implements SpecialModifier {
 	public void spread(Virologist v) {
 		v.addModifier(this);
 	}
+
+	/**
+	 * Készít egy felhasználható másolatot az ágensből
+	 * @return felhasználható másolat
+	 */
+	public Agent clone(){
+		Forget newAgent = new Forget();
+		newAgent.setTimeLeft(3);
+		return newAgent;
+	}
 }

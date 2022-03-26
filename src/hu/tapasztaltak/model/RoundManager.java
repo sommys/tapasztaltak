@@ -10,27 +10,27 @@ public class RoundManager {
     /**
      * A körben már lépett virológusok száma, alap értéke 0.
      */
-    private int movedCounter = 0;
+    private static int movedCounter = 0;
     /**
      * Léptethető példányok listája.
      */
-    private List<ISteppable> steppables = new ArrayList<>();
+    private static List<ISteppable> steppables = new ArrayList<>();
     /**
      * A játékban résztvevő virológusok listája.
      */
-    private List<Virologist> virologists = new ArrayList<>();
+    private static List<Virologist> virologists = new ArrayList<>();
 
     /**
      * Elindít egy új kört.
      */
-    public void newRound() {
+    private static void newRound() {
         // Todo: Peti, ide lehet kéne majd segítség
     }
 
     /**
      * Növeli a lépett virológusok számát és a kör végén újat indít.
      */
-    public void virologistMoved() {
+    public static void virologistMoved() {
         movedCounter++;
         if (movedCounter == virologists.size()) {
             movedCounter = 0;

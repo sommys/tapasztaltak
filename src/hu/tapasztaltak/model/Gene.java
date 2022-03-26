@@ -23,7 +23,25 @@ public class Gene {
 	 * @param inv az {@link Inventory}, amiben az anyagok vannak és amihez hozzáadja az ágenst, ha sikerült elkészíteni
 	 */
 	public void make(Inventory inv) {
-		//todo Soma
+		int i = 0;
+		ArrayList<IMaterial> found = new ArrayList<>();
+
+		for (IMaterial m : materials) {
+			while (i < inv.getMaterials().size() && !m.isCompatible(inv.getMaterials().get(i))) {
+				i++;
+			}
+			if (i != inv.getMaterials().size()) {
+				found.add(inv.getMaterials().get(i));
+				inv.getMaterials().remove(i);
+			} else {
+				inv.getMaterials().addAll(found);
+				return;
+			}
+		}
+		if(materials.size() == found.size()){
+			Agent newAgent = (Agent) agent.clone();
+			inv.addAgent(newAgent);
+		}
 	}
 	//region GETTEREK ÉS SETTEREK
 	/**
