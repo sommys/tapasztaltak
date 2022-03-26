@@ -73,13 +73,17 @@ public class Virologist implements ISteppable {
 	 * @param s a {@link Suite}, amit fel szeretne venni
 	 */
 	public void putOnSuite(Suite s) {
+		Logger.log(this, "putOnSuite", CALL, s);
 		System.out.print("Le van bénulva a virológus? (I/N):");
 		Scanner sc = new Scanner(System.in);
 		String stunDecision = sc.nextLine();
 		if(stunDecision.equalsIgnoreCase("I")){
 			stunned = true;
 		}
-		if(stunned) return;
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		System.out.print("Hány felszerelést visel már a virológus? (0...3):");
 		int activeSuitesDecision = sc.nextInt();
 		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
@@ -101,6 +105,7 @@ public class Virologist implements ISteppable {
 		if(activeSuites < 3){
 			s.activate(this);
 		}
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -109,14 +114,13 @@ public class Virologist implements ISteppable {
 	 * @param g a {@link Gene} amiből az ágens elő tud állni
 	 */
 	public void makeAgent(Gene g) {
-		System.out.print("Le van bénulva a virológus? (I/N):");
-		Scanner sc = new Scanner(System.in);
-		String stunDecision = sc.nextLine();
-		if(stunDecision.equalsIgnoreCase("I")){
-			stunned = true;
+		Logger.log(this, "makeAgent", CALL, g);
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
 		}
-		if(stunned) return;
 		g.make(this.inventory);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -125,8 +129,13 @@ public class Virologist implements ISteppable {
 	 * @param v a megkent {@link Virologist}
 	 */
 	public void useAgent(Agent a, Virologist v) {
-		if(stunned) return;
+		Logger.log(this, "useAgent", CALL, a, v);
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		spreadInitiation(a, v);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -135,9 +144,14 @@ public class Virologist implements ISteppable {
 	 * @param to a felvenni kívánt {@link Suite}
 	 */
 	public void switchSuite(Suite from, Suite to) {
-		if(stunned) return;
+		Logger.log(this, "switchSuite", CALL, from, to);
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		from.deactivate(this);
 		to.activate(this);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -159,6 +173,9 @@ public class Virologist implements ISteppable {
 	 * @return a kiválaszott tárgyak ({@link IStealable})
 	 */
 	public List<IStealable> chooseItem(List<IStealable> available) {
+		TestSetup.addObject(available, "available");
+		Logger.log(this, "chooseItem", CALL, available);
+		TestSetup.removeObject("available");
 		List<IStealable> chosen = new ArrayList<>();
 		Logger.log(null, "Szeretnél felvenni dolgokat? (I/N):", QUESTION);
 		Scanner sc = new Scanner(System.in);
@@ -198,13 +215,15 @@ public class Virologist implements ISteppable {
 		if(stunDecision.equalsIgnoreCase("I")){
 			stunned = true;
 		}
-		if(stunned) return;
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		System.out.print("Tele van a virológus tárhelye? (I/N):");
 		String invFullDecision = sc.nextLine();
 		if(invFullDecision.equalsIgnoreCase("I")){
 			inventory.setSize(1);
 			inventory.addSuite(new Cape());
-
 		}
 		Inventory inv2 = from.getInventory();
 		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) return;
@@ -221,9 +240,14 @@ public class Virologist implements ISteppable {
 	 * @param what az ellopni kívánt {@link IStealable}
 	 */
 	public void stolen(Virologist stealer, IStealable what) {
-		if(!stunned) return;
+		Logger.log(this, "stolen", CALL, stealer, what);
+		if(!stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -231,19 +255,23 @@ public class Virologist implements ISteppable {
 	 * @param g a megtanulandó {@link Gene}
 	 */
 	public void learn(Gene g) {
+		Logger.log(this, "learn", CALL, g);
 		if(!learnt.contains(g)){
 			learnt.add(g);
 		}
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
 	public void step() {
+		Logger.log(this, "step", CALL);
 		moved=false;
 		for(SpecialModifier m : modifiers){
 			m.effect(this);
 		}
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -252,6 +280,8 @@ public class Virologist implements ISteppable {
 	 * @return érinthető-e
 	 */
 	public boolean canReach(Virologist v) {
+		Logger.log(this, "canReach", CALL, v);
+		Logger.log(this, "can="+(v.getField()==field), RETURN);
 		return v.getField() == field;
 	}
 
@@ -261,17 +291,24 @@ public class Virologist implements ISteppable {
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
 	public void spreadInitiation(Agent a, Virologist v) {
+		Logger.log(this, "spreadInitiation", CALL, a, v);
 		for(IDefense d : v.getDefenses()){
-			if(d.tryToBlock(this, v, a)) return;
+			if(d.tryToBlock(this, v, a)){
+				Logger.log(this, "", RETURN);
+				return;
+			}
 		}
 		a.spread(v);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
 	public void endRound() {
+		Logger.log(this, "endRound", CALL);
 		RoundManager.virologistMoved();
+		Logger.log(this, "", RETURN);
 	}
 
 	//region GETTEREK ÉS SETTEREK
