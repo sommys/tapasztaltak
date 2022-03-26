@@ -25,10 +25,10 @@ public class SkeletonMenu {
                     TestSetup.virologistMoves();
                     break;
                 case "2":
-                    //TestSetup.useAgentOnThemself();
+                    TestSetup.useAgentOnThemself();
                     break;
                 case "3":
-                    //TestSetup.useAgentOnOtherVirologist();
+                    TestSetup.useAgentOnOtherVirologist();
                     break;
                 case "4":
                     break;

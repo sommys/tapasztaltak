@@ -130,7 +130,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void useAgent(Agent a, Virologist v) {
 		Logger.log(this, "useAgent", CALL, a, v);
-		if(stunned){
+		if(stunned || !canReach(v)){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -421,9 +421,7 @@ public class Virologist implements ISteppable {
 	 * Beállítja a virológus tárhelyét, amiben a dolgait tárolja.
 	 * @param inventory a virológus tárhelye ({@link Inventory})
 	 */
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
+	public void setInventory(Inventory inventory) {this.inventory = inventory;}
 	/**
 	 * Visszaadja a virológusra aktuálisan ható védekező dolgokat (ágensek és felszerelések).
 	 * @return a virológusra ható {@link IDefense}-ek
