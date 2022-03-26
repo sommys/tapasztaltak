@@ -20,6 +20,9 @@ public class Warehouse extends Field {
      */
     public void getItem(Virologist v) {
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
+        if(!chosen.isEmpty()){
+            //todo random szamra allitani a refreshcountert
+        }
         for(IStealable m : chosen){
             v.getInventory().addMaterial((IMaterial) m);
         }
@@ -29,6 +32,8 @@ public class Warehouse extends Field {
      * Random anyagokat tesz a mezőre.
      */
     public void refresh() {
+        refreshCounter = -1;
+
         materials.clear();
 
         Random random = new Random();

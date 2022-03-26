@@ -21,6 +21,9 @@ public class Shelter extends Field {
      */
     public void getItem(Virologist v) {
         List<IStealable> chosen = v.chooseItem(List.of(suite));
+        if(!chosen.isEmpty()){
+            //todo random szamra allitani a refreshcountert
+        }
         for(IStealable s : chosen){
             v.getInventory().addSuite((Suite)s);
         }
@@ -30,6 +33,8 @@ public class Shelter extends Field {
      * Random védőfelszerelést tesz az óvóhelyre
      */
     public void refresh() {
+        refreshCounter = -1;
+
         Random random = new Random();
         int randomNumber = random.nextInt(3);
 

@@ -16,7 +16,7 @@ public class Field implements ISteppable {
     /**
      * A mezőre létrejövő tárgyak megjelenéséig hátralévő körök száma.
      */
-    private int refreshCounter = -1;
+    protected int refreshCounter = -1;
     /**
      * A mezővel szomszédos mezők listája.
      */

@@ -12,7 +12,7 @@ public class Game {
     /**
      * Győzelemhez szükséges genetikai kódok száma.
      */
-    public static int maxAgent = 4;
+    final int maxAgent = 4;
     /**
      * A játék mezőinek listája.
      */
@@ -22,7 +22,7 @@ public class Game {
      * Elindítja a játékot, létrehozza a pályát és a további szereplőket.
      */
     public void startGame() {
-        // Todo: Peti
+        // Todo: Peti majd elesben?
     }
 
     /**
@@ -38,8 +38,6 @@ public class Game {
     }
 
     //region GETTEREK és SETTEREK
-
-    // Todo: Peti, maxagent maradjon public static? Mert akkor fölösleges a getter/setter
 
     /**
      * Visszaadja a játék mezőinek listáját.
