@@ -21,8 +21,9 @@ public class Shelter extends Field {
      */
     public void getItem(Virologist v) {
         List<IStealable> chosen = v.chooseItem(List.of(suite));
-        if(!chosen.isEmpty()){
-            //todo random szamra allitani a refreshcountert
+        if(!chosen.isEmpty() && refreshCounter == -1){
+            Random random = new Random();
+            refreshCounter = random.nextInt(5) + 4;
         }
         for(IStealable s : chosen){
             v.getInventory().addSuite((Suite)s);

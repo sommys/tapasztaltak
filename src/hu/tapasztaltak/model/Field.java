@@ -42,17 +42,13 @@ public class Field implements ISteppable {
      * Refreshcountert csökkenti és ha nulla, akkor a refresh függvényt meghívja.
      */
     public void step() {
-        // Todo: Peti, leírás szerint csak ha szükséges, akkor csökkentünk, de ez mit akar pontosan jelenteni?
         if (refreshCounter > 0) {
             refreshCounter--;
-        } else {
-            // Todo: Peti, hibakezelés
-            System.out.println("HIBA: Nem várt működés a futás során");
         }
 
         if (refreshCounter == 0) {
             refresh();
-            // Todo: Peti, Itt nekem kéne a refresh countert random 4-8 közé állítani?
+            refreshCounter = -1;
         }
     }
 
