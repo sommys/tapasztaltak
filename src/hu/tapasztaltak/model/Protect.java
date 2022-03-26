@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
+
+import java.util.List;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -21,6 +24,23 @@ public class Protect extends Agent implements IDefense {
 		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
 		Logger.log(this, "blockingSuccess=true", RETURN);
 		return true;
+	}
+
+	/**
+	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
+	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
+	 */
+	@Override
+	public List<IMaterial> getRecipe() {
+		Nucleotid protectN1 = new Nucleotid();
+		Nucleotid protectN2 = new Nucleotid();
+		Aminoacid protectA1 = new Aminoacid();
+		Aminoacid protectA2 = new Aminoacid();
+		TestSetup.addObject(protectN1, "protectN1");
+		TestSetup.addObject(protectN2, "protectN2");
+		TestSetup.addObject(protectA1, "protectA1");
+		TestSetup.addObject(protectA2, "protectA2");
+		return List.of(protectA1, protectA2, protectN1, protectN2);
 	}
 
 	/**

@@ -65,6 +65,7 @@ public class Gene {
 	 */
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+		materials=agent.getRecipe();
 	}
 	/**
 	 * Visszaadja az előállításhoz szükséges anyagok listáját.

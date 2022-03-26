@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
+
+import java.util.List;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -18,6 +21,22 @@ public class Stun extends Agent implements SpecialModifier {
 		Logger.log(this, "effect", CALL, v);
 		v.setStunned(true);
 		Logger.log(this, "", RETURN);
+	}
+
+	/**
+	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
+	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
+	 */
+	@Override
+	public List<IMaterial> getRecipe() {
+		Aminoacid stunA1 = new Aminoacid();
+		Aminoacid stunA2 = new Aminoacid();
+		Aminoacid stunA3 = new Aminoacid();
+
+		TestSetup.addObject(stunA1, "stunA1");
+		TestSetup.addObject(stunA2, "stunA2");
+		TestSetup.addObject(stunA3, "stunA3");
+		return List.of(stunA1, stunA2, stunA3);
 	}
 
 	/**

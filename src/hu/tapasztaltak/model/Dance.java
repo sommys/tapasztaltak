@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
+
+import java.util.List;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -21,6 +24,19 @@ public class Dance extends Agent implements SpecialModifier {
 		randField.addVirologist(v);
 		v.setMoved(true);
 		Logger.log(this, "", RETURN);
+	}
+
+	/**
+	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
+	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
+	 */
+	@Override
+	public List<IMaterial> getRecipe() {
+		Nucleotid danceN = new Nucleotid();
+		Aminoacid danceA = new Aminoacid();
+		TestSetup.addObject(danceN, "danceN");
+		TestSetup.addObject(danceA, "danceA");
+		return List.of(danceN, danceA);
 	}
 
 	/**

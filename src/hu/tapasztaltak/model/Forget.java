@@ -1,9 +1,11 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -20,6 +22,22 @@ public class Forget extends Agent implements SpecialModifier {
 		Logger.log(this, "effect", CALL, v);
 		v.setLearnt(Collections.emptyList());
 		Logger.log(this, "", RETURN);
+	}
+
+	/**
+	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
+	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
+	 */
+	@Override
+	public List<IMaterial> getRecipe() {
+		Nucleotid forgetN1 = new Nucleotid();
+		Nucleotid forgetN2 = new Nucleotid();
+		Nucleotid forgetN3 = new Nucleotid();
+
+		TestSetup.addObject(forgetN1, "forgetN1");
+		TestSetup.addObject(forgetN2, "forgetN2");
+		TestSetup.addObject(forgetN3, "forgetN3");
+		return List.of(forgetN1, forgetN2, forgetN3);
 	}
 
 	/**
