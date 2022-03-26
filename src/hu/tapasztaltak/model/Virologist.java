@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
+
 /**
  * A játékosok által irányított virológusokat reprezentáló osztály.
  */
@@ -45,25 +47,24 @@ public class Virologist implements ISteppable {
 	 * @param f a {@link Field}, amire mozogni szeretne
 	 */
 	public void move(Field f) {
-		System.out.print("Le van bénulva a virológus? (I/N):");
+		Logger.log(this, "move", CALL, f);
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		Scanner sc = new Scanner(System.in);
-		String stunDecision = sc.nextLine();
-		if(stunDecision.equalsIgnoreCase("I")){
-			stunned = true;
-		}
-		if(stunned) return;
-		System.out.print("Szomszédos mezőre akar lépni a virológus? (I/N):");
+		Logger.log(this, "Szomszédos mezőre akar lépni a virológus? (I/N):", QUESTION);
 		String neighbourDecision = sc.nextLine();
-		Field f2 = (Field)TestSetup.storage.get("f2");
 		if(neighbourDecision.equalsIgnoreCase("I")){
-			f.addNeighbour(f2);
-			f2.addNeighbour(f);
+			field.addNeighbour(f);
+			f.addNeighbour(field);
 		}
-		if(f.isNeighbour(f2)){
-			f.removeVirologist(this);
-			f2.addVirologist(this);
-			moved = true;
+		if(field.isNeighbour(f)){
+			field.removeVirologist(this);
+			f.addVirologist(this);
+			field = f;
 		}
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -167,7 +168,7 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
-		Logger.log(this, "steal", Logger.LogType.CALL, from);
+		Logger.log(this, "steal", CALL, from);
 		System.out.print("Le van bénulva a virológus? (I/N):");
 		Scanner sc = new Scanner(System.in);
 		String stunDecision = sc.nextLine();
@@ -187,7 +188,7 @@ public class Virologist implements ISteppable {
 		IStealable item = inv2.pickItem();
 		if(!from.isStunned()) return;
 		from.stolen(this, item);
-		Logger.log(this, "", Logger.LogType.RETURN);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**

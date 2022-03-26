@@ -3,6 +3,9 @@ package hu.tapasztaltak.skeleton;
 import hu.tapasztaltak.model.*;
 
 import java.util.HashMap;
+import java.util.Scanner;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
 
 public class TestSetup {
     /**
@@ -67,10 +70,14 @@ public class TestSetup {
         storage.put("v", v);
         f1.addVirologist(v);
         v.setField(f1);
+        Logger.log(null, "Le van bénulva a virológus? (I/N):", QUESTION);
+        Scanner sc = new Scanner(System.in);
+        String stunDecision = sc.nextLine();
+        v.setStunned(stunDecision.equalsIgnoreCase("I"));
         v.move(f2);
-        storage.remove(v);
-        storage.remove(f1);
-        storage.remove(f2);
+        storage.remove("v");
+        storage.remove("f1");
+        storage.remove("f2");
     }
 
     /**

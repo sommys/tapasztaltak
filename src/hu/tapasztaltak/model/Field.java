@@ -1,8 +1,13 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A játék alapmezőit reprezentáló osztály.
@@ -58,6 +63,8 @@ public class Field implements ISteppable {
      * @return szomszédos-e a mező
      */
     public boolean isNeighbour(Field f) {
+        Logger.log(this, "isNeighbour", CALL, f);
+        Logger.log(this, "neighbour="+neighbours.contains(f), RETURN);
         return neighbours.contains(f);
     }
 
@@ -151,7 +158,9 @@ public class Field implements ISteppable {
      * @param virologist a hozzáadandó {@link Virologist}
      */
     public void addVirologist(Virologist virologist) {
+        Logger.log(this, "addVirologist", CALL, virologist);
         this.virologists.add(virologist);
+        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -160,7 +169,9 @@ public class Field implements ISteppable {
      * @param virologist a törlendő {@link Virologist}
      */
     public void removeVirologist(Virologist virologist) {
+        Logger.log(this, "removeVirologist", CALL, virologist);
         this.virologists.remove(virologist);
+        Logger.log(this, "", RETURN);
     }
 
     //endregion

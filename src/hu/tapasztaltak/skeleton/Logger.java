@@ -44,7 +44,6 @@ public class Logger {
      */
     public static void log(Object called, String methodNameOrMsg, LogType type, Object ... args) {
         if(type == LogType.CALL) tabCount++;
-        else if(type == LogType.RETURN) tabCount--;
 
         String tabs = "";
         for (int i = 0; i < tabCount; i++) tabs+='\t';
@@ -54,14 +53,16 @@ public class Logger {
                 System.out.print("? "+tabs+methodNameOrMsg);
                 break;
             case CALL:
-                StringBuilder callString = new StringBuilder("["+TestSetup.getName(called)+":"+called.getClass().toString()+"]");
+                StringBuilder callString = new StringBuilder("["+TestSetup.getName(called)+":"+called.getClass().getSimpleName()+"]");
                 callString.append("."+methodNameOrMsg);
                 String params = Arrays.stream(args).map(param -> TestSetup.getName(param)).collect(Collectors.joining(",", "(", ")"));
                 callString.append(params);
                 System.out.println("> "+tabs+callString);
                 break;
             case RETURN:
-                System.out.println("< "+tabs+methodNameOrMsg);
+                tabCount--;
+                if(!methodNameOrMsg.isBlank())
+                    System.out.println("< "+tabs+methodNameOrMsg);
                 break;
             case COMMENT:
                 System.out.println("- "+tabs+methodNameOrMsg);
