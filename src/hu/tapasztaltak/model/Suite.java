@@ -11,7 +11,7 @@ public abstract class Suite implements IStealable {
 	private boolean active = false;
 
 	/**
-	 * Aktivan viseltté teszi a felszerelést v-re.
+	 * Aktivan viseltté teszi a felszerelést v-n.
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public abstract void activate(Virologist v);
