@@ -1,7 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A genetikai kódot reprezentáló osztály.
@@ -23,6 +28,7 @@ public class Gene {
 	 * @param inv az {@link Inventory}, amiben az anyagok vannak és amihez hozzáadja az ágenst, ha sikerült elkészíteni
 	 */
 	public void make(Inventory inv) {
+		Logger.log(this, "make", CALL, inv);
 		int i = 0;
 		ArrayList<IMaterial> found = new ArrayList<>();
 
@@ -35,6 +41,7 @@ public class Gene {
 				inv.getMaterials().remove(i);
 			} else {
 				inv.getMaterials().addAll(found);
+				Logger.log(this, "", RETURN);
 				return;
 			}
 		}
@@ -42,6 +49,7 @@ public class Gene {
 			Agent newAgent = (Agent) agent.clone();
 			inv.addAgent(newAgent);
 		}
+		Logger.log(this, "", RETURN);
 	}
 	//region GETTEREK ÉS SETTEREK
 	/**
