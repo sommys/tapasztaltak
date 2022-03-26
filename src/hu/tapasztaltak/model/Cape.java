@@ -1,6 +1,11 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.Random;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A köpeny felszerelést reprezentáló osztály.
@@ -15,10 +20,14 @@ public class Cape extends Suite implements IDefense {
 	 * @return a védés sikeressége
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
 		Random r = new Random();
 		int result = r.nextInt(1000);
-		if(result < 824)
+		if (result < 824){
+			Logger.log(this, "blockingSuccess="+(result < 824), RETURN);
 			return true;
+		}
+		Logger.log(this, "blockingSuccess="+(result < 824), RETURN);
 		return false;
 	}
 
@@ -27,8 +36,10 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
+		Logger.log(this, "activate(Cape)", CALL, v);
 		v.addDefense(this);
 		setActive(true);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -36,7 +47,9 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
+		Logger.log(this, "deactivate(Cape)", CALL, v);
 		v.removeDefense(this);
 		setActive(false);
+		Logger.log(this, "", RETURN);
 	}
 }

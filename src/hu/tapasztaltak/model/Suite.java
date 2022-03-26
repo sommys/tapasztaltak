@@ -1,5 +1,10 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+
 /**
  * A felszereléseknek az összefoglaló absztrakt ősosztálya,
  * ebből származnak le a különböző felszerelések.
@@ -44,13 +49,16 @@ public abstract class Suite implements IStealable {
 	 * Visszzaadja, hogy a felszerelés aktívan viselt-e
 	 * @return aktív-e?
 	 */
-	public boolean isActive() { return active; }
+	public boolean isActive() {
+
+		return active;
+
+	}
 
 	/**
 	 * Beálltja hogy aktívan viselt-e a felszerelés
 	 * @param active aktívan viselt-e?
 	 */
 	public void setActive(boolean active) { this.active = active; }
-
 	//endregion
 }

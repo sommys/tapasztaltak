@@ -1,6 +1,11 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.Scanner;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A kesztyű felszerelést reprezentáló osztály.
@@ -20,6 +25,7 @@ public class Gloves extends Suite implements IDefense {
 	 * @return az, hogy visszakenjük-e a támadóra
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
 		if(atc != vict && !used){
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Visszakennéd a támadóra? (I/N)");
@@ -27,9 +33,11 @@ public class Gloves extends Suite implements IDefense {
 			if(input.equals("I")){
 				used = true;
 				vict.useAgent(a,atc);
+				Logger.log(this, "blockingSuccess="+true, RETURN);
 				return true;
 			}
 		}
+		Logger.log(this, "blockingSuccess="+false, RETURN);
 		return false;
 	}
 
@@ -38,8 +46,10 @@ public class Gloves extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
+		Logger.log(this, "activate(Gloves)", CALL, v);
 		v.addDefense(this);
 		setActive(true);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -47,8 +57,10 @@ public class Gloves extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
+		Logger.log(this, "deactivate(Gloves)", CALL, v);
 		v.removeDefense(this);
 		setActive(false);
+		Logger.log(this, "", RETURN);
 	}
 
 	//region GETTEREK ÉS SETTEREK

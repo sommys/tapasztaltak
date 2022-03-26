@@ -1,5 +1,10 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+
 /**
  * A Nucleotid anyagot reprezentáló osztály.
  */
@@ -10,8 +15,12 @@ public class Nucleotid implements IMaterial {
 	 * @return ugyan az-e a két anyag
 	 */
 	public boolean isCompatible(IMaterial m) {
-		if(m.getClass() == Nucleotid.class)
+		Logger.log(this, "isCompatibleNucleotid", CALL, m);
+		if (m.getClass() == Nucleotid.class) {
+			Logger.log(this, "kompatibilis="+(m.getClass() == Nucleotid.class), RETURN);
 			return true;
+		}
+		Logger.log(this, "kompatibilis="+(m.getClass() == Nucleotid.class), RETURN);
 		return false;
 	}
 }
