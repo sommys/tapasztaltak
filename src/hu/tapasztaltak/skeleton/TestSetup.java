@@ -189,39 +189,55 @@ public class TestSetup {
         Warehouse w = new Warehouse();
         Virologist v = new Virologist();
 
+        storage.put("v", v);
+        storage.put("w", w);
+
         v.setField(w);
         w.addVirologist(v);
 
         stunQuestion(v);
 
-        Scanner sc = new Scanner(System.in);
+        if(!v.isStunned()) {
+            Scanner sc = new Scanner(System.in);
+            Logger.log(null, "Hány zsák van a virológuson? (0..3):", QUESTION);
+            int bags = sc.nextInt();
+            if (bags > 3 || bags < 0) {
+                System.out.println("Hibás bemenet");
+                return;
+            }
+            for (int i = 0; i < bags; i++) {
+                Bag b = new Bag();
+                b.add(v.getInventory());
+                b.activate(v);
+            }
 
-        Logger.log(null, "Hány zsák van a virológuson? (0..3):", QUESTION);
-        int bags = sc.nextInt();
-        if(bags > 3 || bags < 0){
-            System.out.println("Hibás bemenet");
-            return;
-        }
-        for(int i = 0; i < bags; i++){
-            Bag b = new Bag();
-            b.add(v.getInventory());
-            b.activate(v);
+            Logger.log(null, "Mennyi hely van még a tárhelyben? (0.." + v.getInventory().getSize() + "):", QUESTION);
+            int remaining = sc.nextInt();
+            if (remaining < 0 || remaining > v.getInventory().getSize()) {
+                System.out.println("Hibás bemenet");
+                return;
+            }
+
+            for (int i = 0; i < v.getInventory().getSize() - remaining; i++) {
+                Nucleotid placeholder = new Nucleotid();
+                v.getInventory().addMaterial(placeholder);
+            }
         }
 
-        Logger.log(null, "Mennyi hely van még a tárhelyben? (0.."+v.getInventory().getSize()+"):", QUESTION);
-        int remaining = sc.nextInt();
-        if(remaining < 0 || remaining > v.getInventory().getSize()) {
-            System.out.println("Hibás bemenet");
-            return;
-        }
+        Nucleotid n = new Nucleotid();
+        Nucleotid n1 = new Nucleotid();
+        Aminoacid a = new Aminoacid();
+        Aminoacid a1 = new Aminoacid();
 
-        for(int i = 0; i < v.getInventory().getSize()-remaining; i++){
-            Nucleotid placeholder = new Nucleotid();
-            v.getInventory().addMaterial(placeholder);
-        }
+        storage.put("n", n);
+        storage.put("n1", n1);
+        storage.put("a", a);
+        storage.put("a1", a1);
 
-        storage.put("v", v);
-        storage.put("w", w);
+        w.addMaterials(n);
+        w.addMaterials(n1);
+        w.addMaterials(a);
+        w.addMaterials(a1);
 
         v.scanning();
 

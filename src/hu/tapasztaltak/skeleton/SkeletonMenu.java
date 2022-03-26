@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
 import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
+import static hu.tapasztaltak.skeleton.TestSetup.virologistScansWarehouse;
 
 //todo: CSIMMA
 public class SkeletonMenu {
@@ -32,6 +33,7 @@ public class SkeletonMenu {
                 case "4":
                     break;
                 case "5":
+                    TestSetup.virologistScansWarehouse();
                     break;
                 case "6":
                     break;

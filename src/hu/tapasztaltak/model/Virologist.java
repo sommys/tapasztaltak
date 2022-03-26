@@ -144,8 +144,13 @@ public class Virologist implements ISteppable {
 	 * Tapogatózás, a virológus megismeri a mezőn lévő virológusokat és tárgyakat/genetikai kódot.
 	 */
 	public void scanning() {
-		if(stunned) return;
+		Logger.log(this, "scanning", CALL);
+		if(stunned){
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		field.getItem(this);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -162,12 +167,16 @@ public class Virologist implements ISteppable {
 			Logger.log(this, "chosen=EmptyList", RETURN);
 			return chosen;
 		}
-
+		int remaining = inventory.getSize() - inventory.getUsedSize();
 		for(IStealable a : available){
 			Logger.log(null, String.format("Fel szeretnéd venni %s[%s]-t? (I/N):", TestSetup.getName(a), a.getClass().getSimpleName()), QUESTION);
 			String currentPickupDecision = sc.nextLine();
 			if(currentPickupDecision.equalsIgnoreCase("I")){
-				chosen.add(a);
+				if(remaining>0){
+					chosen.add(a);
+					remaining--;
+					Logger.log(null, "Hátralevő helyek: "+remaining, COMMENT);
+				}
 			}
 		}
 
