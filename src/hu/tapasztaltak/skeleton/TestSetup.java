@@ -53,6 +53,21 @@ public class TestSetup {
     }
 
     /**
+     * Megkérdezi a felhasználótól, hogy {@code v} le van bénulva
+     * @param v a {@link Virologist}, akire vonatkozik a kérdés
+     */
+    private static void stunQuestion(Virologist v) {
+        Logger.log(null, "Le van bénulva a virológus? (I/N):", QUESTION);
+        Scanner sc = new Scanner(System.in);
+        String stunDecision = sc.nextLine();
+        if(stunDecision.equalsIgnoreCase("I")){
+            Stun s = new Stun();
+            v.addModifier(s);
+            s.effect(v);
+        }
+    }
+
+    /**
      * Virologist moves init
      * A virológus mozgását bemutatő függvény
      * Létre kell hozni 2 mezőt és egy virológust.
@@ -62,18 +77,21 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistMoves(){
+        System.out.println("--- Setting up Test Environment for Virologist Moves ---");
         Field f1 = new Field();
         Field f2 = new Field();
         Virologist v = new Virologist();
         storage.put("f1", f1);
         storage.put("f2", f2);
         storage.put("v", v);
+
         f1.addVirologist(v);
         v.setField(f1);
-        Logger.log(null, "Le van bénulva a virológus? (I/N):", QUESTION);
-        Scanner sc = new Scanner(System.in);
-        String stunDecision = sc.nextLine();
-        v.setStunned(stunDecision.equalsIgnoreCase("I"));
+
+        System.out.println("--- Setup Test Environment for Virologist Moves DONE---");
+
+        stunQuestion(v);
+
         v.move(f2);
         storage.remove("v");
         storage.remove("f1");
@@ -173,6 +191,34 @@ public class TestSetup {
 
         v.setField(w);
         w.addVirologist(v);
+
+        stunQuestion(v);
+
+        Scanner sc = new Scanner(System.in);
+
+        Logger.log(null, "Hány zsák van a virológuson? (0..3):", QUESTION);
+        int bags = sc.nextInt();
+        if(bags > 3 || bags < 0){
+            System.out.println("Hibás bemenet");
+            return;
+        }
+        for(int i = 0; i < bags; i++){
+            Bag b = new Bag();
+            b.add(v.getInventory());
+            b.activate(v);
+        }
+
+        Logger.log(null, "Mennyi hely van még a tárhelyben? (0.."+v.getInventory().getSize()+"):", QUESTION);
+        int remaining = sc.nextInt();
+        if(remaining < 0 || remaining > v.getInventory().getSize()) {
+            System.out.println("Hibás bemenet");
+            return;
+        }
+
+        for(int i = 0; i < v.getInventory().getSize()-remaining; i++){
+            Nucleotid placeholder = new Nucleotid();
+            v.getInventory().addMaterial(placeholder);
+        }
 
         storage.put("v", v);
         storage.put("w", w);

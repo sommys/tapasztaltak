@@ -6,6 +6,7 @@ import hu.tapasztaltak.skeleton.TestSetup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
@@ -154,12 +155,25 @@ public class Virologist implements ISteppable {
 	 */
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
-
-		for(IStealable a : available){
-			System.out.printf("Fel szeretnéd venni %s[%s]-t? (I/N):", TestSetup.getName(a), a.getClass().toString());
+		Logger.log(null, "Szeretnél felvenni dolgokat? (I/N):", QUESTION);
+		Scanner sc = new Scanner(System.in);
+		String pickupDecision = sc.nextLine();
+		if(!pickupDecision.equalsIgnoreCase("I")){
+			Logger.log(this, "chosen=EmptyList", RETURN);
+			return chosen;
 		}
 
-		if(!chosen.isEmpty()) moved = true;
+		for(IStealable a : available){
+			Logger.log(null, String.format("Fel szeretnéd venni %s[%s]-t? (I/N):", TestSetup.getName(a), a.getClass().getSimpleName()), QUESTION);
+			String currentPickupDecision = sc.nextLine();
+			if(currentPickupDecision.equalsIgnoreCase("I")){
+				chosen.add(a);
+			}
+		}
+
+		moved = !chosen.isEmpty();
+
+		Logger.log(this, "chosen="+chosen.stream().map(TestSetup::getName).collect(Collectors.joining(",", "[", "]")), RETURN);
 		return chosen;
 	}
 
