@@ -154,10 +154,11 @@ public class Virologist implements ISteppable {
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
 
-		//todo itt most nem latom at hogy hova kerulnek pontosan a dontesek, elvileg itt kene,
-		// de ahhoz typecheck kene mert ugye warehouse meg shelter eseten
-		// mast kell kerdezni meg mast kell pakolaszni
+		for(IStealable a : available){
+			System.out.printf("Fel szeretnéd venni %s[%s]-t? (I/N):", TestSetup.getName(a), a.getClass().toString());
+		}
 
+		if(!chosen.isEmpty()) moved = true;
 		return chosen;
 	}
 
@@ -166,7 +167,7 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
-		Logger.log("c", TestSetup.getName(this));
+		Logger.log(this, "steal", Logger.LogType.CALL, from);
 		System.out.print("Le van bénulva a virológus? (I/N):");
 		Scanner sc = new Scanner(System.in);
 		String stunDecision = sc.nextLine();
@@ -186,6 +187,7 @@ public class Virologist implements ISteppable {
 		IStealable item = inv2.pickItem();
 		if(!from.isStunned()) return;
 		from.stolen(this, item);
+		Logger.log(this, "", Logger.LogType.RETURN);
 	}
 
 	/**

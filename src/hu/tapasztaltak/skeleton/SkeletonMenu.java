@@ -2,21 +2,19 @@ package hu.tapasztaltak.skeleton;
 
 import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.RoundManager;
-
-import javax.swing.*;
 import java.util.Scanner;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
+import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
 
 //todo: CSIMMA
 public class SkeletonMenu {
-    //ezt itthagyom, jol johet majd a useAgent-hez :D
-    //region useAgenthelp
-
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
         boolean started = false;
         String input = "";
         do{
-            Logger.log("q","Válasszon menüpontot:");
+            Logger.log(null,"Válasszon menüpontot:", QUESTION);
             input = sc.nextLine();
             switch (input){
                 case "1":
@@ -26,7 +24,7 @@ public class SkeletonMenu {
                         started = true;
                     }
                     else{
-                        Logger.log("cm","A program már fut!");
+                        Logger.log(null, "A program már fut!", COMMENT);
                     }
                     break;
                 case "2":
@@ -71,37 +69,41 @@ public class SkeletonMenu {
                 case "21":
                     break;
                 case "help":
-                    Logger.log("cm","A szám beírásával tudsz menüpontot választani!");
-                    Logger.log("cm","1: Start Game");
-                    Logger.log("cm","2: Virologist move");
-                    Logger.log("cm","3: Virologist uses agent on themself ");
-                    Logger.log("cm","4: Virologist uses agent on other virologist");
-                    Logger.log("cm","5: Virologist makes agent");
-                    Logger.log("cm","6: Virologist scans warehouse");
-                    Logger.log("cm","7: Virologist scans labor");
-                    Logger.log("cm","8: Virologist scans shelter");
-                    Logger.log("cm","9: Virologist steals material");
-                    Logger.log("cm","10: Virologist steals suite");
-                    Logger.log("cm","11: Virologist switches suite");
-                    Logger.log("cm","12: Shelter refresh");
-                    Logger.log("cm","13: Warehouse refresh");
-                    Logger.log("cm","14: Shelter refresh");
-                    Logger.log("cm","15: Virologist dances");
-                    Logger.log("cm","16: Virologist forgets");
-                    Logger.log("cm","17: Virologist is being stunned");
-                    Logger.log("cm","18: Virologist puts on bag");
-                    Logger.log("cm","19: Virologist puts on cape");
-                    Logger.log("cm","20: Virologist puts on gloves");
-                    Logger.log("cm","21: Virologist ends round, round manager reacts");
+                    Logger.log(null,"A szám beírásával tudsz menüpontot választani!", COMMENT);
+                    Logger.log(null,"1: Start Game", COMMENT);
+                    Logger.log(null,"2: Virologist move", COMMENT);
+                    Logger.log(null,"3: Virologist uses agent on themself ", COMMENT);
+                    Logger.log(null,"4: Virologist uses agent on other virologist", COMMENT);
+                    Logger.log(null,"5: Virologist makes agent", COMMENT);
+                    Logger.log(null,"6: Virologist scans warehouse", COMMENT);
+                    Logger.log(null,"7: Virologist scans labor", COMMENT);
+                    Logger.log(null,"8: Virologist scans shelter", COMMENT);
+                    Logger.log(null,"9: Virologist steals material", COMMENT);
+                    Logger.log(null,"10: Virologist steals suite", COMMENT);
+                    Logger.log(null,"11: Virologist switches suite", COMMENT);
+                    Logger.log(null,"12: Shelter refresh", COMMENT);
+                    Logger.log(null,"13: Warehouse refresh", COMMENT);
+                    Logger.log(null,"14: Shelter refresh", COMMENT);
+                    Logger.log(null,"15: Virologist dances", COMMENT);
+                    Logger.log(null,"16: Virologist forgets", COMMENT);
+                    Logger.log(null,"17: Virologist is being stunned", COMMENT);
+                    Logger.log(null,"18: Virologist puts on bag", COMMENT);
+                    Logger.log(null,"19: Virologist puts on cape", COMMENT);
+                    Logger.log(null,"20: Virologist puts on gloves", COMMENT);
+                    Logger.log(null,"21: Virologist ends round, round manager reacts", COMMENT);
                     break;
                 case "endtest":
-                    Logger.log("cm","Teszt vége!");
+                    Logger.log(null,"Teszt vége!", COMMENT);
                     break;
                 default:
-                    Logger.log("cm","A 'help' paranccsal kaphat leírást a program működéséről.");
+                    Logger.log(null,"A 'help' paranccsal kaphat leírást a program működéséről.", COMMENT);
                     break;
             }
-        }while (!input.equals("endtest"));
+        } while (!input.equals("endtest"));
+    }
+
+    //ezt itthagyom, jol johet majd a useAgent-hez :D
+    //region useAgenthelp
         /*System.out.println("a");
         System.out.print("Le van bénulva a virológus? (I/N):");
 
@@ -130,8 +132,6 @@ public class SkeletonMenu {
 
             }
         }*/
-    }
-
-
     //endregion
+
 }

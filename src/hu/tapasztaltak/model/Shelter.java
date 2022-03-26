@@ -1,5 +1,8 @@
 package hu.tapasztaltak.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,8 +20,10 @@ public class Shelter extends Field {
      * @param v a {@link Virologist}, aki a védőfelszerelést kapja.
      */
     public void getItem(Virologist v) {
-        // Todo: Peti, utólag rájöttem, hogy valszeg nem ezt kéne itt csinálni.
-        v.getInventory().addSuite(suite);
+        List<IStealable> chosen = v.chooseItem(List.of(suite));
+        for(IStealable s : chosen){
+            v.getInventory().addSuite((Suite)s);
+        }
     }
 
     /**

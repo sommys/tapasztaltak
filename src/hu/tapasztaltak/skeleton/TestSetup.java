@@ -68,7 +68,6 @@ public class TestSetup {
         f1.addVirologist(v);
         v.setField(f1);
         v.move(f2);
-        Logger.log("c",getName(v)+"move"+getName(f2));
         storage.remove(v);
         storage.remove(f1);
         storage.remove(f2);

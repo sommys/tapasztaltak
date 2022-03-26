@@ -70,6 +70,18 @@ public class Inventory {
 	//region GETTEREK és SETTEREK
 
 	/**
+	 * Visszaadja a felhasznált tárhelyek számát
+	 * @return a felhasznált tárhelyek száma
+	 */
+	public int getUsedSize(){
+		int usedSize = materials.size();
+		for(Suite s : suites){
+			if(!s.isActive()) usedSize++;
+		}
+		return usedSize;
+	}
+
+	/**
 	 * Visszaadja a tárhely kapacitását.
 	 * @return tárhely kapacitása.
 	 */
@@ -97,13 +109,15 @@ public class Inventory {
 	 * Hozzáadja a tárolt anyagok listájához {@code material}-t.
 	 * @param material a hozzáadandó {@link IMaterial}
 	 */
-	public void addMaterials(IMaterial material) { materials.add(material); }
+	public void addMaterial(IMaterial material) {
+		if(getUsedSize() < size) materials.add(material);
+	}
 
 	/**
 	 * Törli a tárolt anyagok listájából {@code material}-t.
 	 * @param material a törlendő {@link IMaterial}
 	 */
-	public void removeMaterials(IMaterial material) { materials.remove(material); }
+	public void removeMaterial(IMaterial material) { materials.remove(material); }
 
 	/**
 	 * Visszaadja a tárolt védőfelszerelések listáját.
@@ -121,7 +135,9 @@ public class Inventory {
 	 * Hozzáadja {@code suite}-ot a tárolt védőfelszerelések listáját.
 	 * @param suite a hozzáadandó {@link Suite}
 	 */
-	public void addSuite(Suite suite) { suites.add(suite); }
+	public void addSuite(Suite suite) {
+		if(getUsedSize()< size) suites.add(suite);
+	}
 
 	/**
 	 * Törli {@code suite}-ot a tárolt védőfelszerelések listájából.

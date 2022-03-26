@@ -19,7 +19,10 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
-        // Todo: Peti
+        List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
+        for(IStealable m : chosen){
+            v.getInventory().addMaterial((IMaterial) m);
+        }
     }
 
     /**

@@ -1,5 +1,7 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 /**
  * A bénító ágenst reprezentáló osztály.
  * A hatása alatt a virológust nem hagyja cselekedni.
