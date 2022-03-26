@@ -15,7 +15,7 @@ public class Nucleotid implements IMaterial {
 	 * @return ugyan az-e a két anyag
 	 */
 	public boolean isCompatible(IMaterial m) {
-		Logger.log(this, "isCompatibleNucleotid", CALL, m);
+		Logger.log(this, "isCompatible", CALL, m);
 		if (m.getClass() == Nucleotid.class) {
 			Logger.log(this, "kompatibilis="+(m.getClass() == Nucleotid.class), RETURN);
 			return true;

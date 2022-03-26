@@ -19,7 +19,7 @@ public class Bag extends Suite {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
-		Logger.log(this, "activate(Bag)", CALL, v);
+		Logger.log(this, "activate", CALL, v);
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize + size);
 		setActive(true);
@@ -31,7 +31,7 @@ public class Bag extends Suite {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
-		Logger.log(this, "deactivate(Bag)", CALL, v);
+		Logger.log(this, "deactivate", CALL, v);
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize - size);
 		setActive(false);

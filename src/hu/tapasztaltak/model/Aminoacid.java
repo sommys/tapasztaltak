@@ -15,7 +15,7 @@ public class Aminoacid implements IMaterial {
 	 * @return ugyan az-e a két anyag
 	 */
 	public boolean isCompatible(IMaterial m) {
-		Logger.log(this, "isCompatibleAminoacid", CALL, m);
+		Logger.log(this, "isCompatible", CALL, m);
 		if (m.getClass() == Aminoacid.class) {
 			Logger.log(this, "kompatibilis="+(m.getClass() == Aminoacid.class), RETURN);
 			return true;

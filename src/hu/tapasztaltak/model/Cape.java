@@ -36,7 +36,7 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
-		Logger.log(this, "activate(Cape)", CALL, v);
+		Logger.log(this, "activate", CALL, v);
 		v.addDefense(this);
 		setActive(true);
 		Logger.log(this, "", RETURN);
@@ -47,7 +47,7 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
-		Logger.log(this, "deactivate(Cape)", CALL, v);
+		Logger.log(this, "deactivate", CALL, v);
 		v.removeDefense(this);
 		setActive(false);
 		Logger.log(this, "", RETURN);
