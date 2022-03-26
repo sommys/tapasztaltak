@@ -1,41 +1,76 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * Körök irányításáért felelős singleton osztály.
  */
 public class RoundManager {
     /**
+     * Privát konstruktor, a singleton elvárásainak megfelelően.
+     */
+    private RoundManager() {}
+
+    /**
+     * Az egyetlen RoundManager példány.
+     */
+    private static RoundManager instance = null;
+
+    /**
      * A körben már lépett virológusok száma, alap értéke 0.
      */
-    private static int movedCounter = 0;
+    private int movedCounter = 0;
     /**
      * Léptethető példányok listája.
      */
-    private static List<ISteppable> steppables = new ArrayList<>();
+    private List<ISteppable> steppables = new ArrayList<>();
     /**
      * A játékban résztvevő virológusok listája.
      */
-    private static List<Virologist> virologists = new ArrayList<>();
+    private List<Virologist> virologists = new ArrayList<>();
+
+    /**
+     * Hozzáférés a singleton példányhoz.
+     *
+     * @return a {@link RoundManager} példánya.
+     */
+    public static RoundManager getInstance() {
+        if (instance == null) {
+            instance = new RoundManager();
+        }
+        return instance;
+    }
 
     /**
      * Elindít egy új kört.
      */
-    private static void newRound() {
-        // Todo: Peti, ide lehet kéne majd segítség
+    private void newRound() {
+        Logger.log(this, "newRound", CALL);
+        for (var s : steppables) {
+            s.step();
+        }
+
+        movedCounter = 0;
+        Logger.log(this, "", RETURN);
     }
 
     /**
      * Növeli a lépett virológusok számát és a kör végén újat indít.
      */
-    public static void virologistMoved() {
+    public void virologistMoved() {
+        Logger.log(this, "virologistMoved", CALL);
         movedCounter++;
         if (movedCounter == virologists.size()) {
             movedCounter = 0;
             newRound();
         }
+        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

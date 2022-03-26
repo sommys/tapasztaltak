@@ -1,5 +1,10 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+
 /**
  * A pályán lévő laboratórium mező reprezentálása.
  */
@@ -15,7 +20,9 @@ public class Labor extends Field {
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
     public void getItem(Virologist v) {
+        Logger.log(this, "getItem", CALL, v);
         v.learn(gene);
+        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

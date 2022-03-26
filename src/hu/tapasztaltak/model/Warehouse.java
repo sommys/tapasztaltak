@@ -1,8 +1,13 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A pályán lévő raktár mező reprezentálása.
@@ -19,6 +24,7 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
+        Logger.log(this, "getItem", CALL, v);
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
         if(!chosen.isEmpty() && refreshCounter == -1){
             Random random = new Random();
@@ -27,12 +33,14 @@ public class Warehouse extends Field {
         for(IStealable m : chosen){
             v.getInventory().addMaterial((IMaterial) m);
         }
+        Logger.log(this, "", RETURN);
     }
 
     /**
      * Random anyagokat tesz a mezőre.
      */
     public void refresh() {
+        Logger.log(this, "refresh", CALL);
         refreshCounter = -1;
 
         materials.clear();
@@ -50,6 +58,7 @@ public class Warehouse extends Field {
                 materials.add(new Nucleotid());
             }
         }
+        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

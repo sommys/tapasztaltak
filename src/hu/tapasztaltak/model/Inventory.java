@@ -1,10 +1,14 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A virológus tárhelyét reprezentáló osztály.
@@ -32,8 +36,10 @@ public class Inventory {
 	 * @return kiválasztott {@link IStealable} vagy null, ha nincs ellopható elem
 	 */
 	public IStealable pickItem() {
+		Logger.log(this, "pickItem", CALL);
 		if (materials.isEmpty() && suites.isEmpty()){
 			System.out.println("A virológus tárja üres.");
+			Logger.log(this, "selected=null", RETURN);
 			return null;
 		}
 
@@ -64,6 +70,7 @@ public class Inventory {
 				? suites.remove(value - materials.size() - 1)
 				: materials.remove(value - 1);
 
+		Logger.log(this, "selected="+TestSetup.getName(selected), RETURN);
 		return selected;
 	}
 

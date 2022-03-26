@@ -42,6 +42,7 @@ public class Field implements ISteppable {
      * Refreshcountert csökkenti és ha nulla, akkor a refresh függvényt meghívja.
      */
     public void step() {
+        Logger.log(this, "step", CALL);
         if (refreshCounter > 0) {
             refreshCounter--;
         }
@@ -50,6 +51,7 @@ public class Field implements ISteppable {
             refresh();
             refreshCounter = -1;
         }
+        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -70,7 +72,9 @@ public class Field implements ISteppable {
      * @return random szomszédos {@link Field}
      */
     public Field getRandomNeighbour() {
+        Logger.log(this, "getRandomNeighbour", CALL);
         Random random = new Random();
+        Logger.log(this, "random neighbour", RETURN);
         return neighbours.get(random.nextInt(neighbours.size()));
     }
 

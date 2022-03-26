@@ -1,14 +1,26 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+
 /**
  * A játékot reprezentáló singleton osztály.
  */
 public class Game {
+    /**
+     * Privát konstruktor, a singleton elvárásainak megfelelően.
+     */
+    private Game() {}
+    /**
+     * Az egyetlen Game példány.
+     */
+    private static Game instance = null;
     /**
      * Győzelemhez szükséges genetikai kódok száma.
      */
@@ -17,6 +29,18 @@ public class Game {
      * A játék mezőinek listája.
      */
     private List<Field> fields = new ArrayList<>();
+
+    /**
+     * Hozzáférés a singleton példányhoz.
+     *
+     * @return a {@link Game} példánya.
+     */
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
 
     /**
      * Elindítja a játékot, létrehozza a pályát és a további szereplőket.
@@ -31,10 +55,12 @@ public class Game {
      * @param v a potenciális győztes {@link Virologist}
      */
     public void checkEndGame(Virologist v) {
+        Logger.log(this, "checkEndGame", CALL, v);
         if (v.getLearnt().size() == maxAgent) {
             System.out.printf("%s játékos győzött!\n", TestSetup.getName(v));
             // Todo: Peti, játék leállítása, egyéb teendők
         }
+        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

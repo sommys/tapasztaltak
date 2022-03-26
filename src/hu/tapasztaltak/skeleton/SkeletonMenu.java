@@ -51,8 +51,8 @@ public class SkeletonMenu {
                     break;
                 case "13":
                     if(!started){
-                        RoundManager rm = new RoundManager();
-                        Game game = new Game();
+                        RoundManager rm = RoundManager.getInstance();
+                        Game game = Game.getInstance();
                         started = true;
                     }
                     else{

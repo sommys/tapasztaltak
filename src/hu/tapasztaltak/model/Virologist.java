@@ -240,14 +240,12 @@ public class Virologist implements ISteppable {
 	 * @param what az ellopni kívánt {@link IStealable}
 	 */
 	public void stolen(Virologist stealer, IStealable what) {
-		Logger.log(this, "stolen", CALL, stealer, what);
 		if(!stunned){
 			Logger.log(this, "", RETURN);
 			return;
 		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -255,23 +253,19 @@ public class Virologist implements ISteppable {
 	 * @param g a megtanulandó {@link Gene}
 	 */
 	public void learn(Gene g) {
-		Logger.log(this, "learn", CALL, g);
 		if(!learnt.contains(g)){
 			learnt.add(g);
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
 	public void step() {
-		Logger.log(this, "step", CALL);
 		moved=false;
 		for(SpecialModifier m : modifiers){
 			m.effect(this);
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -280,8 +274,6 @@ public class Virologist implements ISteppable {
 	 * @return érinthető-e
 	 */
 	public boolean canReach(Virologist v) {
-		Logger.log(this, "canReach", CALL, v);
-		Logger.log(this, "can="+(v.getField()==field), RETURN);
 		return v.getField() == field;
 	}
 
@@ -291,7 +283,6 @@ public class Virologist implements ISteppable {
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
 	public void spreadInitiation(Agent a, Virologist v) {
-		Logger.log(this, "spreadInitiation", CALL, a, v);
 		for(IDefense d : v.getDefenses()){
 			if(d.tryToBlock(this, v, a)){
 				Logger.log(this, "", RETURN);
@@ -299,16 +290,13 @@ public class Virologist implements ISteppable {
 			}
 		}
 		a.spread(v);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
 	public void endRound() {
-		Logger.log(this, "endRound", CALL);
-		RoundManager.virologistMoved();
-		Logger.log(this, "", RETURN);
+		RoundManager.getInstance().virologistMoved();
 	}
 
 	//region GETTEREK ÉS SETTEREK
