@@ -2,6 +2,7 @@ package hu.tapasztaltak.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A pályán lévő raktár mező reprezentálása.
@@ -25,7 +26,21 @@ public class Warehouse extends Field {
      * Random anyagokat tesz a mezőre.
      */
     public void refresh() {
-        // Todo: Peti, mennyi anyag keletkezzen random?
+        materials.clear();
+
+        Random random = new Random();
+        int materialsSize = random.nextInt(4) + 1;
+        int randomNumber;
+
+        for (int i = 0; i < materialsSize; i++) {
+            randomNumber = random.nextInt(2);
+            if (randomNumber == 0) {
+                materials.add(new Aminoacid());
+            }
+            else {
+                materials.add(new Nucleotid());
+            }
+        }
     }
 
     //region GETTEREK és SETTEREK

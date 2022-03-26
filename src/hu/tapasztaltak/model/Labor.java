@@ -15,7 +15,6 @@ public class Labor extends Field {
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
     public void getItem(Virologist v) {
-        // Todo: Peti, utólag rájöttem, hogy valszeg nem ezt kéne itt csinálni.
         v.learn(gene);
     }
 
