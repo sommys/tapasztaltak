@@ -800,8 +800,8 @@ public class TestSetup {
                 gloves.add(v2.getInventory());
             }
             Logger.log(null,"Mennyi zsák van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
-            int bagss = sc.nextInt();
-            for (int i = 0; i < capenum; i++) {
+            int bagsnum = sc.nextInt();
+            for (int i = 0; i < bagsnum; i++) {
                 Bag bag = new Bag();
                 storage.put("bag"+i,bag);
                 bag.add(v2.getInventory());
