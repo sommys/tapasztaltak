@@ -65,6 +65,7 @@ public class Gene {
 	 * @param agent az elkészíthető {@link Agent}
 	 */
 	public void setAgent(Agent agent) {
+		if(agent == null) return;
 		this.agent = agent;
 		materials=agent.getRecipe();
 	}
