@@ -68,66 +68,6 @@ public class TestSetup {
             s.effect(v);
         }
     }
-
-    /**
-     * A beérkezett szám alapján eldönti, hogy melyik ágenst használjuk.
-     * @param agentnum a beérkezett szám
-     * @param v a {@link Virologist}, aki használja az ágenst
-     * @return visszadja a választott ágenst
-     */
-    private static void useagenthelp(int agentnum, Virologist v, boolean glvs){
-        switch (agentnum){
-            case 0:
-                Dance dance = new Dance();
-                v.addModifier(dance);
-                storage.put("d",dance);
-                if(glvs){
-                    Gloves gloves = new Gloves();
-                    v.addDefense(gloves);
-                    gloves.tryToBlock(v,v,dance);
-                }
-                v.useAgent(dance,v);
-                storage.remove("d",dance);
-                break;
-            case 1:
-                Protect protect = new Protect();
-                v.addDefense(protect);
-                storage.put("p",protect);
-                if(glvs){
-                    Gloves gloves = new Gloves();
-                    v.addDefense(gloves);
-                    gloves.tryToBlock(v,v,protect);
-                }
-                v.useAgent(protect,v);
-                storage.remove("p",protect);
-                break;
-            case 2:
-                Forget forget = new Forget();
-                v.addModifier(forget);
-                storage.put("f",forget);
-                if(glvs){
-                    Gloves gloves = new Gloves();
-                    v.addDefense(gloves);
-                    gloves.tryToBlock(v,v,forget);
-                }
-                v.useAgent(forget,v);
-                storage.remove("f",forget);
-                break;
-            case 3:
-                Stun stun = new Stun();
-                v.addModifier(stun);
-                storage.put("s",stun);
-                if(glvs){
-                    Gloves gloves = new Gloves();
-                    v.addDefense(gloves);
-                    gloves.tryToBlock(v,v,stun);
-                }
-                v.useAgent(stun,v);
-                storage.remove("f",stun);
-                break;
-        }
-    }
-
     /**
      * Virologist moves init
      * A virológus mozgását bemutatő függvény
@@ -489,7 +429,73 @@ public class TestSetup {
         storage.remove("l", l);
         storage.remove("g", g);
     }
+    public static void VirologistStealsMaterial(){
+        System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
+        Virologist v1 = new Virologist();
+        Virologist v2 = new Virologist();
+        Field f1 = new Field();
+        Field f2 = new Field();
+        Inventory inv = new Inventory();
+        Inventory inv2 = new Inventory();
+        v1.setInventory(inv);
+        v2.setInventory(inv2);
+        v1.setField(f1);
+        storage.put("v",v1);
+        storage.put("v2",v2);
+        storage.put("f",f1);
+        storage.put("f2",f2);
+        storage.put("inv",inv);
+        storage.put("inv2",inv);
+        f1.addVirologist(v1);
+        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE---");
+        stunQuestion(v1);
+        Scanner sc = new Scanner(System.in);
+        if(!v1.isStunned()) {
+            Logger.log(null, "Mennyi hely van a virológs inventoryába? 0...10", QUESTION);
+            int vinvcapacity = sc.nextInt();
+            if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
+                System.out.println("Hibás bemenet");
+                storage.clear();
+                return;
+            }
 
+            for (int i = 0; i < v1.getInventory().getSize() - vinvcapacity; i++) {
+                Nucleotid placeholder = new Nucleotid();
+                v1.getInventory().addMaterial(placeholder);
+            }
+            Logger.log(null, "Ugyanazon a mezőn van, akire használni akarod az ágenst? (I/N)", QUESTION);
+            sc.nextLine();
+            String samefield = sc.nextLine();
+            if (samefield.equalsIgnoreCase("I")) {
+                f1.addVirologist(v2);
+                v2.setField(f1);
+            } else if (samefield.equalsIgnoreCase("N")) {
+                f2.addVirologist(v2);
+                v2.setField(f2);
+            } else {
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
+            stunQuestion(v2);
+            Logger.log(null, "Mennyi nukleotid legyen a kirabolni kívánt virológusnál?0.." + v2.getInventory().getSize(), QUESTION);
+            int nukleotidnum = sc.nextInt();
+            for (int i = 0; i < nukleotidnum; i++) {
+                Nucleotid nucleotid = new Nucleotid();
+                v2.getInventory().addMaterial(nucleotid);
+                storage.put("nuc" + i, nucleotid);
+            }
+            Logger.log(null, "Mennyi aminosav legyen a kirabolni kívánt virológusnál?0.." + v2.getInventory().getSize(), QUESTION);
+            int aminoacidnum = sc.nextInt();
+            for (int i = 0; i < aminoacidnum; i++) {
+                Aminoacid aminoacid = new Aminoacid();
+                v2.getInventory().addMaterial(aminoacid);
+                storage.put("amino" + i, aminoacid);
+            }
+        }
+        v1.steal(v2);
+        storage.clear();
+    }
     /**
      *
      *
