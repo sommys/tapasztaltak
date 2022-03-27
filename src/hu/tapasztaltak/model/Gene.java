@@ -39,6 +39,7 @@ public class Gene {
 			if (i != inv.getMaterials().size()) {
 				found.add(inv.getMaterials().get(i));
 				inv.getMaterials().remove(i);
+				i=0;
 			} else {
 				inv.getMaterials().addAll(found);
 				Logger.log(this, "", RETURN);

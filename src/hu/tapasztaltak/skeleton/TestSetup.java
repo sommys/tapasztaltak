@@ -347,8 +347,8 @@ public class TestSetup {
                     if(hasEnough){
                         Nucleotid invN1 = new Nucleotid();
                         Aminoacid invA1 = new Aminoacid();
-                        invN1.add(v.getInventory());
                         invA1.add(v.getInventory());
+                        invN1.add(v.getInventory());
                         storage.put("invN1", invN1);
                         storage.put("invA1", invA1);
                     }
