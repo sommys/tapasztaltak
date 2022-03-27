@@ -36,14 +36,6 @@ public class TestSetup {
     }
 
     /**
-     * Eltávolítja a HashMapből a paraméterben megadott objektumot
-     * @param o az objektum
-     */
-    public static void removeObject(Object o) {
-        storage.remove(getName(o));
-    }
-
-    /**
      * Eltávolítja a HashMapből a paraméterben megadott objektumot úgy, hogy előtte megkeresi azt a neve alapján
      * @param name az objektum neve
      */
@@ -81,7 +73,7 @@ public class TestSetup {
      */
     private static Agent chooseAgent(Virologist v) {
         Scanner sc = new Scanner(System.in);
-        Agent use = null;
+        Agent use;
         Logger.log(null,"Melyik ágenst szeretnéd használni?[0=Dance, 1=Protect, 2=Forget, 3=Stun]:",QUESTION);
         int agentnum = sc.nextInt();
         sc.nextLine();
