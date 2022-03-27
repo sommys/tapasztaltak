@@ -69,6 +69,7 @@ public class SkeletonMenu {
                     TestSetup.virologistForgets();
                     break;
                 case "16":
+                    TestSetup.virologistIsBeingStunned();
                     break;
                 case "17":
                     TestSetup.virologistPutsOnBag();

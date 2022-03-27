@@ -827,7 +827,7 @@ public class TestSetup {
     /**
      * A virológuson dance ágens hatása érvényesül.
      * Ennek következtében egy másik mezőre lép
-     * Létre kell hozni 3 fieldet, 1 virológust, 1 dance ágenst.
+     * Létre kell hozni: 3 fieldet, 1 virológust, 1 dance ágenst.
      * A létrehozott objektumokat beletesszük a HashMapbe.
      * A virológus meghívja a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
@@ -863,7 +863,7 @@ public class TestSetup {
     /**
      * A virológuson forget ágens hatása érvényesül.
      * Ennek következtében egy másik mezőre lép
-     * Létre kell hozni 1 gene-t, 1 virológust, 1 dance ágenst.
+     * Létre kell hozni: 1 gene-t, 1 virológust, 1 dance ágenst.
      * A létrehozott objektumokat beletesszük a HashMapbe.
      * A virológus meghívja a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
@@ -880,6 +880,31 @@ public class TestSetup {
         storage.put("f",f);
         storage.put("g",g);
         System.out.println("--- Setup Test Environment for Virologist forgets DONE ---");
+        v.step();
+        storage.clear();
+    }
+
+    /**
+     * A virológuson a stun ágens hatása érvényesül.
+     * Ennek következtében nem tud lépni, se cselekedni.
+     * Létre kell hozni: 1 stun-t, 1 virológust, 1 roundManager-t.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a step függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistIsBeingStunned(){
+        System.out.println("--- Setting up Test Environment for Virologist is being stunned ---");
+        Virologist v = new Virologist();
+        SpecialModifier s = new Stun();
+        RoundManager rm = RoundManager.getInstance();
+
+        v.addModifier(s);
+        rm.addVirologists(v);
+        storage.put("v",v);
+        storage.put("s",s);
+        storage.put("rm",rm);
+
+        System.out.println("--- Setup Test Environment for Virologist is being stunned DONE ---");
         v.step();
         storage.clear();
     }
