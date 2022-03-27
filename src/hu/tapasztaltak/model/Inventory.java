@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
  * A virológus tárhelyét reprezentáló osztály.
@@ -44,25 +43,23 @@ public class Inventory {
 		}
 
 		int id = 1;
-		System.out.println("Válassz a tárolt elemek közül:");
-
 		for (IMaterial m : materials) {
-			System.out.printf("%d. %s\n", id, TestSetup.getName(m));
+			Logger.log(null,String.format("%d. %s",id,TestSetup.getName(m)),COMMENT);
 			id++;
 		}
 
 		for (Suite s : suites) {
-			System.out.printf("%d. %s\n", id, TestSetup.getName(s));
+			Logger.log(null,String.format("%d. %s",id,TestSetup.getName(s)),COMMENT);
 			id++;
 		}
 
 		int stealableSize = materials.size() + suites.size();
 
-		System.out.println("Add meg a választott elem indexét:");
+		Logger.log(null,"Add meg a választott elem indexét:",QUESTION);
 		Scanner input = new Scanner(System.in);
 		int value = input.nextInt();
 		while(value < 1 || value > stealableSize) {
-			System.out.printf("Érvénytelen index, kérlek adj meg 1 és %d közötti számot!\n", stealableSize);
+			Logger.log(null,String.format("Érvénytelen index, kérlek adj meg 1 és %d közötti számot!",stealableSize),COMMENT);
 			value = input.nextInt();
 		}
 

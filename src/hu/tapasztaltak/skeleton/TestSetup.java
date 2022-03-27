@@ -503,6 +503,11 @@ public class TestSetup {
         storage.remove("l", l);
         storage.remove("g", g);
     }
+
+    /**
+     * Virologist Steals Material init
+     *
+     */
     public static void VirologistStealsMaterial(){
         System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
         Virologist v1 = new Virologist();
@@ -525,7 +530,15 @@ public class TestSetup {
         stunQuestion(v1);
         Scanner sc = new Scanner(System.in);
         if(!v1.isStunned()) {
-            Logger.log(null, "Mennyi hely van a virológs inventoryába? 0...10", QUESTION);
+            Logger.log(null,"Mennyi zsákot visel a rabló virológus? 0..3",QUESTION);
+            int bags = sc.nextInt();
+            for (int i = 0; i < bags; i++) {
+                Bag bag = new Bag();
+                storage.put("bag"+i,bag);
+                bag.add(v1.getInventory());
+                bag.activate(v1);
+            }
+            Logger.log(null, "Mennyi hely van a virológs inventoryába? 0.."+v1.getInventory().getSize(), QUESTION);
             int vinvcapacity = sc.nextInt();
             if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
                 System.out.println("Hibás bemenet");
@@ -537,7 +550,7 @@ public class TestSetup {
                 Nucleotid placeholder = new Nucleotid();
                 v1.getInventory().addMaterial(placeholder);
             }
-            Logger.log(null, "Ugyanazon a mezőn van, akire használni akarod az ágenst? (I/N)", QUESTION);
+            Logger.log(null, "Ugyanazon a mezőn van, akitől lopni akarsz? (I/N)", QUESTION);
             sc.nextLine();
             String samefield = sc.nextLine();
             if (samefield.equalsIgnoreCase("I")) {
@@ -551,19 +564,27 @@ public class TestSetup {
                 storage.clear();
                 return;
             }
-            stunQuestion(v2);
+            Logger.log(null,"Mennyi zsákot visel a kirabolni kívánt virológusnál?0..3",QUESTION);
+            int bagnum = sc.nextInt();
+            for (int i = 0; i < bagnum; i++) {
+                Bag bag = new Bag();
+                storage.put("bag"+i,bag);
+                bag.add(v2.getInventory());
+                bag.activate(v2);
+            }
+
             Logger.log(null, "Mennyi nukleotid legyen a kirabolni kívánt virológusnál?0.." + v2.getInventory().getSize(), QUESTION);
             int nukleotidnum = sc.nextInt();
             for (int i = 0; i < nukleotidnum; i++) {
                 Nucleotid nucleotid = new Nucleotid();
-                v2.getInventory().addMaterial(nucleotid);
+                nucleotid.add(v2.getInventory());
                 storage.put("nuc" + i, nucleotid);
             }
-            Logger.log(null, "Mennyi aminosav legyen a kirabolni kívánt virológusnál?0.." + v2.getInventory().getSize(), QUESTION);
+            Logger.log(null, "Mennyi aminosav legyen a kirabolni kívánt virológusnál?0.." + (v2.getInventory().getSize()-v2.getInventory().getUsedSize()), QUESTION);
             int aminoacidnum = sc.nextInt();
             for (int i = 0; i < aminoacidnum; i++) {
                 Aminoacid aminoacid = new Aminoacid();
-                v2.getInventory().addMaterial(aminoacid);
+                aminoacid.add(v2.getInventory());
                 storage.put("amino" + i, aminoacid);
             }
         }

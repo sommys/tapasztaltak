@@ -214,9 +214,15 @@ public class Virologist implements ISteppable {
 			return;
 		}
 		Inventory inv2 = from.getInventory();
-		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) return;
+		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) {
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		IStealable item = inv2.pickItem();
-		if(!from.isStunned()) return;
+		if(!from.isStunned()) {
+			Logger.log(this, "", RETURN);
+			return;
+		}
 		from.stolen(this, item);
 		Logger.log(this, "", RETURN);
 	}
