@@ -172,9 +172,9 @@ public class TestSetup {
         f1.addVirologist(v);
         v.setField(f1);
 
-        System.out.println("--- Setup Test Environment for Virologist Moves DONE ---");
-
         stunQuestion(v);
+
+        System.out.println("--- Setup Test Environment for Virologist Moves DONE ---");
 
         v.move(f2);
         storage.clear();
