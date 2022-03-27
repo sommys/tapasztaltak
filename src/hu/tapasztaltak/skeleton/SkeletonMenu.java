@@ -31,6 +31,7 @@ public class SkeletonMenu {
                     TestSetup.useAgentOnOtherVirologist();
                     break;
                 case "4":
+                    TestSetup.virologistMakesAgent();
                     break;
                 case "5":
                     TestSetup.virologistScansWarehouse();

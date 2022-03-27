@@ -209,21 +209,9 @@ public class Virologist implements ISteppable {
 	 */
 	public void steal(Virologist from) {
 		Logger.log(this, "steal", CALL, from);
-		System.out.print("Le van bénulva a virológus? (I/N):");
-		Scanner sc = new Scanner(System.in);
-		String stunDecision = sc.nextLine();
-		if(stunDecision.equalsIgnoreCase("I")){
-			stunned = true;
-		}
 		if(stunned){
 			Logger.log(this, "", RETURN);
 			return;
-		}
-		System.out.print("Tele van a virológus tárhelye? (I/N):");
-		String invFullDecision = sc.nextLine();
-		if(invFullDecision.equalsIgnoreCase("I")){
-			inventory.setSize(1);
-			inventory.addSuite(new Cape());
 		}
 		Inventory inv2 = from.getInventory();
 		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) return;
@@ -258,6 +246,8 @@ public class Virologist implements ISteppable {
 		Logger.log(this, "learn", CALL, g);
 		if(!learnt.contains(g)){
 			learnt.add(g);
+		} else {
+			Logger.log(this, "A genetikai kód már ismert.", COMMENT);
 		}
 		Logger.log(this, "", RETURN);
 	}

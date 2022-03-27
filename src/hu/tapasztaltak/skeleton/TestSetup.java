@@ -64,6 +64,7 @@ public class TestSetup {
         String stunDecision = sc.nextLine();
         if(stunDecision.equalsIgnoreCase("I")){
             Stun s = new Stun();
+            storage.put("s", s);
             v.addModifier(s);
             s.effect(v);
         }
@@ -89,14 +90,12 @@ public class TestSetup {
         f1.addVirologist(v);
         v.setField(f1);
 
-        System.out.println("--- Setup Test Environment for Virologist Moves DONE---");
+        System.out.println("--- Setup Test Environment for Virologist Moves DONE ---");
 
         stunQuestion(v);
 
         v.move(f2);
-        storage.remove("v");
-        storage.remove("f1");
-        storage.remove("f2");
+        storage.clear();
     }
 
     /**
@@ -114,7 +113,7 @@ public class TestSetup {
         v.setInventory(inv);
         storage.put("inv", inv);
         storage.put("v", v);
-        System.out.println("--- Setup Test Environment for useAgentOnThemself DONE---");
+        System.out.println("--- Setup Test Environment for useAgentOnThemself DONE ---");
         stunQuestion(v);
         if(!v.isStunned()){
             Scanner sc = new Scanner(System.in);
@@ -200,7 +199,6 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void useAgentOnOtherVirologist(){
-
         System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
@@ -215,7 +213,7 @@ public class TestSetup {
         f1.addVirologist(v);
         v.setField(f1);
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE---");
+        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE ---");
         stunQuestion(v);
         if(!v.isStunned()){
             Scanner sc = new Scanner(System.in);
@@ -315,23 +313,99 @@ public class TestSetup {
      * A virológus létrehozza az ágenst.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistMakesAgent(Agent a){
+    public static void virologistMakesAgent(){
+        System.out.println("--- Setting up Test Environment for virologistMakesAgent ---");
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
         Gene g = new Gene();
-
-        g.setAgent(a);
-        v.setInventory(inv);
-
+        Agent a = null;
         storage.put("inv", inv);
         storage.put("v", v);
         storage.put("g", g);
+        storage.put("a", a);
 
+        v.setInventory(inv);
+        stunQuestion(v);
+
+        if(!v.isStunned()){
+            Scanner sc = new Scanner(System.in);
+            Logger.log(null,"Melyik ágenst szeretnéd elkészíteni?[0:Dance, 1: Protect, 2:Forget, 3:Stun]",QUESTION);
+            int agentnum = sc.nextInt();
+            if (agentnum > 3 || agentnum < 0) {
+                System.out.println("Hibás bemenet");
+                storage.clear();
+                return;
+            }
+            Logger.log(null, "Van elég nyersanyaga a virológusnak, hogy elkészítse az ágenst? (I/N):", QUESTION);
+            sc.nextLine();
+            String enoughMaterial = sc.nextLine();
+            boolean hasEnough = enoughMaterial.equalsIgnoreCase("I");
+            switch (agentnum){
+                case 0:
+                    a = new Dance();
+                    if(hasEnough){
+                        Nucleotid invN1 = new Nucleotid();
+                        Aminoacid invA1 = new Aminoacid();
+                        invN1.add(v.getInventory());
+                        invA1.add(v.getInventory());
+                        storage.put("invN1", invN1);
+                        storage.put("invA1", invA1);
+                    }
+                    break;
+                case 1:
+                    a = new Protect();
+                    if(hasEnough){
+                        Nucleotid invN1 = new Nucleotid();
+                        Nucleotid invN2 = new Nucleotid();
+                        Aminoacid invA1 = new Aminoacid();
+                        Aminoacid invA2 = new Aminoacid();
+                        invN1.add(v.getInventory());
+                        invN2.add(v.getInventory());
+                        invA1.add(v.getInventory());
+                        invA2.add(v.getInventory());
+                        storage.put("invN1", invN1);
+                        storage.put("invN2", invN2);
+                        storage.put("invA1", invA1);
+                        storage.put("invA2", invA2);
+                    }
+                    break;
+                case 2:
+                    a = new Forget();
+                    if(hasEnough){
+                        Nucleotid invN1 = new Nucleotid();
+                        Nucleotid invN2 = new Nucleotid();
+                        Nucleotid invN3 = new Nucleotid();
+                        invN1.add(v.getInventory());
+                        invN2.add(v.getInventory());
+                        invN3.add(v.getInventory());
+                        storage.put("invN1", invN1);
+                        storage.put("invN2", invN2);
+                        storage.put("invN3", invN3);
+                    }
+                    break;
+                case 3:
+                    a = new Stun();
+                    if(hasEnough){
+                        Aminoacid invA1 = new Aminoacid();
+                        Aminoacid invA2 = new Aminoacid();
+                        Aminoacid invA3 = new Aminoacid();
+                        invA1.add(v.getInventory());
+                        invA2.add(v.getInventory());
+                        invA3.add(v.getInventory());
+                        storage.put("invA1", invA1);
+                        storage.put("invA2", invA2);
+                        storage.put("invA3", invA3);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        System.out.println("--- Setup Test Environment for virologistMakesAgent DONE ---");
         v.makeAgent(g);
 
-        storage.remove("inv", inv);
-        storage.remove("v", v);
-        storage.remove("g", g);
+        storage.clear();
     }
 
     /**
