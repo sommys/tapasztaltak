@@ -542,7 +542,7 @@ public class TestSetup {
                 bag.add(v1.getInventory());
                 bag.activate(v1);
             }
-            Logger.log(null, "Mennyi hely van a virológs inventoryába? 0.."+v1.getInventory().getSize(), QUESTION);
+            Logger.log(null, "Mennyi hely van a virológus inventoryába? 0.."+v1.getInventory().getSize(), QUESTION);
             int vinvcapacity = sc.nextInt();
             if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
                 System.out.println("Hibás bemenet");
