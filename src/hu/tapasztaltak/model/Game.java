@@ -66,6 +66,13 @@ public class Game {
     //region GETTEREK és SETTEREK
 
     /**
+     * Visszaadja a játékban lévő különböző ágensek számát.
+     *
+     * @return a játékban gyűjtehtő különböző ágensek száma.
+     */
+    public int getMaxAgent(){ return maxAgent; }
+
+    /**
      * Visszaadja a játék mezőinek listáját.
      *
      * @return a játék {@link Field} listája.

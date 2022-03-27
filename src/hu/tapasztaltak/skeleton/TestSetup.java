@@ -518,12 +518,21 @@ public class TestSetup {
                 sc.nextLine();
                 String win = sc.nextLine();
                 if (win.equalsIgnoreCase("I")) {
-                    //IDE
+                    while ( v.getLearnt().size() != Game.getInstance().getMaxAgent() ){
+                        v.addLearnt(g);
+                    }
                     Game.getInstance().checkEndGame(v);
                     storage.clear();
                     return;
                 } else if (win.equalsIgnoreCase("N")) {
-                    //IDE
+                    if( v.getLearnt().size() == Game.getInstance().getMaxAgent()){
+                        v.getLearnt().remove(0);
+                    }
+                    else {
+                        while ( v.getLearnt().size() != Game.getInstance().getMaxAgent()-1 ){
+                            v.addLearnt(g);
+                        }
+                    }
                     Game.getInstance().checkEndGame(v);
                     storage.clear();
                     return;
