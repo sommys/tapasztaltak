@@ -484,7 +484,7 @@ public class TestSetup {
      * A virológus letapogatja a labort
      * Létre kell hozni 1 labort, 1 virológust, 1 játékot és egy genetikai kódot.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a tapogat függvényt.
+     * A virológuson meghívjuk a tapogat függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansLabor(){
@@ -626,7 +626,7 @@ public class TestSetup {
      * A virológus ellop egy anyagot.
      * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a lopás függvényt.
+     * A virológuson meghívjuk a steal függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistStealsMaterial(){
@@ -718,7 +718,7 @@ public class TestSetup {
      * A virológus ellop egy felszerelést.
      * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a lopás függvényt.
+     * A virológuson meghívjuk a steal függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistStealsSuite(){
@@ -877,6 +877,9 @@ public class TestSetup {
      * Shelter refreshes init.
      * Az óvóhely újra létrehoz felszerelést, ha szükséges.
      * Létre kell hozni 1 óvóhelyet és opcionálisan 1 rajta lévő felszerelést.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * Az óvóhelyen meghívjuk a refresh függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void shelterRefresh(){
         System.out.println("--- Setting up Test Environment for Shelter refresh ---");
@@ -899,6 +902,9 @@ public class TestSetup {
      * Warehouse refreshes init.
      * A raktár újra létrehoz anyagokat, ha szükséges.
      * Létre kell hozni 1 raktárat és opcionálisan pár rajta lévő anyagot.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A raktáron meghívjuk a refresh függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void warehouseRefresh(){
         System.out.println("--- Setting up Test Environment for Warehouse refresh ---");
@@ -917,6 +923,15 @@ public class TestSetup {
         storage.clear();
     }
 
+    /**
+     * Player Starts Game init
+     * Megkérdezi a felhasználótól, hogy milyen paraméterekkel indítaná el a játékot.
+     * Bekérjük az üres mezők számát
+     * Bekérjük a laborok számát
+     * Bekérjük a raktárak számát
+     * Bekérjük az óvóhelyek számát
+     * Bekérjük a virológusok számát
+     */
     public static void playerStartsGame(){
         System.out.println("--- Setting up Test Environment for Player starts game ---");
         Game g = Game.getInstance();
@@ -969,7 +984,7 @@ public class TestSetup {
      * A virológus felveszi az inventory-jában található bag-et.
      * Létre kell hozni 1 bag-et, egy inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a putOnSuite függvényt.
+     * A virológuson meghívjuk a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnBag() {
@@ -1006,7 +1021,7 @@ public class TestSetup {
      * A virológus felveszi az inventory-jában található cape-et.
      * Létre kell hozni 1 cape-et, 1 inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a putOnSuite függvényt.
+     * A virológuson meghívjuk a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnCape() {
@@ -1043,7 +1058,7 @@ public class TestSetup {
      * A virológus felveszi az inventory-jában található gloves-ot.
      * Létre kell hozni 1 gloves-ot, egy inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a putOnSuite függvényt.
+     * A virológuson meghívjuk a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnGloves() {
@@ -1080,7 +1095,7 @@ public class TestSetup {
      * Ennek következtében egy másik mezőre lép
      * Létre kell hozni: 3 fieldet, 1 virológust, 1 dance ágenst.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a step függvényt.
+     * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistDances(){
@@ -1116,7 +1131,7 @@ public class TestSetup {
      * Ennek következtében egy másik mezőre lép
      * Létre kell hozni: 1 gene-t, 1 virológust, 1 dance ágenst.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a step függvényt.
+     * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistForgets(){
@@ -1140,7 +1155,7 @@ public class TestSetup {
      * Ennek következtében nem tud lépni, se cselekedni.
      * Létre kell hozni: 1 stun-t, 1 virológust, 1 roundManager-t.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja a step függvényt.
+     * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistIsBeingStunned(){
@@ -1165,7 +1180,7 @@ public class TestSetup {
      * Attól függően, hogy az utolsó játékos lépett-e, a roundManager új kört kezd.
      * Létre kell hozni: 3 virológust, 1 roundManagert.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológus meghívja az endround függvényt.
+     * A virológuson meghívjuk az endround függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistEndsRoundRoundManagerReacts(){
