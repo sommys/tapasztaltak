@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
  * A játékot reprezentáló singleton osztály.
@@ -101,7 +100,7 @@ public class Game {
     public void checkEndGame(Virologist v) {
         Logger.log(this, "checkEndGame", CALL, v);
         if (v.getLearnt().size() == maxAgent) {
-            System.out.printf("%s játékos győzött!\n", TestSetup.getName(v));
+            Logger.log(this, String.format("%s játékos győzött!", TestSetup.getName(v)), COMMENT);
             // Todo: Peti, játék leállítása, egyéb teendők
         }
         Logger.log(this, "", RETURN);

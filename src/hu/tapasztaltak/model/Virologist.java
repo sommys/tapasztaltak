@@ -252,6 +252,7 @@ public class Virologist implements ISteppable {
 		Logger.log(this, "learn", CALL, g);
 		if(!learnt.contains(g)){
 			learnt.add(g);
+			Game.getInstance().checkEndGame(this);
 		} else {
 			Logger.log(this, "A genetikai kód már ismert.", COMMENT);
 		}
@@ -293,6 +294,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void spreadInitiation(Agent a, Virologist v) {
 		Logger.log(this, "spreadInitiation", CALL, a, v);
+		inventory.removeAgent(a);
 		for(IDefense d : v.getDefenses()){
 			if(d.tryToBlock(this, v, a)){
 				Logger.log(this, "", RETURN);

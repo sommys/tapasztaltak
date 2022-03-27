@@ -1,15 +1,17 @@
 package hu.tapasztaltak.skeleton;
-
-import hu.tapasztaltak.model.Game;
-import hu.tapasztaltak.model.RoundManager;
-
 import java.util.Scanner;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
 import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
 
-//todo: CSIMMA
+/**
+ * A menü kezeléséért felelős osztály
+ */
 public class SkeletonMenu {
+    /**
+     * Az alkalmazást futtató metódus
+     * @param args parancssori argumentumok
+     */
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
         help();
@@ -40,49 +42,46 @@ public class SkeletonMenu {
                     TestSetup.virologistScansShelter();
                     break;
                 case "8":
-                    TestSetup.virologistStealsMaterial();
+                    TestSetup.virologistSteals();
                     break;
                 case "9":
-                    TestSetup.virologistStealsSuite();
-                    break;
-                case "10":
                     TestSetup.virologistSwitchesSuite();
                     break;
-                case "11":
+                case "10":
                     TestSetup.shelterRefresh();
                     break;
-                case "12":
+                case "11":
                     TestSetup.warehouseRefresh();
                     break;
-                case "13":
+                case "12":
                     TestSetup.playerStartsGame();
                     break;
-                case "14":
+                case "13":
                     TestSetup.virologistDances();
                     break;
-                case "15":
+                case "14":
                     TestSetup.virologistForgets();
                     break;
-                case "16":
+                case "15":
                     TestSetup.virologistIsBeingStunned();
                     break;
-                case "17":
+                case "16":
                     TestSetup.virologistPutsOnBag();
                     break;
-                case "18":
+                case "17":
                     TestSetup.virologistPutsOnCape();
                     break;
-                case "19":
+                case "18":
                     TestSetup.virologistPutsOnGloves();
                     break;
-                case "20":
+                case "19":
                     TestSetup.virologistEndsRoundRoundManagerReacts();
                     break;
                 case "help":
                     help();
                     break;
                 case "endtest":
-                    Logger.log(null,"Köszi hogy letesztelted! :) @ tapasztaltak", COMMENT);
+                    Logger.log(null,"Köszi, hogy letesztelted! :) @ tapasztaltak", COMMENT);
                     break;
                 default:
                     Logger.log(null,"A 'help' paranccsal kaphat leírást a program működéséről.\nAz 'endtest' paranccsal léphet ki a tesztből.", COMMENT);
@@ -93,6 +92,7 @@ public class SkeletonMenu {
 
     /**
      * A menü kiírását végző metódus
+     * Törli a konzolt és kiírja a lehetséges teszteseteket.
      */
     private static void help() {
         try {
@@ -106,51 +106,17 @@ public class SkeletonMenu {
         Logger.log(null,"5: Virologist scans warehouse", COMMENT);
         Logger.log(null,"6: Virologist scans labor", COMMENT);
         Logger.log(null,"7: Virologist scans shelter", COMMENT);
-        Logger.log(null,"8: Virologist steals material", COMMENT);
-        Logger.log(null,"9: Virologist steals suite", COMMENT);
-        Logger.log(null,"10: Virologist switches suite", COMMENT);
-        Logger.log(null,"11: Shelter refresh", COMMENT);
-        Logger.log(null,"12: Warehouse refresh", COMMENT);
-        Logger.log(null,"13: Player Start Game", COMMENT);
-        Logger.log(null,"14: Virologist dances", COMMENT);
-        Logger.log(null,"15: Virologist forgets", COMMENT);
-        Logger.log(null,"16: Virologist is being stunned", COMMENT);
-        Logger.log(null,"17: Virologist puts on bag", COMMENT);
-        Logger.log(null,"18: Virologist puts on cape", COMMENT);
-        Logger.log(null,"19: Virologist puts on gloves", COMMENT);
-        Logger.log(null,"20: Virologist ends round, round manager reacts", COMMENT);
+        Logger.log(null,"8: Virologist steals", COMMENT);
+        Logger.log(null,"9: Virologist switches suite", COMMENT);
+        Logger.log(null,"10: Shelter refresh", COMMENT);
+        Logger.log(null,"11: Warehouse refresh", COMMENT);
+        Logger.log(null,"12: Player Start Game", COMMENT);
+        Logger.log(null,"13: Virologist dances", COMMENT);
+        Logger.log(null,"14: Virologist forgets", COMMENT);
+        Logger.log(null,"15: Virologist is being stunned", COMMENT);
+        Logger.log(null,"16: Virologist puts on bag", COMMENT);
+        Logger.log(null,"17: Virologist puts on cape", COMMENT);
+        Logger.log(null,"18: Virologist puts on gloves", COMMENT);
+        Logger.log(null,"19: Virologist ends round, round manager reacts", COMMENT);
     }
-
-    //ezt itthagyom, jol johet majd a useAgent-hez :D
-    //region useAgenthelp
-        /*System.out.println("a");
-        System.out.print("Le van bénulva a virológus? (I/N):");
-
-        boolean stunned = false;
-        if(stunDecision.equalsIgnoreCase("I")){
-            stunned = true;
-        }
-        System.out.print("Melyik ágenst szeretnéd használni? [1=Dance, 2=Forget, 3=Protect, 4=Stun]:");
-        int agentChoice = sc.nextInt();
-        while(agentChoice < 1 || agentChoice > 4){
-            System.out.println("Hibás bemenet...");
-            System.out.print("Melyik ágenst szeretnéd használni? [1=Dance, 2=Forget, 3=Protect, 4=Stun]:");
-            agentChoice = sc.nextInt();
-        }
-        switch (agentChoice){
-            case 1: {
-
-            }
-            case 2: {
-
-            }
-            case 3: {
-
-            }
-            default: {
-
-            }
-        }*/
-    //endregion
-
 }

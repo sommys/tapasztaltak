@@ -22,13 +22,9 @@ public class Cape extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
 		Random r = new Random();
-		int result = r.nextInt(1000);
-		if (result < 824){
-			Logger.log(this, "blockingSuccess="+(result < 824), RETURN);
-			return true;
-		}
-		Logger.log(this, "blockingSuccess="+(result < 824), RETURN);
-		return false;
+		double result = r.nextDouble();
+		Logger.log(this, "blockingSuccess="+(result <= 0.823), RETURN);
+		return (result <= 0.823);
 	}
 
 	/**

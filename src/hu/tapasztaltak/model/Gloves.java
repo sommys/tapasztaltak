@@ -4,8 +4,7 @@ import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.Scanner;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
  * A kesztyű felszerelést reprezentáló osztály.
@@ -26,9 +25,9 @@ public class Gloves extends Suite implements IDefense {
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
-		if(atc != vict && !used){
+		if(atc != vict && !used && !vict.isStunned()){
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Visszakennéd a támadóra? (I/N)");
+			Logger.log(null, "Visszakennéd a támadóra? (I/N):", QUESTION);
 			String input = sc.nextLine();
 			if(input.equals("I")){
 				used = true;

@@ -59,7 +59,7 @@ public class Protect extends Agent implements IDefense {
 	public void spread(Virologist v) {
 		Logger.log(this, "spread", CALL, v);
 		v.addDefense(this);
-		Logger.log(this, "success=true", RETURN);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**

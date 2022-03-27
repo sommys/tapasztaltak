@@ -44,6 +44,7 @@ public abstract class Suite implements IStealable {
 	public void remove(Inventory inv) {
 		Logger.log(this, "remove", CALL, inv);
 		inv.getSuites().remove(this);
+		active = false;
 		Logger.log(this, "", RETURN);
 	}
 
@@ -54,9 +55,7 @@ public abstract class Suite implements IStealable {
 	 * @return aktív-e?
 	 */
 	public boolean isActive() {
-
 		return active;
-
 	}
 
 	/**

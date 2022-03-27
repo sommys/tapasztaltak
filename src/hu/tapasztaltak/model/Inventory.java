@@ -60,12 +60,13 @@ public class Inventory {
 		int value = input.nextInt();
 		while(value < 1 || value > stealableSize) {
 			Logger.log(null,String.format("Érvénytelen index, kérlek adj meg 1 és %d közötti számot!",stealableSize),COMMENT);
+			Logger.log(null,"Add meg a választott elem indexét:",QUESTION);
 			value = input.nextInt();
 		}
 
 		IStealable selected = value > materials.size()
-				? suites.remove(value - materials.size() - 1)
-				: materials.remove(value - 1);
+				? suites.get(value - materials.size() - 1)
+				: materials.get(value - 1);
 
 		Logger.log(this, "selected="+TestSetup.getName(selected), RETURN);
 		return selected;
@@ -113,9 +114,7 @@ public class Inventory {
 	 * Hozzáadja a tárolt anyagok listájához {@code material}-t.
 	 * @param material a hozzáadandó {@link IMaterial}
 	 */
-	public void addMaterial(IMaterial material) {
-		if(getUsedSize() < size) materials.add(material);
-	}
+	public void addMaterial(IMaterial material) { if(getUsedSize() < size) materials.add(material); }
 
 	/**
 	 * Törli a tárolt anyagok listájából {@code material}-t.

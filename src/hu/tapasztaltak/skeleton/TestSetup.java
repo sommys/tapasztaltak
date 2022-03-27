@@ -52,11 +52,12 @@ public class TestSetup {
     }
 
     /**
-     * Megkérdezi a felhasználótól, hogy {@code v} le van bénulva
+     * Megkérdezi a felhasználótól, hogy {@code v} le van-e bénulva
+     * Ha igen, akkor hozzáadja a bénító ágenst és kifejti hatását
      * @param v a {@link Virologist}, akire vonatkozik a kérdés
      */
     private static void stunQuestion(Virologist v) {
-        Logger.log(null, "Le van bénulva a virológus? (I/N):", QUESTION);
+        Logger.log(null, "Le van bénulva a "+getName(v)+" virológus? (I/N):", QUESTION);
         Scanner sc = new Scanner(System.in);
         String stunDecision = sc.nextLine();
         if(stunDecision.equalsIgnoreCase("I")){
@@ -65,6 +66,89 @@ public class TestSetup {
             v.addModifier(s);
             s.effect(v);
         }
+    }
+
+    /**
+     * A paraméterben átadott virológus választ egy ágenst amit felhasználna
+     * Ha a táncoló ágenst választja létrehozzuk és hozzáadjuk a tárhelyéhez
+     * Ha a felejtő ágenst választja létrehozzuk és hozzáadjuk a tárhelyéhez
+     * Ha a védő ágenst választja létrehozzuk és hozzáadjuk a tárhelyéhez
+     * Ha a bénító ágenst választja létrehozzuk és hozzáadjuk a tárhelyéhez
+     * Amennyiben valahol hibás bemenetet ad meg a felhasználó, akkor visszatérünk
+     * és a teszteset, ahonnan ezt a metódust hívtuk megszakad.
+     * @param v a virológus, aki használni fogja az ágenst
+     * @return volt-e hiba
+     */
+    private static Agent chooseAgent(Virologist v) {
+        Scanner sc = new Scanner(System.in);
+        Agent use = null;
+        Logger.log(null,"Melyik ágenst szeretnéd használni?[0=Dance, 1=Protect, 2=Forget, 3=Stun]:",QUESTION);
+        int agentnum = sc.nextInt();
+        sc.nextLine();
+        if (agentnum > 3 || agentnum < 0) {
+            System.out.println("Hibás bemenet");
+            storage.clear();
+            return null;
+        }
+        switch (agentnum){
+            case 0:
+                use = new Dance();
+                break;
+            case 1:
+                use = new Protect();
+                break;
+            case 2:
+                use = new Forget();
+                break;
+            default:
+                use = new Stun();
+                break;
+        }
+        v.getInventory().addAgent(use);
+        storage.put("a",use);
+        return use;
+    }
+
+    /**
+     * A paraméterben átadott virológusnak tölti fel a védelmét
+     * Megkérdezi, hány köpeny van rajta, és hozzá is adja őket
+     * Megkérdezi, hány védő ágens van rajta, és hozzá is adja őket
+     * Megkérdezi, hány kesztyű van rajta, és hozzá is adja őket
+     * Amennyiben valahol hibás bemenetet ad meg a felhasználó, akkor visszatérünk
+     * és a teszteset, ahonnan ezt a metódust hívtuk megszakad.
+     * @param virologist a virológus, akinek hozzáadjuk a védekező dolgokat
+     * @return volt-e hiba
+     */
+    private static boolean addProtectiveStuff(Virologist virologist) {
+        Scanner sc = new Scanner(System.in);
+        Logger.log(null, "Mennyi köpeny van a virológuson? (0..3):", QUESTION);
+        int capenum = sc.nextInt();
+        Logger.log(null, "Mennyi védő ágens van a virológuson? (0.." + (3 - capenum)+"):", QUESTION);
+        int protectnum = sc.nextInt();
+        Logger.log(null, "Mennyi kesztyű van a virológuson? (0.." + (3 - (capenum + protectnum))+"):", QUESTION);
+        int glovesnum = sc.nextInt();
+        sc.nextLine();
+        if ((capenum + protectnum + glovesnum) > 3 || (capenum + protectnum + glovesnum) < 0) {
+            System.out.println("Hibás bemenet");
+            storage.clear();
+            return true;
+        }
+        for (int i = 0; i < capenum; i++) {
+            Cape cape = new Cape();
+            virologist.addDefense(cape);
+            storage.put(getName(virologist)+"_cape" + i, cape);
+        }
+        for (int i = 0; i < protectnum; i++) {
+            Protect protect = new Protect();
+            virologist.addDefense(protect);
+            storage.put(getName(virologist)+"_protect" + i, protect);
+        }
+        for (int i = 0; i < glovesnum; i++) {
+            Gloves gloves = new Gloves();
+            virologist.addDefense(gloves);
+            storage.put(getName(virologist)+"_gloves" + i, gloves);
+        }
+        return false;
     }
 
     /**
@@ -111,80 +195,28 @@ public class TestSetup {
         v.setInventory(inv);
         storage.put("inv", inv);
         storage.put("v", v);
-        System.out.println("--- Setup Test Environment for useAgentOnThemself DONE ---");
         stunQuestion(v);
+        Agent use = null;
+        storage.put("a", use);
         if(!v.isStunned()){
+            use = chooseAgent(v);
+            if (use == null){
+                storage.clear();
+                return;
+            }
+            Logger.log(null,"Van olyan védőfelszerelés/ágens a virológuson ami levédi az ágenst? (I/N):",QUESTION);
             Scanner sc = new Scanner(System.in);
-            Logger.log(null,"Melyik ágenst szeretnéd használni?[0:Dance, 1: Protect, 2:Forget, 3:Stun]",QUESTION);
-            Agent use;
-            int agentnum = sc.nextInt();
-            if (agentnum > 3 || agentnum < 0) {
-                System.out.println("Hibás bemenet");
-                storage.clear();
-                return;
-            }
-            switch (agentnum){
-                case 0:
-                    use = new Dance();
-                    break;
-                case 1:
-                    use = new Protect();
-                    break;
-                case 2:
-                    use = new Forget();
-                    break;
-                case 3:
-                    use = new Stun();
-                    break;
-                default:
-                    use = null;
-            }
-            v.getInventory().addAgent(use);
-            storage.put("a",use);
-            Logger.log(null,"Van olyan védőfelszerelés/ágens a virológuson ami levédi az ágenst?[I/N]",QUESTION);
-            sc.nextLine();
             String suite = sc.nextLine();
-            if(suite.equalsIgnoreCase("N")){
-                v.useAgent(use,v);
-                storage.clear();
-                return;
-            }
-            else if(suite.equalsIgnoreCase("I")) {
-                Logger.log(null, "Mennyi köpeny van a virológuson? 0..3", QUESTION);
-                int capenum = sc.nextInt();
-                Logger.log(null, "Mennyi védő ágens van a virológuson?0.." + (3 - capenum), QUESTION);
-                int protectnum = sc.nextInt();
-                Logger.log(null, "Mennyi Kesztyű van a virológuson?0.." + (3 - (capenum + protectnum)), QUESTION);
-                int glovesnum = sc.nextInt();
-                if ((capenum + protectnum + glovesnum) > 3 || (capenum + protectnum + glovesnum) < 0) {
-                    System.out.println("Hibás bemenet");
-                    storage.clear();
-                    return;
-                }
-                for (int i = 0; i < capenum; i++) {
-                    Cape cape = new Cape();
-                    v.addDefense(cape);
-                    storage.put("cape" + i, cape);
-                }
-                for (int i = 0; i < protectnum; i++) {
-                    Protect protect = new Protect();
-                    v.addDefense(protect);
-                    storage.put("protect" + i, protect);
-                }
-                for (int i = 0; i < glovesnum; i++) {
-                    Gloves gloves = new Gloves();
-                    v.addDefense(gloves);
-                    storage.put("gloves" + i, gloves);
-                }
-                v.useAgent(use, v);
-            }
-            else{
+            if(suite.equalsIgnoreCase("I")) {
+                addProtectiveStuff(v);
+            } else if(!suite.equalsIgnoreCase("N")){
                 System.out.println("Hibás bemenet!");
                 storage.clear();
                 return;
             }
-
         }
+        System.out.println("--- Setup Test Environment for useAgentOnThemself DONE ---");
+        v.useAgent(use, v);
         storage.clear();
     }
 
@@ -197,7 +229,7 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void useAgentOnOtherVirologist(){
-        System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
+        System.out.println("--- Setting up Test Environment for Virologist uses agent on other virologist ---");
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
         Virologist v2 = new Virologist();
@@ -211,38 +243,16 @@ public class TestSetup {
         f1.addVirologist(v);
         v.setField(f1);
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE ---");
         stunQuestion(v);
+        Scanner sc = new Scanner(System.in);
+        Agent use = null;
+        storage.put("a", use);
         if(!v.isStunned()){
-            Scanner sc = new Scanner(System.in);
-            Logger.log(null,"Melyik ágenst szeretnéd használni?[0:Dance, 1: Protect, 2:Forget, 3:Stun]",QUESTION);
-            Agent use;
-            int agentnum = sc.nextInt();
-            if (agentnum > 3 || agentnum < 0) {
-                System.out.println("Hibás bemenet");
-                storage.clear();
-                return;
-            }
-            switch (agentnum){
-                case 0:
-                    use = new Dance();
-                    break;
-                case 1:
-                    use = new Protect();
-                    break;
-                case 2:
-                    use = new Forget();
-                    break;
-                case 3:
-                    use = new Stun();
-                    break;
-                default:
-                    use = null;
-            }
-            v.getInventory().addAgent(use);
-            storage.put("a",use);
-            Logger.log(null,"Ugyanazon a mezőn van, akire használni akarod az ágenst? (I/N)",QUESTION);
+            use = chooseAgent(v);
             sc.nextLine();
+            Logger.log(null,"Van olyan védőfelszerelés/ágens rajtunk, ami levédi az ágenst? (I/N):",QUESTION);
+            if (addProtectiveStuff(v)) return;
+            Logger.log(null,"Ugyanazon a mezőn van, akire használni akarod az ágenst? (I/N):",QUESTION);
             String samefield = sc.nextLine();
             if(samefield.equalsIgnoreCase("I")){
                 f1.addVirologist(v2);
@@ -257,49 +267,23 @@ public class TestSetup {
                 storage.clear();
                 return;
             }
-            Logger.log(null,"Van olyan védőfelszerelés/ágens a virológuson ami levédi az ágenst?[I/N]",QUESTION);
-            String suite = sc.nextLine();
-            if(suite.equalsIgnoreCase("N")){
-                v.useAgent(use,v2);
-                storage.clear();
-                return;
-            }
-            else if(suite.equalsIgnoreCase("I")) {
-                Logger.log(null, "Mennyi köpeny van a virológuson? 0..3", QUESTION);
-                int capenum = sc.nextInt();
-                Logger.log(null, "Mennyi védő ágens van a virológuson?0.." + (3 - capenum), QUESTION);
-                int protectnum = sc.nextInt();
-                Logger.log(null, "Mennyi Kesztyű van a virológuson?0.." + (3 - (capenum + protectnum)), QUESTION);
-                int glovesnum = sc.nextInt();
-                if ((capenum + protectnum + glovesnum) > 3 || (capenum + protectnum + glovesnum) < 0) {
-                    System.out.println("Hibás bemenet");
-                    storage.clear();
-                    return;
-                }
-                for (int i = 0; i < capenum; i++) {
-                    Cape cape = new Cape();
-                    v2.addDefense(cape);
-                    storage.put("cape" + i, cape);
-                }
-                for (int i = 0; i < protectnum; i++) {
-                    Protect protect = new Protect();
-                    v2.addDefense(protect);
-                    storage.put("protect" + i, protect);
-                }
-                for (int i = 0; i < glovesnum; i++) {
-                    Gloves gloves = new Gloves();
-                    v2.addDefense(gloves);
-                    storage.put("gloves" + i, gloves);
-                }
-                v.useAgent(use, v2);
-            }
-            else{
+            Logger.log(null,"Van olyan védőfelszerelés/ágens a virológuson ami levédi az ágenst? (I/N):",QUESTION);
+            if (addProtectiveStuff(v2)) return;
+            Logger.log(null, "Le van bénulva a megkenni kívánt virológus? (I/N):", QUESTION);
+            String stunnedVict = sc.nextLine();
+            if(stunnedVict.equalsIgnoreCase("I")){
+                Stun s = new Stun();
+                storage.put("victStun", s);
+                v2.addModifier(s);
+                s.effect(v2);
+            } else if(!stunnedVict.equalsIgnoreCase("N")){
                 System.out.println("Hibás bemenet!");
                 storage.clear();
                 return;
             }
-
         }
+        System.out.println("--- Setup Test Environment for Virologist uses agent on other virologist DONE ---");
+        v.useAgent(use, v2);
         storage.clear();
     }
 
@@ -327,7 +311,7 @@ public class TestSetup {
 
         if(!v.isStunned()){
             Scanner sc = new Scanner(System.in);
-            Logger.log(null,"Melyik ágenst szeretnéd elkészíteni?[0:Dance, 1: Protect, 2:Forget, 3:Stun]",QUESTION);
+            Logger.log(null,"Melyik ágenst szeretnéd elkészíteni?[0=Dance, 1=Protect, 2=Forget, 3=Stun]:",QUESTION);
             int agentnum = sc.nextInt();
             if (agentnum > 3 || agentnum < 0) {
                 System.out.println("Hibás bemenet");
@@ -345,10 +329,10 @@ public class TestSetup {
                     if(hasEnough){
                         Nucleotid invN1 = new Nucleotid();
                         Aminoacid invA1 = new Aminoacid();
-                        invA1.add(v.getInventory());
-                        invN1.add(v.getInventory());
                         storage.put("invN1", invN1);
                         storage.put("invA1", invA1);
+                        invA1.add(v.getInventory());
+                        invN1.add(v.getInventory());
                     }
                     break;
                 case 1:
@@ -359,14 +343,14 @@ public class TestSetup {
                         Nucleotid invN2 = new Nucleotid();
                         Aminoacid invA1 = new Aminoacid();
                         Aminoacid invA2 = new Aminoacid();
-                        invN1.add(v.getInventory());
-                        invN2.add(v.getInventory());
-                        invA1.add(v.getInventory());
-                        invA2.add(v.getInventory());
                         storage.put("invN1", invN1);
                         storage.put("invN2", invN2);
                         storage.put("invA1", invA1);
                         storage.put("invA2", invA2);
+                        invN1.add(v.getInventory());
+                        invN2.add(v.getInventory());
+                        invA1.add(v.getInventory());
+                        invA2.add(v.getInventory());
                     }
                     break;
                 case 2:
@@ -376,12 +360,12 @@ public class TestSetup {
                         Nucleotid invN1 = new Nucleotid();
                         Nucleotid invN2 = new Nucleotid();
                         Nucleotid invN3 = new Nucleotid();
-                        invN1.add(v.getInventory());
-                        invN2.add(v.getInventory());
-                        invN3.add(v.getInventory());
                         storage.put("invN1", invN1);
                         storage.put("invN2", invN2);
                         storage.put("invN3", invN3);
+                        invN1.add(v.getInventory());
+                        invN2.add(v.getInventory());
+                        invN3.add(v.getInventory());
                     }
                     break;
                 case 3:
@@ -391,12 +375,12 @@ public class TestSetup {
                         Aminoacid invA1 = new Aminoacid();
                         Aminoacid invA2 = new Aminoacid();
                         Aminoacid invA3 = new Aminoacid();
-                        invA1.add(v.getInventory());
-                        invA2.add(v.getInventory());
-                        invA3.add(v.getInventory());
                         storage.put("invA1", invA1);
                         storage.put("invA2", invA2);
                         storage.put("invA3", invA3);
+                        invA1.add(v.getInventory());
+                        invA2.add(v.getInventory());
+                        invA3.add(v.getInventory());
                     }
                     break;
                 default:
@@ -419,19 +403,22 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansWarehouse(){
+        System.out.println("--- Setting up Test Environment for Virologist Scans Warehouse ---");
         Warehouse w = new Warehouse();
         Virologist v = new Virologist();
+        Inventory inv = new Inventory();
 
         storage.put("v", v);
         storage.put("w", w);
+        storage.put("inv", inv);
 
+        v.setInventory(inv);
         v.setField(w);
         w.addVirologist(v);
 
         stunQuestion(v);
-
+        Scanner sc = new Scanner(System.in);
         if(!v.isStunned()) {
-            Scanner sc = new Scanner(System.in);
             Logger.log(null, "Hány zsák van a virológuson? (0..3):", QUESTION);
             int bags = sc.nextInt();
             if (bags > 3 || bags < 0) {
@@ -441,6 +428,7 @@ public class TestSetup {
             }
             for (int i = 0; i < bags; i++) {
                 Bag b = new Bag();
+                storage.put("b"+i, b);
                 b.add(v.getInventory());
                 b.activate(v);
             }
@@ -458,22 +446,38 @@ public class TestSetup {
                 v.getInventory().addMaterial(placeholder);
             }
         }
+        Logger.log(null, "Vannak anyagok a raktárban? (I/N):", QUESTION);
+        sc.nextLine();
+        String emptyWarehouse = sc.nextLine();
+        if(emptyWarehouse.equalsIgnoreCase("I")){
+            Logger.log(null, "Van nukleotid a raktárban? (I/N):", QUESTION);
+            String nuc = sc.nextLine();
+            if(nuc.equalsIgnoreCase("I")){
+                Nucleotid n = new Nucleotid();
+                Nucleotid n1 = new Nucleotid();
+                storage.put("n", n);
+                storage.put("n1", n1);
+                w.addMaterials(n);
+                w.addMaterials(n1);
+            }
 
-        Nucleotid n = new Nucleotid();
-        Nucleotid n1 = new Nucleotid();
-        Aminoacid a = new Aminoacid();
-        Aminoacid a1 = new Aminoacid();
+            Logger.log(null, "Van aminosav a raktárban? (I/N):", QUESTION);
+            String amino = sc.nextLine();
+            if(amino.equalsIgnoreCase("I")) {
+                Aminoacid a = new Aminoacid();
+                Aminoacid a1 = new Aminoacid();
+                storage.put("a", a);
+                storage.put("a1", a1);
+                w.addMaterials(a);
+                w.addMaterials(a1);
+            }
+        } else if(!emptyWarehouse.equalsIgnoreCase("N")){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
 
-        storage.put("n", n);
-        storage.put("n1", n1);
-        storage.put("a", a);
-        storage.put("a1", a1);
-
-        w.addMaterials(n);
-        w.addMaterials(n1);
-        w.addMaterials(a);
-        w.addMaterials(a1);
-
+        System.out.println("--- Setup Test Environment for Virologist Scans Warehouse DONE ---");
         v.scanning();
 
         storage.clear();
@@ -488,11 +492,12 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansLabor(){
-        System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
+        System.out.println("--- Setting up Test Environment for Virologist Scans Labor ---");
         Labor l = new Labor();
         Virologist v = new Virologist();
         Gene g = new Gene();
 
+        storage.put("game", Game.getInstance());
         storage.put("v", v);
         storage.put("l", l);
         storage.put("g", g);
@@ -501,8 +506,6 @@ public class TestSetup {
         l.addVirologist(v);
         l.setGene(g);
 
-        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE ---");
-
         stunQuestion(v);
 
         if(!v.isStunned()) {
@@ -510,34 +513,15 @@ public class TestSetup {
             Logger.log(null, "Megtanulta már az itt lévő genetikai kódot a virológus? (I/N):", QUESTION);
             String learn = sc.nextLine();
             if (learn.equalsIgnoreCase("I")) {
-                storage.clear();
-                return;
-            } else if (learn.equalsIgnoreCase("N")) {
-                v.learn(g);
                 v.addLearnt(g);
-
+            } else if (learn.equalsIgnoreCase("N")) {
                 Logger.log(null, "Nyert a virológus? (I/N):", QUESTION);
                 String win = sc.nextLine();
                 if (win.equalsIgnoreCase("I")) {
-                    while ( v.getLearnt().size() != Game.getInstance().getMaxAgent() ){
-                        v.addLearnt(g);
+                    while ( v.getLearnt().size() < Game.getInstance().getMaxAgent()-1 ){
+                        v.addLearnt(new Gene());
                     }
-                    Game.getInstance().checkEndGame(v);
-                    storage.clear();
-                    return;
-                } else if (win.equalsIgnoreCase("N")) {
-                    if( v.getLearnt().size() == Game.getInstance().getMaxAgent()){
-                        v.getLearnt().remove(0);
-                    }
-                    else {
-                        while ( v.getLearnt().size() != Game.getInstance().getMaxAgent()-1 ){
-                            v.addLearnt(g);
-                        }
-                    }
-                    Game.getInstance().checkEndGame(v);
-                    storage.clear();
-                    return;
-                } else {
+                } else if (!win.equalsIgnoreCase("N")) {
                     System.out.println("Hibás bemenet!");
                     storage.clear();
                     return;
@@ -549,9 +533,8 @@ public class TestSetup {
             }
 
         }
-
+        System.out.println("--- Setup Test Environment for Virologist Scans Labor DONE ---");
         v.scanning();
-
         storage.clear();
     }
 
@@ -591,7 +574,7 @@ public class TestSetup {
                 storage.put("invC"+i, c);
                 c.add(v.getInventory());
             }
-            Logger.log(null, "Milyen felszerelés van az óvóhelyen? [0=Semmi, 1=Bag, 2=Cape, 3=Gloves]", QUESTION);
+            Logger.log(null, "Milyen felszerelés van az óvóhelyen? [0=Semmi, 1=Bag, 2=Cape, 3=Gloves]:", QUESTION);
             int suiteOnShelter = sc.nextInt();
             switch(suiteOnShelter){
                 case 0: break;
@@ -629,7 +612,7 @@ public class TestSetup {
      * A virológuson meghívjuk a steal függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistStealsMaterial(){
+    public static void virologistSteals(){
         System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
         Virologist v1 = new Virologist();
         Virologist v2 = new Virologist();
@@ -645,13 +628,13 @@ public class TestSetup {
         storage.put("f",f1);
         storage.put("f2",f2);
         storage.put("inv",inv);
-        storage.put("inv2",inv);
+        storage.put("inv2",inv2);
         f1.addVirologist(v1);
-        System.out.println("--- Setup Test Environment for VirologistStealsMaterial DONE---");
         stunQuestion(v1);
+        stunQuestion(v2);
         Scanner sc = new Scanner(System.in);
         if(!v1.isStunned()) {
-            Logger.log(null,"Mennyi zsákot visel a rabló virológus? 0..3",QUESTION);
+            Logger.log(null,"Mennyi zsákot visel a rabló virológus? (0..3):",QUESTION);
             int bags = sc.nextInt();
             for (int i = 0; i < bags; i++) {
                 Bag bag = new Bag();
@@ -659,7 +642,7 @@ public class TestSetup {
                 bag.add(v1.getInventory());
                 bag.activate(v1);
             }
-            Logger.log(null, "Mennyi hely van a virológus inventoryába? 0.."+v1.getInventory().getSize(), QUESTION);
+            Logger.log(null, "Mennyi hely van a virológus inventoryába? (0.."+v1.getInventory().getSize()+"):", QUESTION);
             int vinvcapacity = sc.nextInt();
             if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
                 System.out.println("Hibás bemenet");
@@ -669,9 +652,10 @@ public class TestSetup {
 
             for (int i = 0; i < v1.getInventory().getSize() - vinvcapacity; i++) {
                 Nucleotid placeholder = new Nucleotid();
-                v1.getInventory().addMaterial(placeholder);
+                storage.put("placeholder"+i, placeholder);
+                placeholder.add(v1.getInventory());
             }
-            Logger.log(null, "Ugyanazon a mezőn van, akitől lopni akarsz? (I/N)", QUESTION);
+            Logger.log(null, "Ugyanazon a mezőn van, akitől lopni akarsz? (I/N):", QUESTION);
             sc.nextLine();
             String samefield = sc.nextLine();
             if (samefield.equalsIgnoreCase("I")) {
@@ -685,7 +669,7 @@ public class TestSetup {
                 storage.clear();
                 return;
             }
-            Logger.log(null,"Mennyi zsákot visel a kirabolni kívánt virológusnál?0..3",QUESTION);
+            Logger.log(null,"Mennyi zsákot visel a kirabolni kívánt virológusnál? (0..3):",QUESTION);
             int bagnum = sc.nextInt();
             for (int i = 0; i < bagnum; i++) {
                 Bag bag = new Bag();
@@ -694,120 +678,45 @@ public class TestSetup {
                 bag.activate(v2);
             }
 
-            Logger.log(null, "Mennyi nukleotid legyen a kirabolni kívánt virológusnál?0.." + v2.getInventory().getSize(), QUESTION);
+            Logger.log(null, "Mennyi nukleotid legyen a kirabolni kívánt virológusnál? (0.." + v2.getInventory().getSize()+"):", QUESTION);
             int nukleotidnum = sc.nextInt();
             for (int i = 0; i < nukleotidnum; i++) {
                 Nucleotid nucleotid = new Nucleotid();
-                nucleotid.add(v2.getInventory());
                 storage.put("nuc" + i, nucleotid);
+                nucleotid.add(v2.getInventory());
             }
-            Logger.log(null, "Mennyi aminosav legyen a kirabolni kívánt virológusnál?0.." + (v2.getInventory().getSize()-v2.getInventory().getUsedSize()), QUESTION);
+            Logger.log(null, "Mennyi aminosav legyen a kirabolni kívánt virológusnál? (0.." + (v2.getInventory().getSize()-v2.getInventory().getUsedSize())+"):", QUESTION);
             int aminoacidnum = sc.nextInt();
             for (int i = 0; i < aminoacidnum; i++) {
                 Aminoacid aminoacid = new Aminoacid();
-                aminoacid.add(v2.getInventory());
                 storage.put("amino" + i, aminoacid);
+                aminoacid.add(v2.getInventory());
             }
-        }
-        v1.steal(v2);
-        storage.clear();
-    }
-
-    /**
-     * Virologist Steals Suite init
-     * A virológus ellop egy felszerelést.
-     * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
-     * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A virológuson meghívjuk a steal függvényt.
-     * A létrehozott objektumokat kivesszük a HashMapből.
-     */
-    public static void virologistStealsSuite(){
-        System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
-        Virologist v1 = new Virologist();
-        Virologist v2 = new Virologist();
-        Field f1 = new Field();
-        Field f2 = new Field();
-        Inventory inv = new Inventory();
-        Inventory inv2 = new Inventory();
-        v1.setInventory(inv);
-        v2.setInventory(inv2);
-        v1.setField(f1);
-        storage.put("v",v1);
-        storage.put("v2",v2);
-        storage.put("f",f1);
-        storage.put("f2",f2);
-        storage.put("inv",inv);
-        storage.put("inv2",inv);
-        f1.addVirologist(v1);
-        System.out.println("--- Setup Test Environment for VirologistStealsMaterial DONE---");
-        stunQuestion(v1);
-        Scanner sc = new Scanner(System.in);
-        if(!v1.isStunned()) {
-            Logger.log(null, "Mennyi zsákot visel a rabló virológus? 0..3", QUESTION);
-            int bags = sc.nextInt();
-            for (int i = 0; i < bags; i++) {
-                Bag bag = new Bag();
-                storage.put("bag" + i, bag);
-                bag.add(v1.getInventory());
-                bag.activate(v1);
-            }
-            Logger.log(null, "Mennyi hely van a virológus inventoryába? 0.." + v1.getInventory().getSize(), QUESTION);
-            int vinvcapacity = sc.nextInt();
-            if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
-                System.out.println("Hibás bemenet");
-                storage.clear();
-                return;
-            }
-
-            for (int i = 0; i < v1.getInventory().getSize() - vinvcapacity; i++) {
-                Nucleotid placeholder = new Nucleotid();
-                v1.getInventory().addMaterial(placeholder);
-            }
-            Logger.log(null, "Ugyanazon a mezőn van, akitől lopni akarsz? (I/N)", QUESTION);
-            sc.nextLine();
-            String samefield = sc.nextLine();
-            if (samefield.equalsIgnoreCase("I")) {
-                f1.addVirologist(v2);
-                v2.setField(f1);
-            } else if (samefield.equalsIgnoreCase("N")) {
-                f2.addVirologist(v2);
-                v2.setField(f2);
-            } else {
-                System.out.println("Hibás bemenet!");
-                storage.clear();
-                return;
-            }
-            Logger.log(null, "Mennyi zsákot visel a kirabolni kívánt virológusnál?0..3", QUESTION);
-            int bagnum = sc.nextInt();
-            for (int i = 0; i < bagnum; i++) {
-                Bag bag = new Bag();
-                storage.put("bag" + i, bag);
-                bag.add(v2.getInventory());
-                bag.activate(v2);
-            }
-            Logger.log(null,"Mennyi köpeny van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            Logger.log(null,"Mennyi köpeny van a virológusnál? (0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize())+"):",QUESTION);
             int capenum = sc.nextInt();
             for (int i = 0; i < capenum; i++) {
                 Cape cape = new Cape();
                 storage.put("cape"+i,cape);
                 cape.add(v2.getInventory());
             }
-            Logger.log(null,"Mennyi kesztyű van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            Logger.log(null,"Mennyi kesztyű van a virológusnál? (0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize())+"):",QUESTION);
             int glovesnum = sc.nextInt();
             for (int i = 0; i < glovesnum; i++) {
                 Gloves gloves = new Gloves();
                 storage.put("gloves"+i,gloves);
                 gloves.add(v2.getInventory());
             }
-            Logger.log(null,"Mennyi zsák van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            Logger.log(null,"Mennyi zsák van a virológusnál? (0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize())+"):",QUESTION);
             int bagsnum = sc.nextInt();
             for (int i = 0; i < bagsnum; i++) {
                 Bag bag = new Bag();
                 storage.put("bag"+i,bag);
                 bag.add(v2.getInventory());
             }
-            v1.steal(v2);
         }
+        System.out.println("--- Setup Test Environment for VirologistStealsMaterial DONE ---");
+        v1.steal(v2);
+        storage.clear();
     }
 
     /**
@@ -1104,7 +1013,14 @@ public class TestSetup {
         Field f2 = new Field();
         Field f3 = new Field();
         Virologist v = new Virologist();
-        SpecialModifier d = new Dance();
+        Dance d = new Dance();
+        d.setTimeLeft(3);
+
+        storage.put("f1",f1);
+        storage.put("f2",f2);
+        storage.put("f3",f3);
+        storage.put("v",v);
+        storage.put("d",d);
 
         v.setField(f1);
         f1.addVirologist(v);
@@ -1113,12 +1029,6 @@ public class TestSetup {
         f1.addNeighbour(f3);
         f3.addNeighbour(f1);
         v.addModifier(d);
-
-        storage.put("f1",f1);
-        storage.put("f2",f2);
-        storage.put("f3",f3);
-        storage.put("v",v);
-        storage.put("d",d);
 
         stunQuestion(v);
         System.out.println("--- Setup Test Environment for Virologist dances DONE ---");
@@ -1137,10 +1047,11 @@ public class TestSetup {
     public static void virologistForgets(){
         System.out.println("--- Setting up Test Environment for Virologist forgets ---");
         Virologist v = new Virologist();
-        SpecialModifier f = new Forget();
+        Forget f = new Forget();
         Gene g = new Gene();
 
         v.addLearnt(g);
+        f.setTimeLeft(1);
         v.addModifier(f);
         storage.put("v",v);
         storage.put("f",f);

@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+
+import java.util.Random;
+
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -32,9 +35,46 @@ public class Bag extends Suite {
 	 */
 	public void deactivate(Virologist v) {
 		Logger.log(this, "deactivate", CALL, v);
+		clearInventoryFromBag(v.getInventory());
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize - size);
 		setActive(false);
+		Logger.log(this, "", RETURN);
+	}
+
+	/**
+	 * Eltávolítja a zsákban lévő dolgokat {@code inv}-ből
+	 * @param inv a tárhely, amiből ki kell venni a plusz dolgokat
+	 */
+	private void clearInventoryFromBag(Inventory inv) {
+		if(active && inv.getUsedSize()>10){
+			for(int i = 0; i < size-1; i++){
+				Random r = new Random();
+				if(inv.getMaterials().isEmpty()){
+					inv.getSuites().remove(r.nextInt(inv.getSuites().size()));
+				} else if(inv.getSuites().isEmpty()){
+					inv.getMaterials().remove(r.nextInt(inv.getMaterials().size()));
+				} else {
+					int choice = r.nextInt(2);
+					if(choice == 0){
+						inv.getSuites().remove(r.nextInt(inv.getSuites().size()));
+					} else {
+						inv.getMaterials().remove(r.nextInt(inv.getMaterials().size()));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Eltávolítják a zsákot az inventoryból, így elvesznek a benne levő dolgok
+	 * @param inv az {@link Inventory}, aminek a suites listájából elveszi a felszerelést.
+	 */
+	@Override
+	public void remove(Inventory inv){
+		Logger.log(this, "remove", CALL, inv);
+		clearInventoryFromBag(inv);
+		inv.removeSuite(this);
 		Logger.log(this, "", RETURN);
 	}
 
