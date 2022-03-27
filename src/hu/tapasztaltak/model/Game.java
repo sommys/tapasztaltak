@@ -5,6 +5,7 @@ import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -45,8 +46,51 @@ public class Game {
     /**
      * Elindítja a játékot, létrehozza a pályát és a további szereplőket.
      */
-    public void startGame() {
-        // Todo: Peti majd elesben?
+    public void startGame(int fieldNum, int laborNum, int warehouseNum, int shelterNum, int virologistNum) {
+        RoundManager rm = RoundManager.getInstance();
+        for(int i = 1; i <= fieldNum; i++){
+            Field f = new Field();
+            TestSetup.addObject(f, "f"+i);
+            Logger.log(f, "<<create>>", CALL);
+            Logger.log(f, "", RETURN);
+            fields.add(f);
+            rm.addSteppable(f);
+        }
+        for(int i = 1; i <= laborNum; i++){
+            Labor l= new Labor();
+            TestSetup.addObject(l, "l"+i);
+            Logger.log(l, "<<create>>", CALL);
+            Logger.log(l, "", RETURN);
+            fields.add(l);
+            rm.addSteppable(l);
+        }
+        for(int i = 1; i <= warehouseNum; i++){
+            Warehouse w = new Warehouse();
+            TestSetup.addObject(w,"w"+i);
+            Logger.log(w, "<<create>>", CALL);
+            Logger.log(w, "", RETURN);
+            fields.add(w);
+            rm.addSteppable(w);
+        }
+        for(int i = 1; i <= shelterNum; i++){
+            Shelter s = new Shelter();
+            TestSetup.addObject(s,"s"+i);
+            Logger.log(s, "<<create>>", CALL);
+            Logger.log(s, "", RETURN);
+            fields.add(s);
+            rm.addSteppable(s);
+        }
+        for(int i = 1; i <= virologistNum; i++){
+            Virologist v = new Virologist();
+            TestSetup.addObject(v,"v"+i);
+            Logger.log(v, "<<create>>", CALL);
+            Logger.log(v, "", RETURN);
+            rm.addSteppable(v);
+            rm.addVirologist(v);
+            Random r = new Random();
+            v.setField(fields.get(r.nextInt(fields.size())));
+        }
+        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -91,14 +135,14 @@ public class Game {
      *
      * @param field a hozzáadandó {@link Field}
      */
-    public void addFields(Field field) { fields.add(field); }
+    public void addField(Field field) { fields.add(field); }
 
     /**
      * Törli {@code field}-et a játék mezőinek listájából.
      *
      * @param field a törlendő {@link Field}
      */
-    public void removeFields(Field field) { fields.remove(field); }
+    public void removeField(Field field) { fields.remove(field); }
 
     //endregion
 }

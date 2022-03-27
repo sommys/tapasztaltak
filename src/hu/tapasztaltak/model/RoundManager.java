@@ -108,14 +108,14 @@ public class RoundManager {
      *
      * @param steppable a hozzáadandó {@link ISteppable} példány.
      */
-    public void addSteppables(ISteppable steppable) { steppables.add(steppable); }
+    public void addSteppable(ISteppable steppable) { steppables.add(steppable); }
 
     /**
      * Törli {@code steppable}-t a léptethető példányok listájából.
      *
      * @param steppable a törlendő {@link ISteppable} példány.
      */
-    public void removeSteppables(ISteppable steppable) { steppables.remove(steppable); }
+    public void removeSteppable(ISteppable steppable) { steppables.remove(steppable); }
 
     /**
      * Visszaadja a játékban résztvevő virológusok listáját.
@@ -136,14 +136,14 @@ public class RoundManager {
      *
      * @param virologist a hozzáadandó {@link Virologist}
      */
-    public void addVirologists(Virologist virologist) { virologists.add(virologist); }
+    public void addVirologist(Virologist virologist) { virologists.add(virologist); }
 
     /**
      * Törli {@code virologist}-ot a virológusok listájából.
      *
      * @param virologist a törlendő {@link Virologist}
      */
-    public void removeVirologists(Virologist virologist) { virologists.remove(virologist); }
+    public void removeVirologist(Virologist virologist) { virologists.remove(virologist); }
 
     //endregion
 }

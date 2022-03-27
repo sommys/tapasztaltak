@@ -27,13 +27,17 @@ public class Shelter extends Field {
      */
     public void getItem(Virologist v) {
         Logger.log(this, "getItem", CALL, v);
+        if(suite == null){
+            Logger.log(this, "", RETURN);
+            return;
+        }
         List<IStealable> chosen = v.chooseItem(List.of(suite));
         if(!chosen.isEmpty() && refreshCounter == -1){
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
         }
         for(IStealable s : chosen){
-            v.getInventory().addSuite((Suite)s);
+            s.add(v.getInventory());
         }
         Logger.log(this, "", RETURN);
     }

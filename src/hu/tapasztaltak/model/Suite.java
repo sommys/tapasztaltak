@@ -32,7 +32,9 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájához adja a felszerelést.
 	 */
 	public void add(Inventory inv) {
+		Logger.log(this, "add", CALL, inv);
 		inv.getSuites().add(this);
+		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -40,7 +42,9 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájából elveszi a felszerelést.
 	 */
 	public void remove(Inventory inv) {
+		Logger.log(this, "remove", CALL, inv);
 		inv.getSuites().remove(this);
+		Logger.log(this, "", RETURN);
 	}
 
 	//region GETTEREK ÉS SETTEREK

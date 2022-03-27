@@ -4,8 +4,7 @@ import hu.tapasztaltak.model.*;
 
 import java.util.*;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
-import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 public class TestSetup {
     /**
@@ -557,6 +556,72 @@ public class TestSetup {
     }
 
     /**
+     * Virologist Scans Shelter init
+     * A virológus letapogatja az óvóhelyet, esetleg felveszi az ott található felszerelést (ha van)
+     * Létre kell hozni 1 óvóhelyet, 1 virológust, opcionálisan 1 felszerelést az óvóhelyre.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistScansShelter(){
+        System.out.println("--- Setting up Test Environment for Virologist scans shelter ---");
+        Shelter s = new Shelter();
+        Virologist v = new Virologist();
+        Inventory inv = new Inventory();
+
+        storage.put("v", v);
+        storage.put("s", s);
+        storage.put("inv", inv);
+
+        v.setInventory(inv);
+        v.setField(s);
+        s.addVirologist(v);
+
+        stunQuestion(v);
+        if(!v.isStunned()){
+            Logger.log(null, "Mennyi hely van még a virológusnál? (0..10):", QUESTION);
+            Scanner sc = new Scanner(System.in);
+            int remaining = sc.nextInt();
+            if(remaining<0 || remaining>10){
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
+            for(int i = 0; i < 10-remaining; i++){
+                Cape c = new Cape();
+                storage.put("invC"+i, c);
+                c.add(v.getInventory());
+            }
+            Logger.log(null, "Milyen felszerelés van az óvóhelyen? [0=Semmi, 1=Bag, 2=Cape, 3=Gloves]", QUESTION);
+            int suiteOnShelter = sc.nextInt();
+            switch(suiteOnShelter){
+                case 0: break;
+                case 1:
+                    Bag b = new Bag();
+                    storage.put("b", b);
+                    s.setSuite(b);
+                    break;
+                case 2:
+                    Cape c = new Cape();
+                    storage.put("c", c);
+                    s.setSuite(c);
+                    break;
+                case 3:
+                    Gloves g = new Gloves();
+                    storage.put("g", g);
+                    s.setSuite(g);
+                    break;
+                default:
+                    System.out.println("Hibás bemenet!");
+                    storage.clear();
+                    return;
+            }
+        }
+        System.out.println("--- Setup Test Environment for Virologist scans shelter DONE ---");
+        v.scanning();
+        storage.clear();
+    }
+
+    /**
      * Virologist Steals Material init
      * A virológus ellop egy anyagot.
      * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
@@ -656,7 +721,7 @@ public class TestSetup {
      * A virológus meghívja a lopás függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistStelsSuite(){
+    public static void virologistStealsSuite(){
         System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
         Virologist v1 = new Virologist();
         Virologist v2 = new Virologist();
@@ -852,6 +917,53 @@ public class TestSetup {
         storage.clear();
     }
 
+    public static void playerStartsGame(){
+        System.out.println("--- Setting up Test Environment for Player starts game ---");
+        Game g = Game.getInstance();
+        storage.put("g", g);
+        RoundManager rm = RoundManager.getInstance();
+        storage.put("rm", rm);
+        Scanner sc = new Scanner(System.in);
+        Logger.log(null, "Mennyi üres mező legyen? (1...*):", QUESTION);
+        int fieldNum = sc.nextInt();
+        if(fieldNum<1){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Logger.log(null, "Mennyi labor legyen? (1...*):", QUESTION);
+        int laborNum = sc.nextInt();
+        if(laborNum<1){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Logger.log(null, "Mennyi raktár legyen? (1...*):", QUESTION);
+        int warehouseNum = sc.nextInt();
+        if(warehouseNum<1){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Logger.log(null, "Mennyi óvóhely legyen? (1...*):", QUESTION);
+        int shelterNum = sc.nextInt();
+        if(shelterNum<1){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Logger.log(null, "Mennyi virológus legyen? (1...*):", QUESTION);
+        int virologistNum = sc.nextInt();
+        if(virologistNum<1){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        System.out.println("--- Setup Test Environment for Player starts game DONE ---");
+        g.startGame(fieldNum, laborNum, warehouseNum, shelterNum, virologistNum);
+        storage.clear();
+    }
+
     /**
      * Virologist put on bag init.
      * A virológus felveszi az inventory-jában található bag-et.
@@ -1038,7 +1150,7 @@ public class TestSetup {
         RoundManager rm = RoundManager.getInstance();
 
         v.addModifier(s);
-        rm.addVirologists(v);
+        rm.addVirologist(v);
         storage.put("v",v);
         storage.put("s",s);
         storage.put("rm",rm);
@@ -1063,9 +1175,9 @@ public class TestSetup {
         Virologist v2 = new Virologist();
         RoundManager rm = RoundManager.getInstance();
 
-        rm.addVirologists(v);
-        rm.addVirologists(v1);
-        rm.addVirologists(v2);
+        rm.addVirologist(v);
+        rm.addVirologist(v1);
+        rm.addVirologist(v2);
 
         Scanner sc = new Scanner(System.in);
         Logger.log(null,"Ő volt az utolsó virológus a körben? [I/N]",QUESTION);

@@ -3,19 +3,16 @@ package hu.tapasztaltak.skeleton;
 import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.RoundManager;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
 import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
-import static hu.tapasztaltak.skeleton.TestSetup.virologistScansWarehouse;
 
 //todo: CSIMMA
 public class SkeletonMenu {
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
         help();
-        boolean started = false;
         String input = "";
         do{
             Logger.log(null,"Válasszon menüpontot:", QUESTION);
@@ -40,12 +37,13 @@ public class SkeletonMenu {
                     TestSetup.virologistScansLabor();
                     break;
                 case "7":
+                    TestSetup.virologistScansShelter();
                     break;
                 case "8":
                     TestSetup.virologistStealsMaterial();
                     break;
                 case "9":
-                    TestSetup.virologistStelsSuite();
+                    TestSetup.virologistStealsSuite();
                     break;
                 case "10":
                     TestSetup.virologistSwitchesSuite();
@@ -57,14 +55,7 @@ public class SkeletonMenu {
                     TestSetup.warehouseRefresh();
                     break;
                 case "13":
-                    if(!started){
-                        RoundManager rm = RoundManager.getInstance();
-                        Game game = Game.getInstance();
-                        started = true;
-                    }
-                    else{
-                        Logger.log(null, "A program már fut!", COMMENT);
-                    }
+                    TestSetup.playerStartsGame();
                     break;
                 case "14":
                     TestSetup.virologistDances();
@@ -91,14 +82,13 @@ public class SkeletonMenu {
                     help();
                     break;
                 case "endtest":
-                    Logger.log(null,"Teszt vége!", COMMENT);
+                    Logger.log(null,"Köszi hogy letesztelted! :) @ tapasztaltak", COMMENT);
                     break;
                 default:
-                    Logger.log(null,"A 'help' paranccsal kaphat leírást a program működéséről.", COMMENT);
+                    Logger.log(null,"A 'help' paranccsal kaphat leírást a program működéséről.\nAz 'endtest' paranccsal léphet ki a tesztből.", COMMENT);
                     break;
             }
         } while (!input.equals("endtest"));
-        System.out.println("Bye-Bye");
     }
 
     /**
@@ -108,7 +98,7 @@ public class SkeletonMenu {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch(Exception ignored){}
-        Logger.log(null,"A szám beírásával tudsz menüpontot választani!", COMMENT);
+        Logger.log(null,"A szám beírásával tud menüpontot választani, az 'endtest' paranccsal pedig kilépni a programból!", COMMENT);
         Logger.log(null,"1: Virologist moves", COMMENT);
         Logger.log(null,"2: Virologist uses agent on themself", COMMENT);
         Logger.log(null,"3: Virologist uses agent on other virologist", COMMENT);
