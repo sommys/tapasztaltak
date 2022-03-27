@@ -209,7 +209,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void steal(Virologist from) {
 		Logger.log(this, "steal", CALL, from);
-		if(stunned){
+		if(stunned || !canReach(from)){
 			Logger.log(this, "", RETURN);
 			return;
 		}

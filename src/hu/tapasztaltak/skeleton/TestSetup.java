@@ -343,6 +343,7 @@ public class TestSetup {
             switch (agentnum){
                 case 0:
                     a = new Dance();
+                    storage.put("dance", a);
                     if(hasEnough){
                         Nucleotid invN1 = new Nucleotid();
                         Aminoacid invA1 = new Aminoacid();
@@ -354,6 +355,7 @@ public class TestSetup {
                     break;
                 case 1:
                     a = new Protect();
+                    storage.put("protect", a);
                     if(hasEnough){
                         Nucleotid invN1 = new Nucleotid();
                         Nucleotid invN2 = new Nucleotid();
@@ -371,6 +373,7 @@ public class TestSetup {
                     break;
                 case 2:
                     a = new Forget();
+                    storage.put("forget", a);
                     if(hasEnough){
                         Nucleotid invN1 = new Nucleotid();
                         Nucleotid invN2 = new Nucleotid();
@@ -385,6 +388,7 @@ public class TestSetup {
                     break;
                 case 3:
                     a = new Stun();
+                    storage.put("stun", a);
                     if(hasEnough){
                         Aminoacid invA1 = new Aminoacid();
                         Aminoacid invA2 = new Aminoacid();
@@ -401,7 +405,7 @@ public class TestSetup {
                     break;
             }
         }
-
+        g.setAgent(a);
         System.out.println("--- Setup Test Environment for virologistMakesAgent DONE ---");
         v.makeAgent(g);
 
