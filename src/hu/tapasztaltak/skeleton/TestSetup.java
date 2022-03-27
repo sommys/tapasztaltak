@@ -2,9 +2,7 @@ package hu.tapasztaltak.skeleton;
 
 import hu.tapasztaltak.model.*;
 
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.COMMENT;
 import static hu.tapasztaltak.skeleton.Logger.LogType.QUESTION;
@@ -438,6 +436,7 @@ public class TestSetup {
             int bags = sc.nextInt();
             if (bags > 3 || bags < 0) {
                 System.out.println("Hibás bemenet");
+                storage.clear();
                 return;
             }
             for (int i = 0; i < bags; i++) {
@@ -450,6 +449,7 @@ public class TestSetup {
             int remaining = sc.nextInt();
             if (remaining < 0 || remaining > v.getInventory().getSize()) {
                 System.out.println("Hibás bemenet");
+                storage.clear();
                 return;
             }
 
@@ -476,8 +476,7 @@ public class TestSetup {
 
         v.scanning();
 
-        storage.remove("v", v);
-        storage.remove("w", w);
+        storage.clear();
     }
 
     /**
@@ -605,6 +604,69 @@ public class TestSetup {
      */
 
     /**
+     * Virologist switches suite init.
+     * A virológus lecseréli a kiválasztott felszerelést egy másik kiválasztottra.
+     * Létre kell hozni 1 bag-et, 1 cape-t, 1 gloves-t, 1 inventory-t és 1 virológust.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológuson meghívjuk a switchSuite függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistSwitchesSuite(){
+        System.out.println("--- Setting up Test Environment for Virologist switches suite ---");
+        Virologist v = new Virologist();
+        storage.put("v", v);
+        Inventory inv = new Inventory();
+        storage.put("inv", inv);
+        stunQuestion(v);
+        Bag b = new Bag();
+        storage.put("b", b);
+        Cape c = new Cape();
+        storage.put("c", c);
+        Gloves g = new Gloves();
+        storage.put("g", g);
+        List<Suite> suites = new ArrayList<>();
+        suites.add(b);
+        suites.add(c);
+        suites.add(g);
+        StringBuilder availableSuites = new StringBuilder("[");
+        int i = 1;
+        for(Suite s : suites){
+            availableSuites.append(String.format("%d=%s, ", i++, s.getClass().getSimpleName()));
+        }
+        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "] ");
+        Logger.log(null,"Melyik felszerelést szeretnéd lecserélni? "+availableSuites, QUESTION);
+        Scanner sc = new Scanner(System.in);
+        int fromSuite = sc.nextInt();
+        if(fromSuite<1 || fromSuite>3){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Suite from = suites.remove(fromSuite-1);
+        i = 1;
+
+        availableSuites = new StringBuilder("[");
+        for(Suite s : suites){
+            availableSuites.append(String.format("%d=%s, ", i++, s.getClass().getSimpleName()));
+        }
+        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "] ");
+
+        Logger.log(null,"Melyik felszerelésre szeretnéd lecserélni? "+availableSuites, QUESTION);
+        int toSuite = sc.nextInt();
+        if(toSuite<1 || toSuite>2){
+            System.out.println("Hibás bemenet!");
+            storage.clear();
+            return;
+        }
+        Suite to = suites.remove(toSuite-1);
+        from.add(v.getInventory());
+        to.add(v.getInventory());
+        System.out.println("--- Setup Test Environment for Virologist switches suite DONE ---");
+        v.switchSuite(from, to);
+        storage.clear();
+    }
+
+    /**
      * Virologist put on bag init.
      * A virológus felveszi az inventory-jában található bag-et.
      * Létre kell hozni 1 bag-et, egy inventory-t és 1 virológust.
@@ -636,7 +698,7 @@ public class TestSetup {
             inv.addSuite(c);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on bag DONE---");
+        System.out.println("--- Setup Test Environment for Virologist put on bag DONE ---");
         v.putOnSuite(b);
         storage.clear();
     }
@@ -673,7 +735,7 @@ public class TestSetup {
             inv.addSuite(cape);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on cape DONE---");
+        System.out.println("--- Setup Test Environment for Virologist put on cape DONE ---");
         v.putOnSuite(c);
         storage.clear();
     }
@@ -710,7 +772,7 @@ public class TestSetup {
             inv.addSuite(c);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on gloves DONE---");
+        System.out.println("--- Setup Test Environment for Virologist put on gloves DONE ---");
         v.putOnSuite(g);
         storage.clear();
     }
@@ -746,7 +808,7 @@ public class TestSetup {
         storage.put("d",d);
 
         stunQuestion(v);
-        System.out.println("--- Setup Test Environment for Virologist dances DONE---");
+        System.out.println("--- Setup Test Environment for Virologist dances DONE ---");
         v.step();
         storage.clear();
     }
@@ -770,7 +832,7 @@ public class TestSetup {
         storage.put("v",v);
         storage.put("f",f);
         storage.put("g",g);
-        System.out.println("--- Setup Test Environment for Virologist forgets DONE---");
+        System.out.println("--- Setup Test Environment for Virologist forgets DONE ---");
         v.step();
         storage.clear();
     }
