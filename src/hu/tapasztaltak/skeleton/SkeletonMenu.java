@@ -12,7 +12,7 @@ public class SkeletonMenu {
      * Az alkalmazást futtató metódus
      * @param args parancssori argumentumok
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         help();
         String input = "";
