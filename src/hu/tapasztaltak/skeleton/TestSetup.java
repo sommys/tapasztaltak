@@ -558,8 +558,8 @@ public class TestSetup {
      * Virologist Steals Material init
      *
      */
-    public static void VirologistStealsMaterial(){
-        System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
+    public static void virologistStealsMaterial(){
+        System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
         Virologist v1 = new Virologist();
         Virologist v2 = new Virologist();
         Field f1 = new Field();
@@ -576,7 +576,7 @@ public class TestSetup {
         storage.put("inv",inv);
         storage.put("inv2",inv);
         f1.addVirologist(v1);
-        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE---");
+        System.out.println("--- Setup Test Environment for VirologistStealsMaterial DONE---");
         stunQuestion(v1);
         Scanner sc = new Scanner(System.in);
         if(!v1.isStunned()) {
@@ -640,6 +640,94 @@ public class TestSetup {
         }
         v1.steal(v2);
         storage.clear();
+    }
+    public static void virologistStelsSuite(){
+        System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
+        Virologist v1 = new Virologist();
+        Virologist v2 = new Virologist();
+        Field f1 = new Field();
+        Field f2 = new Field();
+        Inventory inv = new Inventory();
+        Inventory inv2 = new Inventory();
+        v1.setInventory(inv);
+        v2.setInventory(inv2);
+        v1.setField(f1);
+        storage.put("v",v1);
+        storage.put("v2",v2);
+        storage.put("f",f1);
+        storage.put("f2",f2);
+        storage.put("inv",inv);
+        storage.put("inv2",inv);
+        f1.addVirologist(v1);
+        System.out.println("--- Setup Test Environment for VirologistStealsMaterial DONE---");
+        stunQuestion(v1);
+        Scanner sc = new Scanner(System.in);
+        if(!v1.isStunned()) {
+            Logger.log(null, "Mennyi zsákot visel a rabló virológus? 0..3", QUESTION);
+            int bags = sc.nextInt();
+            for (int i = 0; i < bags; i++) {
+                Bag bag = new Bag();
+                storage.put("bag" + i, bag);
+                bag.add(v1.getInventory());
+                bag.activate(v1);
+            }
+            Logger.log(null, "Mennyi hely van a virológus inventoryába? 0.." + v1.getInventory().getSize(), QUESTION);
+            int vinvcapacity = sc.nextInt();
+            if (vinvcapacity < 0 || vinvcapacity > v1.getInventory().getSize()) {
+                System.out.println("Hibás bemenet");
+                storage.clear();
+                return;
+            }
+
+            for (int i = 0; i < v1.getInventory().getSize() - vinvcapacity; i++) {
+                Nucleotid placeholder = new Nucleotid();
+                v1.getInventory().addMaterial(placeholder);
+            }
+            Logger.log(null, "Ugyanazon a mezőn van, akitől lopni akarsz? (I/N)", QUESTION);
+            sc.nextLine();
+            String samefield = sc.nextLine();
+            if (samefield.equalsIgnoreCase("I")) {
+                f1.addVirologist(v2);
+                v2.setField(f1);
+            } else if (samefield.equalsIgnoreCase("N")) {
+                f2.addVirologist(v2);
+                v2.setField(f2);
+            } else {
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
+            Logger.log(null, "Mennyi zsákot visel a kirabolni kívánt virológusnál?0..3", QUESTION);
+            int bagnum = sc.nextInt();
+            for (int i = 0; i < bagnum; i++) {
+                Bag bag = new Bag();
+                storage.put("bag" + i, bag);
+                bag.add(v2.getInventory());
+                bag.activate(v2);
+            }
+            Logger.log(null,"Mennyi köpeny van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            int capenum = sc.nextInt();
+            for (int i = 0; i < capenum; i++) {
+                Cape cape = new Cape();
+                storage.put("cape"+i,cape);
+                cape.add(v2.getInventory());
+            }
+            Logger.log(null,"Mennyi kesztyű van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            int glovesnum = sc.nextInt();
+            for (int i = 0; i < glovesnum; i++) {
+                Gloves gloves = new Gloves();
+                storage.put("gloves"+i,gloves);
+                gloves.add(v2.getInventory());
+            }
+            Logger.log(null,"Mennyi zsák van a virológusnál?0.."+(v2.getInventory().getSize()-v2.getInventory().getUsedSize()),QUESTION);
+            int bagss = sc.nextInt();
+            for (int i = 0; i < capenum; i++) {
+                Bag bag = new Bag();
+                storage.put("bag"+i,bag);
+                bag.add(v2.getInventory());
+            }
+            v1.steal(v2);
+        }
     }
     /**
      *

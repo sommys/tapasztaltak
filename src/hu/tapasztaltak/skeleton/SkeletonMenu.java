@@ -41,9 +41,10 @@ public class SkeletonMenu {
                 case "7":
                     break;
                 case "8":
-                    TestSetup.VirologistStealsMaterial();
+                    TestSetup.virologistStealsMaterial();
                     break;
                 case "9":
+                    TestSetup.virologistStelsSuite();
                     break;
                 case "10":
                     TestSetup.virologistSwitchesSuite();
