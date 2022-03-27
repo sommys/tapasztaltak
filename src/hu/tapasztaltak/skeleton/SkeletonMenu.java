@@ -37,6 +37,7 @@ public class SkeletonMenu {
                     TestSetup.virologistScansWarehouse();
                     break;
                 case "6":
+                    TestSetup.virologistScansLabor();
                     break;
                 case "7":
                     break;

@@ -489,24 +489,26 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansLabor(){
+        System.out.println("--- Setting up Test Environment for useAgentOnOtherVirologist ---");
         Labor l = new Labor();
         Virologist v = new Virologist();
         Gene g = new Gene();
-
-        v.setField(l);
-        l.addVirologist(v);
-        l.setGene(g);
 
         storage.put("v", v);
         storage.put("l", l);
         storage.put("g", g);
 
+        v.setField(l);
+        l.addVirologist(v);
+        l.setGene(g);
+
+        System.out.println("--- Setup Test Environment for useAgentOnOtherVirologist DONE ---");
+
         stunQuestion(v);
 
         if(!v.isStunned()) {
             Scanner sc = new Scanner(System.in);
-            Logger.log(null, "Megtanulta már az itt lévő genetikai kódot a virológus? (I/N)", QUESTION);
-            sc.nextLine();
+            Logger.log(null, "Megtanulta már az itt lévő genetikai kódot a virológus? (I/N):", QUESTION);
             String learn = sc.nextLine();
             if (learn.equalsIgnoreCase("I")) {
                 storage.clear();
@@ -515,8 +517,7 @@ public class TestSetup {
                 v.learn(g);
                 v.addLearnt(g);
 
-                Logger.log(null, "Nyert a virológus? (I/N)", QUESTION);
-                sc.nextLine();
+                Logger.log(null, "Nyert a virológus? (I/N):", QUESTION);
                 String win = sc.nextLine();
                 if (win.equalsIgnoreCase("I")) {
                     while ( v.getLearnt().size() != Game.getInstance().getMaxAgent() ){
@@ -542,12 +543,12 @@ public class TestSetup {
                     storage.clear();
                     return;
                 }
-
             } else {
                 System.out.println("Hibás bemenet!");
                 storage.clear();
                 return;
             }
+
         }
 
         v.scanning();
