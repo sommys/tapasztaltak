@@ -485,7 +485,7 @@ public class TestSetup {
      * A virológus letapogatja a labort
      * Létre kell hozni 1 labort, 1 virológust, 1 játékot és egy genetikai kódot.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     * A
+     * A virológus meghívja a tapogat függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansLabor(){
@@ -558,7 +558,11 @@ public class TestSetup {
 
     /**
      * Virologist Steals Material init
-     *
+     * A virológus ellop egy anyagot.
+     * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a lopás függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistStealsMaterial(){
         System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
@@ -643,6 +647,15 @@ public class TestSetup {
         v1.steal(v2);
         storage.clear();
     }
+
+    /**
+     * Virologist Steals Suite init
+     * A virológus ellop egy felszerelést.
+     * Létre kell hozni 2 virológust, 2 mezőt és 2 inventoryt.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a lopás függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
     public static void virologistStelsSuite(){
         System.out.println("--- Setting up Test Environment for VirologistStealsMaterial ---");
         Virologist v1 = new Virologist();
@@ -731,14 +744,6 @@ public class TestSetup {
             v1.steal(v2);
         }
     }
-    /**
-     *
-     *
-     * Létre kell hozni
-     * A létrehozott objektumokat beletesszük a HashMapbe.
-     *
-     * A létrehozott objektumokat kivesszük a HashMapből.
-     */
 
     /**
      * Virologist switches suite init.
