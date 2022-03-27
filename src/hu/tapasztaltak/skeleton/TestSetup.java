@@ -714,6 +714,50 @@ public class TestSetup {
     }
 
     /**
+     * Shelter refreshes init.
+     * Az óvóhely újra létrehoz felszerelést, ha szükséges.
+     * Létre kell hozni 1 óvóhelyet és opcionálisan 1 rajta lévő felszerelést.
+     */
+    public static void shelterRefresh(){
+        System.out.println("--- Setting up Test Environment for Shelter refresh ---");
+        Shelter s = new Shelter();
+        storage.put("s", s);
+        Logger.log(null, "Van lent a mezőn tárgy? (I/N):", QUESTION);
+        Scanner sc = new Scanner(System.in);
+        String suiteOnShelter = sc.nextLine();
+        if(suiteOnShelter.equalsIgnoreCase("I")){
+            Bag b = new Bag();
+            storage.put("suite", b);
+            s.setSuite(b);
+        }
+        System.out.println("--- Setup Test Environment for Shelter refresh DONE ---");
+        s.refresh();
+        storage.clear();
+    }
+
+    /**
+     * Warehouse refreshes init.
+     * A raktár újra létrehoz anyagokat, ha szükséges.
+     * Létre kell hozni 1 raktárat és opcionálisan pár rajta lévő anyagot.
+     */
+    public static void warehouseRefresh(){
+        System.out.println("--- Setting up Test Environment for Warehouse refresh ---");
+        Warehouse w = new Warehouse();
+        storage.put("w", w);
+        Logger.log(null, "Van lent a mezőn anyag? (I/N):", QUESTION);
+        Scanner sc = new Scanner(System.in);
+        String materialOnWarehouse = sc.nextLine();
+        if(materialOnWarehouse.equalsIgnoreCase("I")){
+            Nucleotid n = new Nucleotid();
+            storage.put("n", n);
+            w.addMaterials(n);
+        }
+        System.out.println("--- Setup Test Environment for Warehouse refresh DONE ---");
+        w.refresh();
+        storage.clear();
+    }
+
+    /**
      * Virologist put on bag init.
      * A virológus felveszi az inventory-jában található bag-et.
      * Létre kell hozni 1 bag-et, egy inventory-t és 1 virológust.

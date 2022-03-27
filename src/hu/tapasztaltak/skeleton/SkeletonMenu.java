@@ -49,8 +49,10 @@ public class SkeletonMenu {
                     TestSetup.virologistSwitchesSuite();
                     break;
                 case "11":
+                    TestSetup.shelterRefresh();
                     break;
                 case "12":
+                    TestSetup.warehouseRefresh();
                     break;
                 case "13":
                     if(!started){

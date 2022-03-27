@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,10 @@ public class Shelter extends Field {
      */
     public void refresh() {
         Logger.log(this, "refresh", CALL);
+        if(suite != null){
+            Logger.log(this, "", RETURN);
+            return;
+        }
         refreshCounter = -1;
 
         Random random = new Random();
@@ -50,16 +55,21 @@ public class Shelter extends Field {
         switch (randomNumber) {
             case 0:
                 suite = new Bag();
+                TestSetup.storage.put("b", suite);
                 break;
 
             case 1:
                 suite = new Cape();
+                TestSetup.storage.put("c", suite);
                 break;
 
             case 2:
                 suite = new Gloves();
+                TestSetup.storage.put("g", suite);
                 break;
         }
+        Logger.log(suite, "<<create>>", CALL);
+        Logger.log(suite, "suite="+TestSetup.getName(suite), RETURN);
         Logger.log(this, "", RETURN);
     }
 

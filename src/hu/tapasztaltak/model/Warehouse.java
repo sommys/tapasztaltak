@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,15 @@ public class Warehouse extends Field {
     public void getItem(Virologist v) {
         Logger.log(this, "getItem", CALL, v);
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
-        if(!chosen.isEmpty() && refreshCounter == -1){
+        for(IStealable m : chosen){
+            m.add(v.getInventory());
+            if(v.getInventory().getSize()-v.getInventory().getUsedSize() > 0){
+                materials.remove(m);
+            }
+        }
+        if(materials.isEmpty() && refreshCounter == -1){
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
-        }
-        for(IStealable m : chosen){
-            v.getInventory().addMaterial((IMaterial) m);
         }
         Logger.log(this, "", RETURN);
     }
@@ -41,9 +45,11 @@ public class Warehouse extends Field {
      */
     public void refresh() {
         Logger.log(this, "refresh", CALL);
+        if(!materials.isEmpty()){
+            Logger.log(this, "", RETURN);
+            return;
+        }
         refreshCounter = -1;
-
-        materials.clear();
 
         Random random = new Random();
         int materialsSize = random.nextInt(4) + 1;
@@ -52,10 +58,18 @@ public class Warehouse extends Field {
         for (int i = 0; i < materialsSize; i++) {
             randomNumber = random.nextInt(2);
             if (randomNumber == 0) {
-                materials.add(new Aminoacid());
+                Aminoacid a = new Aminoacid();
+                TestSetup.addObject(a, "a"+i);
+                Logger.log(a, "<<create>>", CALL);
+                Logger.log(a, "newAminoacid="+TestSetup.getName(a), RETURN);
+                materials.add(a);
             }
             else {
-                materials.add(new Nucleotid());
+                Nucleotid n = new Nucleotid();
+                TestSetup.addObject(n, "n"+i);
+                Logger.log(n, "<<create>>", CALL);
+                Logger.log(n, "newNucleotid="+TestSetup.getName(n), RETURN);
+                materials.add(n);
             }
         }
         Logger.log(this, "", RETURN);
