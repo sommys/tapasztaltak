@@ -484,7 +484,7 @@ public class TestSetup {
      * A virológus letapogatja a labort
      * Létre kell hozni 1 labort, 1 virológust, 1 játékot és egy genetikai kódot.
      * A létrehozott objektumokat beletesszük a HashMapbe.
-     *
+     * A
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistScansLabor(){
@@ -494,17 +494,55 @@ public class TestSetup {
 
         v.setField(l);
         l.addVirologist(v);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!l.setGene(g);
+        l.setGene(g);
 
         storage.put("v", v);
         storage.put("l", l);
         storage.put("g", g);
 
+        stunQuestion(v);
+
+        if(!v.isStunned()) {
+            Scanner sc = new Scanner(System.in);
+            Logger.log(null, "Megtanulta már az itt lévő genetikai kódot a virológus? (I/N)", QUESTION);
+            sc.nextLine();
+            String learn = sc.nextLine();
+            if (learn.equalsIgnoreCase("I")) {
+                storage.clear();
+                return;
+            } else if (learn.equalsIgnoreCase("N")) {
+                v.learn(g);
+                v.addLearnt(g);
+
+                Logger.log(null, "Nyert a virológus? (I/N)", QUESTION);
+                sc.nextLine();
+                String win = sc.nextLine();
+                if (win.equalsIgnoreCase("I")) {
+                    //IDE
+                    Game.getInstance().checkEndGame(v);
+                    storage.clear();
+                    return;
+                } else if (win.equalsIgnoreCase("N")) {
+                    //IDE
+                    Game.getInstance().checkEndGame(v);
+                    storage.clear();
+                    return;
+                } else {
+                    System.out.println("Hibás bemenet!");
+                    storage.clear();
+                    return;
+                }
+
+            } else {
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
+        }
+
         v.scanning();
 
-        storage.remove("v", v);
-        storage.remove("l", l);
-        storage.remove("g", g);
+        storage.clear();
     }
 
     /**
