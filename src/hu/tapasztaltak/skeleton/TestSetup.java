@@ -587,13 +587,14 @@ public class TestSetup {
      * A virológus meghívja a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistPutOnBag() {
+    public static void virologistPutsOnBag() {
         System.out.println("--- Setting up Test Environment for Virologist put on bag ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
         Bag b = new Bag();
         b.add(inv);
-        v.setInventory(inv);
+        storage.put("v",v);
+        storage.put("b",b);
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
@@ -609,9 +610,10 @@ public class TestSetup {
             c.setActive(true);
             inv.addSuite(c);
         }
+        v.setInventory(inv);
         System.out.println("--- Setup Test Environment for Virologist put on bag DONE---");
-
         v.putOnSuite(b);
+        storage.clear();
     }
 
     /**
@@ -622,13 +624,14 @@ public class TestSetup {
      * A virológus meghívja a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistPutOnCape() {
+    public static void virologistPutsOnCape() {
         System.out.println("--- Setting up Test Environment for Virologist put on cape ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
         Cape c = new Cape();
         c.add(inv);
-        v.setInventory(inv);
+        storage.put("v",v);
+        storage.put("c",c);
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
@@ -644,8 +647,10 @@ public class TestSetup {
             cape.setActive(true);
             inv.addSuite(cape);
         }
+        v.setInventory(inv);
         System.out.println("--- Setup Test Environment for Virologist put on cape DONE---");
         v.putOnSuite(c);
+        storage.clear();
     }
 
     /**
@@ -656,30 +661,93 @@ public class TestSetup {
      * A virológus meghívja a putOnSuite függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistPutOnGloves() {
+    public static void virologistPutsOnGloves() {
         System.out.println("--- Setting up Test Environment for Virologist put on gloves ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
         Gloves g = new Gloves();
         g.add(inv);
-        v.setInventory(inv);
+        storage.put("v",v);
+        storage.put("g",g);
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
         System.out.print("Hány felszerelést visel már a virológus? (0...3):");
-		int activeSuitesDecision = sc.nextInt();
-		while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
-			System.out.println("Hibás bemenet...");
-			System.out.print("Hány felszerelést visel már a virológus? (0...3):");
-			activeSuitesDecision = sc.nextInt();
-		}
-		for(int i = 0; i < activeSuitesDecision; i++){
-			Cape c = new Cape();
-			c.setActive(true);
-			inv.addSuite(c);
-		}
+        int activeSuitesDecision = sc.nextInt();
+        while(activeSuitesDecision > 3 || activeSuitesDecision < 0){
+            System.out.println("Hibás bemenet...");
+            System.out.print("Hány felszerelést visel már a virológus? (0...3):");
+            activeSuitesDecision = sc.nextInt();
+        }
+        for(int i = 0; i < activeSuitesDecision; i++){
+            Cape c = new Cape();
+            c.setActive(true);
+            inv.addSuite(c);
+        }
+        v.setInventory(inv);
         System.out.println("--- Setup Test Environment for Virologist put on gloves DONE---");
         v.putOnSuite(g);
-
+        storage.clear();
     }
+
+    /**
+     * A virológuson dance ágens hatása érvényesül.
+     * Ennek következtében egy másik mezőre lép
+     * Létre kell hozni 3 fieldet, 1 virológust, 1 dance ágenst.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a step függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistDances(){
+        System.out.println("--- Setting up Test Environment for Virologist dances ---");
+        Field f1 = new Field();
+        Field f2 = new Field();
+        Field f3 = new Field();
+        Virologist v = new Virologist();
+        SpecialModifier d = new Dance();
+
+        v.setField(f1);
+        f1.addVirologist(v);
+        f1.addNeighbour(f2);
+        f2.addNeighbour(f1);
+        f1.addNeighbour(f3);
+        f3.addNeighbour(f1);
+        v.addModifier(d);
+
+        storage.put("f1",f1);
+        storage.put("f2",f2);
+        storage.put("f3",f3);
+        storage.put("v",v);
+        storage.put("d",d);
+
+        stunQuestion(v);
+        System.out.println("--- Setup Test Environment for Virologist dances DONE---");
+        v.step();
+        storage.clear();
+    }
+
+    /**
+     * A virológuson forget ágens hatása érvényesül.
+     * Ennek következtében egy másik mezőre lép
+     * Létre kell hozni 1 gene-t, 1 virológust, 1 dance ágenst.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja a step függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistForgets(){
+        System.out.println("--- Setting up Test Environment for Virologist forgets ---");
+        Virologist v = new Virologist();
+        SpecialModifier f = new Forget();
+        Gene g = new Gene();
+
+        v.addLearnt(g);
+        v.addModifier(f);
+        storage.put("v",v);
+        storage.put("f",f);
+        storage.put("g",g);
+        System.out.println("--- Setup Test Environment for Virologist forgets DONE---");
+        v.step();
+        storage.clear();
+    }
+
 }

@@ -61,16 +61,21 @@ public class SkeletonMenu {
                     }
                     break;
                 case "14":
+                    TestSetup.virologistDances();
                     break;
                 case "15":
+                    TestSetup.virologistForgets();
                     break;
                 case "16":
                     break;
                 case "17":
+                    TestSetup.virologistPutsOnBag();
                     break;
                 case "18":
+                    TestSetup.virologistPutsOnCape();
                     break;
                 case "19":
+                    TestSetup.virologistPutsOnGloves();
                     break;
                 case "20":
                     break;

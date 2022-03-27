@@ -18,11 +18,13 @@ public class Dance extends Agent implements SpecialModifier {
 	 */
 	public void effect(Virologist v) {
 		Logger.log(this, "effect", CALL, v);
-		Field f = v.getField();
-		Field randField = f.getRandomNeighbour();
-		f.removeVirologist(v);
-		randField.addVirologist(v);
-		v.setMoved(true);
+		if(!v.isStunned()) {
+			Field f = v.getField();
+			Field randField = f.getRandomNeighbour();
+			f.removeVirologist(v);
+			randField.addVirologist(v);
+			v.setMoved(true);
+		}
 		Logger.log(this, "", RETURN);
 	}
 
