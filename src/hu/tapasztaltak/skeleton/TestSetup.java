@@ -67,6 +67,7 @@ public class TestSetup {
             s.effect(v);
         }
     }
+
     /**
      * Virologist moves init
      * A virológus mozgását bemutatő függvény
@@ -1041,4 +1042,37 @@ public class TestSetup {
         storage.clear();
     }
 
+    /**
+     * A virológus befejezi a körét.
+     * Attól függően, hogy az utolsó játékos lépett-e, a roundManager új kört kezd.
+     * Létre kell hozni: 3 virológust, 1 roundManagert.
+     * A létrehozott objektumokat beletesszük a HashMapbe.
+     * A virológus meghívja az endround függvényt.
+     * A létrehozott objektumokat kivesszük a HashMapből.
+     */
+    public static void virologistEndsRoundRoundManagerReacts(){
+        System.out.println("--- Setting up Test Environment for Virologist ends round, round manager reacts ---");
+        Virologist v = new Virologist();
+        Virologist v1 = new Virologist();
+        Virologist v2 = new Virologist();
+        RoundManager rm = RoundManager.getInstance();
+
+        rm.addVirologists(v);
+        rm.addVirologists(v1);
+        rm.addVirologists(v2);
+
+        Scanner sc = new Scanner(System.in);
+        Logger.log(null,"Ő volt az utolsó virológus a körben? [I/N]",QUESTION);
+        String answer = sc.nextLine();
+
+        if(answer.equalsIgnoreCase("I")){
+            v1.setMoved(true);
+            v2.setMoved(true);
+            rm.setMovedCounter(rm.getVirologists().size()-1);
+        }
+        System.out.println("--- Setup Test Environment for Virologist ends round, round manager reacts DONE ---");
+
+        v.endRound();
+        storage.clear();
+    }
 }

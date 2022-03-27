@@ -84,8 +84,7 @@ public class SkeletonMenu {
                     TestSetup.virologistPutsOnGloves();
                     break;
                 case "20":
-                    break;
-                case "21":
+                    TestSetup.virologistEndsRoundRoundManagerReacts();
                     break;
                 case "help":
                     help();
