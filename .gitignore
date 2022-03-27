@@ -27,3 +27,4 @@ hs_err_pid*
 /src/META-INF/MANIFEST.MF
 /out/production/tapasztaltak/META-INF/MANIFEST.MF
 /src/hu/tapasztaltak/model/Perl-5.34.0-Windows/activestate.yaml
+/out/production/tapasztaltak/hu/tapasztaltak/model/Perl-5.34.0-Windows/activestate.yaml
