@@ -29,6 +29,15 @@ public class Dance extends Agent implements SpecialModifier {
 	}
 
 	/**
+	 * Megadja, hogy aktívan hat-e még a módosító
+	 * @return aktívan hat-e a módosító
+	 */
+	@Override
+	public boolean isActive() {
+		return timeLeft > 0;
+	}
+
+	/**
 	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
 	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
 	 */

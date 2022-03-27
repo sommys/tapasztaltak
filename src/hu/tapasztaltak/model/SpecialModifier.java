@@ -9,4 +9,10 @@ public interface SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	void effect(Virologist v);
+
+	/**
+	 * Megadja, hogy aktívan hat-e még a módosító
+	 * @return aktívan hat-e a módosító
+	 */
+	boolean isActive();
 }

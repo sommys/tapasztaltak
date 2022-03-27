@@ -27,6 +27,15 @@ public class Protect extends Agent implements IDefense {
 	}
 
 	/**
+	 * Megadja, hogy aktívan hat-e még a védő
+	 * @return aktívan hat-e még a védő
+	 */
+	@Override
+	public boolean stillActive() {
+		return timeLeft > 0;
+	}
+
+	/**
 	 * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
 	 * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
 	 */

@@ -264,6 +264,11 @@ public class Virologist implements ISteppable {
 	public void step() {
 		Logger.log(this, "step", CALL);
 		moved=false;
+
+		inventory.getAgents().removeIf(a -> a.getTimeLeft() <= 0);
+		modifiers.removeIf(m -> !m.isActive());
+		defenses.removeIf(d -> !d.stillActive());
+
 		for(SpecialModifier m : modifiers){
 			m.effect(this);
 		}

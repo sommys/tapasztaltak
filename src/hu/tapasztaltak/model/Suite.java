@@ -13,7 +13,7 @@ public abstract class Suite implements IStealable {
 	/**
 	 * Azt mutatja, hogy aktívan viselt-e a felszerelés
 	 */
-	private boolean active = false;
+	protected boolean active = false;
 
 	/**
 	 * Aktivan viseltté teszi a felszerelést v-n.

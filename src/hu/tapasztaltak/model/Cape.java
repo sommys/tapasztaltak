@@ -32,6 +32,15 @@ public class Cape extends Suite implements IDefense {
 	}
 
 	/**
+	 * Megadja, hogy aktívan hat-e még a védő
+	 * @return aktívan hat-e még a védő
+	 */
+	@Override
+	public boolean stillActive() {
+		return active;
+	}
+
+	/**
 	 * Aktív viselésre állítja a köpenyt v-n.
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */

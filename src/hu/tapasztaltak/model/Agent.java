@@ -15,7 +15,7 @@ public abstract class Agent implements ISteppable {
 	/**
 	 * Az ágens hatásából hátralevő idő
 	 */
-	private int timeLeft = 0;
+	protected int timeLeft = 0;
 
 	/**
 	 * Lépteti az ágens hátralevő idejét.
