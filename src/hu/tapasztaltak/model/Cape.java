@@ -3,9 +3,9 @@ package hu.tapasztaltak.model;
 import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.Random;
+import java.util.Scanner;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
  * A köpeny felszerelést reprezentáló osztály.
@@ -21,10 +21,16 @@ public class Cape extends Suite implements IDefense {
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
+		Logger.log(null, "Sikeres volt a köpeny védése [valós játékban 82.3%-ban igen]? (I/N):", QUESTION);
+		Scanner sc = new Scanner(System.in);
+		String success = sc.nextLine();
+		Logger.log(this, "blockingSuccess="+success.equalsIgnoreCase("I"), RETURN);
+		return success.equalsIgnoreCase("I");
+		/*Valós függvény megvalósítás
 		Random r = new Random();
 		double result = r.nextDouble();
 		Logger.log(this, "blockingSuccess="+(result <= 0.823), RETURN);
-		return (result <= 0.823);
+		return (result <= 0.823);*/
 	}
 
 	/**

@@ -29,7 +29,7 @@ public class Gloves extends Suite implements IDefense {
 			Scanner sc = new Scanner(System.in);
 			Logger.log(null, "Visszakennéd a támadóra? (I/N):", QUESTION);
 			String input = sc.nextLine();
-			if(input.equals("I")){
+			if(input.equalsIgnoreCase("I")){
 				used = true;
 				vict.useAgent(a,atc);
 				Logger.log(this, "blockingSuccess="+true, RETURN);

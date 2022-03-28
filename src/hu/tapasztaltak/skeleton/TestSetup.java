@@ -76,7 +76,6 @@ public class TestSetup {
         Agent use;
         Logger.log(null,"Melyik ágenst szeretnéd használni?[0=Dance, 1=Protect, 2=Forget, 3=Stun]:",QUESTION);
         int agentnum = sc.nextInt();
-        sc.nextLine();
         if (agentnum > 3 || agentnum < 0) {
             System.out.println("Hibás bemenet");
             storage.clear();
@@ -119,7 +118,6 @@ public class TestSetup {
         int protectnum = sc.nextInt();
         Logger.log(null, "Mennyi kesztyű van a virológuson? (0.." + (3 - (capenum + protectnum))+"):", QUESTION);
         int glovesnum = sc.nextInt();
-        sc.nextLine();
         if ((capenum + protectnum + glovesnum) > 3 || (capenum + protectnum + glovesnum) < 0) {
             System.out.println("Hibás bemenet");
             storage.clear();
@@ -241,9 +239,15 @@ public class TestSetup {
         storage.put("a", use);
         if(!v.isStunned()){
             use = chooseAgent(v);
-            sc.nextLine();
             Logger.log(null,"Van olyan védőfelszerelés/ágens rajtunk, ami levédi az ágenst? (I/N):",QUESTION);
-            if (addProtectiveStuff(v)) return;
+            String suite = sc.nextLine();
+            if(suite.equalsIgnoreCase("I")) {
+                if(addProtectiveStuff(v)) return;
+            } else if(!suite.equalsIgnoreCase("N")){
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
             Logger.log(null,"Ugyanazon a mezőn van, akire használni akarod az ágenst? (I/N):",QUESTION);
             String samefield = sc.nextLine();
             if(samefield.equalsIgnoreCase("I")){
@@ -260,7 +264,14 @@ public class TestSetup {
                 return;
             }
             Logger.log(null,"Van olyan védőfelszerelés/ágens a virológuson ami levédi az ágenst? (I/N):",QUESTION);
-            if (addProtectiveStuff(v2)) return;
+            suite = sc.nextLine();
+            if(suite.equalsIgnoreCase("I")) {
+                if(addProtectiveStuff(v2)) return;
+            } else if(!suite.equalsIgnoreCase("N")){
+                System.out.println("Hibás bemenet!");
+                storage.clear();
+                return;
+            }
             Logger.log(null, "Le van bénulva a megkenni kívánt virológus? (I/N):", QUESTION);
             String stunnedVict = sc.nextLine();
             if(stunnedVict.equalsIgnoreCase("I")){
@@ -432,14 +443,13 @@ public class TestSetup {
                 storage.clear();
                 return;
             }
-
+            sc.nextLine();
             for (int i = 0; i < v.getInventory().getSize() - remaining; i++) {
                 Nucleotid placeholder = new Nucleotid();
                 v.getInventory().addMaterial(placeholder);
             }
         }
         Logger.log(null, "Vannak anyagok a raktárban? (I/N):", QUESTION);
-        sc.nextLine();
         String emptyWarehouse = sc.nextLine();
         if(emptyWarehouse.equalsIgnoreCase("I")){
             Logger.log(null, "Van nukleotid a raktárban? (I/N):", QUESTION);
@@ -630,7 +640,7 @@ public class TestSetup {
             int bags = sc.nextInt();
             for (int i = 0; i < bags; i++) {
                 Bag bag = new Bag();
-                storage.put("bag"+i,bag);
+                storage.put("stealer_bag"+i,bag);
                 bag.add(v1.getInventory());
                 bag.activate(v1);
             }
@@ -665,7 +675,7 @@ public class TestSetup {
             int bagnum = sc.nextInt();
             for (int i = 0; i < bagnum; i++) {
                 Bag bag = new Bag();
-                storage.put("bag"+i,bag);
+                storage.put("victim_worn_bag"+i,bag);
                 bag.add(v2.getInventory());
                 bag.activate(v2);
             }
@@ -702,7 +712,7 @@ public class TestSetup {
             int bagsnum = sc.nextInt();
             for (int i = 0; i < bagsnum; i++) {
                 Bag bag = new Bag();
-                storage.put("bag"+i,bag);
+                storage.put("victim_stored_bag"+i,bag);
                 bag.add(v2.getInventory());
             }
         }
@@ -725,6 +735,7 @@ public class TestSetup {
         storage.put("v", v);
         Inventory inv = new Inventory();
         storage.put("inv", inv);
+        v.setInventory(inv);
         stunQuestion(v);
         Bag b = new Bag();
         storage.put("b", b);
@@ -741,7 +752,7 @@ public class TestSetup {
         for(Suite s : suites){
             availableSuites.append(String.format("%d=%s, ", i++, s.getClass().getSimpleName()));
         }
-        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "] ");
+        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "]: ");
         Logger.log(null,"Melyik felszerelést szeretnéd lecserélni? "+availableSuites, QUESTION);
         Scanner sc = new Scanner(System.in);
         int fromSuite = sc.nextInt();
@@ -757,7 +768,7 @@ public class TestSetup {
         for(Suite s : suites){
             availableSuites.append(String.format("%d=%s, ", i++, s.getClass().getSimpleName()));
         }
-        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "] ");
+        availableSuites.replace(availableSuites.length()-2, availableSuites.length(), "]: ");
 
         Logger.log(null,"Melyik felszerelésre szeretnéd lecserélni? "+availableSuites, QUESTION);
         int toSuite = sc.nextInt();
@@ -881,7 +892,7 @@ public class TestSetup {
     }
 
     /**
-     * Virologist put on bag init.
+     * Virologist puts on bag init.
      * A virológus felveszi az inventory-jában található bag-et.
      * Létre kell hozni 1 bag-et, egy inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
@@ -889,13 +900,16 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnBag() {
-        System.out.println("--- Setting up Test Environment for Virologist put on bag ---");
+        System.out.println("--- Setting up Test Environment for Virologist puts on bag ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
+        v.setInventory(inv);
         Bag b = new Bag();
-        b.add(inv);
         storage.put("v",v);
         storage.put("b",b);
+        storage.put("inv", inv);
+        b.add(inv);
+
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
@@ -908,17 +922,18 @@ public class TestSetup {
         }
         for(int i = 0; i < activeSuitesDecision; i++){
             Cape c = new Cape();
-            c.setActive(true);
-            inv.addSuite(c);
+            storage.put("placeholderCape"+i, c);
+            c.add(inv);
+            c.activate(v);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on bag DONE ---");
+        System.out.println("--- Setup Test Environment for Virologist puts on bag DONE ---");
         v.putOnSuite(b);
         storage.clear();
     }
 
     /**
-     * Virologist put on Cape init.
+     * Virologist puts on Cape init.
      * A virológus felveszi az inventory-jában található cape-et.
      * Létre kell hozni 1 cape-et, 1 inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
@@ -926,13 +941,16 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnCape() {
-        System.out.println("--- Setting up Test Environment for Virologist put on cape ---");
+        System.out.println("--- Setting up Test Environment for Virologist puts on cape ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
         Cape c = new Cape();
-        c.add(inv);
+        v.setInventory(inv);
         storage.put("v",v);
         storage.put("c",c);
+        storage.put("inv", inv);
+        c.add(inv);
+
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
@@ -945,17 +963,18 @@ public class TestSetup {
         }
         for(int i = 0; i < activeSuitesDecision; i++){
             Cape cape = new Cape();
-            cape.setActive(true);
-            inv.addSuite(cape);
+            storage.put("placeholderCape"+i, cape);
+            cape.add(inv);
+            cape.activate(v);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on cape DONE ---");
+        System.out.println("--- Setup Test Environment for Virologist puts on cape DONE ---");
         v.putOnSuite(c);
         storage.clear();
     }
 
     /**
-     * Virologist put on gloves init.
+     * Virologist puts on gloves init.
      * A virológus felveszi az inventory-jában található gloves-ot.
      * Létre kell hozni 1 gloves-ot, egy inventory-t és 1 virológust.
      * A létrehozott objektumokat beletesszük a HashMapbe.
@@ -963,13 +982,15 @@ public class TestSetup {
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
     public static void virologistPutsOnGloves() {
-        System.out.println("--- Setting up Test Environment for Virologist put on gloves ---");
+        System.out.println("--- Setting up Test Environment for Virologist puts on gloves ---");
         Virologist v = new Virologist();
         Inventory inv = new Inventory();
         Gloves g = new Gloves();
-        g.add(inv);
+        v.setInventory(inv);
         storage.put("v",v);
         storage.put("g",g);
+        storage.put("inv", inv);
+        g.add(inv);
 
         stunQuestion(v);
         Scanner sc = new Scanner(System.in);
@@ -982,11 +1003,12 @@ public class TestSetup {
         }
         for(int i = 0; i < activeSuitesDecision; i++){
             Cape c = new Cape();
-            c.setActive(true);
-            inv.addSuite(c);
+            storage.put("placeholderCape"+i, c);
+            c.add(inv);
+            c.activate(v);
         }
         v.setInventory(inv);
-        System.out.println("--- Setup Test Environment for Virologist put on gloves DONE ---");
+        System.out.println("--- Setup Test Environment for Virologist puts on gloves DONE ---");
         v.putOnSuite(g);
         storage.clear();
     }
@@ -1064,14 +1086,16 @@ public class TestSetup {
     public static void virologistIsBeingStunned(){
         System.out.println("--- Setting up Test Environment for Virologist is being stunned ---");
         Virologist v = new Virologist();
-        SpecialModifier s = new Stun();
+        Stun s = new Stun();
+        storage.put("v",v);
+        storage.put("s",s);
+        s.setTimeLeft(3);
         RoundManager rm = RoundManager.getInstance();
+        storage.put("rm",rm);
 
         v.addModifier(s);
         rm.addVirologist(v);
-        storage.put("v",v);
-        storage.put("s",s);
-        storage.put("rm",rm);
+
 
         System.out.println("--- Setup Test Environment for Virologist is being stunned DONE ---");
         v.step();
@@ -1092,13 +1116,21 @@ public class TestSetup {
         Virologist v1 = new Virologist();
         Virologist v2 = new Virologist();
         RoundManager rm = RoundManager.getInstance();
+        storage.put("v", v);
+        storage.put("v1", v1);
+        storage.put("v2", v2);
+        storage.put("rm", rm);
+
+        rm.addSteppable(v);
+        rm.addSteppable(v1);
+        rm.addSteppable(v2);
 
         rm.addVirologist(v);
         rm.addVirologist(v1);
         rm.addVirologist(v2);
 
         Scanner sc = new Scanner(System.in);
-        Logger.log(null,"Ő volt az utolsó virológus a körben? [I/N]",QUESTION);
+        Logger.log(null,"Ő volt az utolsó virológus a körben? (I/N): ",QUESTION);
         String answer = sc.nextLine();
 
         if(answer.equalsIgnoreCase("I")){

@@ -110,7 +110,7 @@ public class SkeletonMenu {
         Logger.log(null,"9: Virologist switches suite", COMMENT);
         Logger.log(null,"10: Shelter refresh", COMMENT);
         Logger.log(null,"11: Warehouse refresh", COMMENT);
-        Logger.log(null,"12: Player Start Game", COMMENT);
+        Logger.log(null,"12: Player starts game", COMMENT);
         Logger.log(null,"13: Virologist dances", COMMENT);
         Logger.log(null,"14: Virologist forgets", COMMENT);
         Logger.log(null,"15: Virologist is being stunned", COMMENT);
