@@ -17,6 +17,11 @@ public class Gloves extends Suite implements IDefense {
 	private boolean used = false;
 
 	/**
+	 * Azt mutatja, hányszor lehet még a kesztyűt a hámlásig felhasználni
+	 */
+	private int usedCount = 3;
+
+	/**
 	 * Visszakenhető vele egy ágens, amelyet rákentek a virológusra.
 	 * @param atc a támadó {@link Virologist}
 	 * @param vict a megtámadott {@link Virologist}
@@ -25,13 +30,15 @@ public class Gloves extends Suite implements IDefense {
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
-		if(atc != vict && !used && !vict.isStunned()){
+		if(atc != vict && !used && usedCount > 0 && !vict.isStunned()){
 			Scanner sc = new Scanner(System.in);
 			Logger.log(null, "Visszakennéd a támadóra? (I/N):", QUESTION);
 			String input = sc.nextLine();
 			if(input.equalsIgnoreCase("I")){
 				used = true;
+				usedCount--;
 				vict.useAgent(a,atc);
+				if(usedCount==0) remove(vict.getInventory());
 				Logger.log(this, "blockingSuccess="+true, RETURN);
 				return true;
 			}

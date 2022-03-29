@@ -26,11 +26,15 @@ public class Warehouse extends Field {
      */
     public void getItem(Virologist v) {
         Logger.log(this, "getItem", CALL, v);
-        List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
-        for(IStealable m : chosen){
-            m.add(v.getInventory());
-            if(v.getInventory().getSize()-v.getInventory().getUsedSize() > 0){
-                materials.remove(m);
+        if(v.isBear()){
+            materials.clear();
+        } else {
+            List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
+            for (IStealable m : chosen) {
+                m.add(v.getInventory());
+                if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
+                    materials.remove(m);
+                }
             }
         }
         if(materials.isEmpty() && refreshCounter == -1){

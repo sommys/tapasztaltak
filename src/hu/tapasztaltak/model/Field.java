@@ -1,10 +1,12 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
+import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -172,6 +174,16 @@ public class Field implements ISteppable {
         Logger.log(this, "removeVirologist", CALL, virologist);
         this.virologists.remove(virologist);
         Logger.log(this, "", RETURN);
+    }
+
+    public Virologist chooseVirologist(Virologist v) {
+        Logger.log(this, "chooseVirologist", CALL, v);
+        List<Virologist> choosable = virologists.stream().filter(vir -> vir != v).collect(Collectors.toList());
+        //ehelyett majd pickel egyet, NEM FOGOM most megoldani...
+        Random r = new Random();
+        Virologist chosen = choosable.get(r.nextInt(choosable.size()));
+        Logger.log(this, "chosen="+ TestSetup.getName(chosen), RETURN);
+        return chosen;
     }
 
     //endregion
