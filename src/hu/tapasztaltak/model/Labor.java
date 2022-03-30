@@ -29,9 +29,7 @@ public class Labor extends Field {
         v.learn(gene);
         if(infected){
             Bear b = new Bear();
-            if(!v.isBear()){
-                v.addModifier(b);
-            }
+            v.addModifier(b);
         }
         Logger.log(this, "", RETURN);
     }

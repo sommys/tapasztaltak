@@ -44,14 +44,6 @@ public class Virologist implements ISteppable {
 	private List<IDefense> defenses = new ArrayList<>();
 
 	/**
-	 * Megmondja a virológusról, hogy medvévé alakult-e?
-	 * @return medve-e?
-	 */
-	public boolean isBear(){
-		return Bear.containsBear(modifiers);
-	}
-
-	/**
 	 * A virológus az {@code f} mezőre mozog, ha szomszédos a jelenlegi mezővel és nincs lebénulva.
 	 * @param f a {@link Field}, amire mozogni szeretne
 	 */

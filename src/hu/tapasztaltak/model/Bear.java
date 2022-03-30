@@ -15,18 +15,6 @@ import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 public class Bear extends Agent implements SpecialModifier{
 
     /**
-     * Megmondja az ádatott listáról, hogy van-e benne Medvetánc ágens
-     * @param m a {@link SpecialModifier} lista amit vizsgálunk
-     * @return van-e benne Medvetánc ágens
-     */
-    public static boolean containsBear(List<SpecialModifier> m){
-        for(SpecialModifier sm : m){
-            if(sm.getClass() == Bear.class) return true;
-        }
-        return false;
-    }
-
-    /**
      * Visszaadja az ágens készítéséhez szükséges receptet, azaz hogy milyen anyagok kellenek hozzá
      * @return milyen anyagok ({@link IMaterial}) kellenek a készítéséhez
      */
@@ -58,7 +46,10 @@ public class Bear extends Agent implements SpecialModifier{
 
     /**
      * Kifejti a hatását a paraméterben átadott {@link Virologist}-ra
-     *
+     * Ha bénult, akkor nem történik semmi.
+     * Különben egy random szomszédra mozog, ha az egy raktár, akkor összetöri az ott lévő anyagokat.
+     * Az azonos mezőn lévő virológusokat megpróbálja megfertőzni.
+     * A játékos nem csinálhat egyebet a Medve ágens hatása alatt, ezért a köre is véget ér.
      * @param v {@link Virologist}, akire kifejti a hatását
      */
     @Override
@@ -75,9 +66,7 @@ public class Bear extends Agent implements SpecialModifier{
         //fertőzés
         List<Virologist> toInfect = v.getField().getVirologists();
         for(Virologist i : toInfect){
-            if(!i.isBear()){
-                v.useAgent(new Bear(), i); //köszi Lilla :)
-            }
+            v.useAgent(new Bear(), i); //köszi Lilla :)
         }
         //cselekvőképtelenség és kör vége
         v.setMoved(true);
