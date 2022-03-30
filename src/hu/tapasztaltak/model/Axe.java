@@ -4,6 +4,9 @@ package hu.tapasztaltak.model;
  * A baltát reprezentáló osztály
  */
 public class Axe extends Suite implements IStealable{
+    /**
+     * Használták-e már a baltát, ha igen, akkor kicsorbult, így nincs hatása
+     */
     private boolean used = false;
     /**
      * v használja a baltát

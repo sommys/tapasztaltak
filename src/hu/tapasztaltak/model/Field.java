@@ -57,6 +57,11 @@ public class Field implements ISteppable {
     }
 
     /**
+     * A medve hívja, és szétzúzza a mezőn található anyagokat, amennyiben vannak.
+     */
+    public void destroyStuff(){ }
+
+    /**
      * Megállapítja {@code f} mezőről, hogy szomszédos-e.
      *
      * @param f a {@link Field}, ami a kérdéses szomszéd

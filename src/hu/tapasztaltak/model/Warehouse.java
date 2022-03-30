@@ -26,15 +26,11 @@ public class Warehouse extends Field {
      */
     public void getItem(Virologist v) {
         Logger.log(this, "getItem", CALL, v);
-        if(v.isBear()){
-            materials.clear();
-        } else {
-            List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
-            for (IStealable m : chosen) {
-                m.add(v.getInventory());
-                if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
-                    materials.remove(m);
-                }
+        List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
+        for (IStealable m : chosen) {
+            m.add(v.getInventory());
+            if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
+                materials.remove(m);
             }
         }
         if(materials.isEmpty() && refreshCounter == -1){
@@ -42,6 +38,14 @@ public class Warehouse extends Field {
             refreshCounter = random.nextInt(5) + 4;
         }
         Logger.log(this, "", RETURN);
+    }
+
+    /**
+     * A medve hívja, és szétzúzza a mezőn található anyagokat, amennyiben vannak.
+     */
+    @Override
+    public void destroyStuff(){
+        materials.clear();
     }
 
     /**

@@ -63,13 +63,15 @@ public class Bear extends Agent implements SpecialModifier{
      */
     @Override
     public void effect(Virologist v) {
+        //ha béna, akkor nem történik semmi
+        if(v.isStunned() || v.isMoved()) return;
         //random mozgás
-        if(!v.isStunned()) {
-            Field f = v.getField();
-            Field randField = f.getRandomNeighbour();
-            f.removeVirologist(v);
-            randField.addVirologist(v);
-        }
+        Field f = v.getField();
+        Field randField = f.getRandomNeighbour();
+        f.removeVirologist(v);
+        randField.addVirologist(v);
+        //törés, zúzás
+        randField.destroyStuff();
         //fertőzés
         List<Virologist> toInfect = v.getField().getVirologists();
         for(Virologist i : toInfect){
@@ -78,7 +80,7 @@ public class Bear extends Agent implements SpecialModifier{
             }
         }
         //cselekvőképtelenség és kör vége
-        v.setMoved(true); //ez lehet nem kell?
+        v.setMoved(true);
         v.endRound();
     }
 
