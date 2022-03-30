@@ -57,7 +57,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void move(Field f) {
 		Logger.log(this, "move", CALL, f);
-		if(stunned){
+		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -82,7 +82,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void putOnSuite(Suite s) {
 		Logger.log(this, "putOnSuite", CALL, s);
-		if(stunned){
+		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -105,7 +105,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void makeAgent(Gene g) {
 		Logger.log(this, "makeAgent", CALL, g);
-		if(stunned){
+		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -120,7 +120,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void useAgent(Agent a, Virologist v) {
 		Logger.log(this, "useAgent", CALL, a, v);
-		if(stunned || !canReach(v)){
+		if(stunned || moved || !canReach(v)){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -135,7 +135,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void switchSuite(Suite from, Suite to) {
 		Logger.log(this, "switchSuite", CALL, from, to);
-		if(stunned){
+		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -149,7 +149,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void scanning() {
 		Logger.log(this, "scanning", CALL);
-		if(stunned){
+		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
 		}
@@ -199,7 +199,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void steal(Virologist from) {
 		Logger.log(this, "steal", CALL, from);
-		if(stunned || !canReach(from) || inventory.getUsedSize()==inventory.getSize()){
+		if(stunned || moved || !canReach(from) || inventory.getUsedSize()==inventory.getSize()){
 			Logger.log(this, "", RETURN);
 			return;
 		}
