@@ -3,7 +3,7 @@ package hu.tapasztaltak.model;
 /**
  * A baltát reprezentáló osztály
  */
-public class Axe extends Suite implements IStealable{
+public class Axe extends Suite{
     /**
      * Használták-e már a baltát, ha igen, akkor kicsorbult, így nincs hatása
      */

@@ -21,6 +21,7 @@ public class Labor extends Field {
 
     /**
      * A {@code v} virológusnak adja a rajta található genetikai kódot.
+     * Ha infected, akkor
      *
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
@@ -29,7 +30,7 @@ public class Labor extends Field {
         v.learn(gene);
         if(infected){
             Bear b = new Bear();
-            v.addModifier(b);
+            v.useAgent(b,v); //Átírtam, hogy ez is csak akkor menjen végbe, ha nincs védelem alatt a virológus.
         }
         Logger.log(this, "", RETURN);
     }

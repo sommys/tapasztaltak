@@ -296,6 +296,14 @@ public class Virologist implements ISteppable {
 		Logger.log(this, "", RETURN);
 	}
 
+	/**
+	 * Kiveszi a virológust a {@link Field}-ről, kiveszi {@link RoundManager} stepable-jei közül.
+	 * A virológus meghal, így irányíthatóvá válik.
+	 */
+	public void die(){
+		//TODO
+	}
+
 	//region GETTEREK ÉS SETTEREK
 	/**
 	 * Visszaadja, hogy a virológus mozgott-e már a körben.

@@ -85,6 +85,21 @@ public class Field implements ISteppable {
         return neighbours.get(random.nextInt(neighbours.size()));
     }
 
+    /**
+     * A {@link Virologist} választ egyet a vele egy mezőn tartózkodó virológusok közül.
+     * @param v a választó {@link Virologist}
+     * @return kiválasztott {@link Virologist}
+     */
+    public Virologist chooseVirologist(Virologist v) {
+        Logger.log(this, "chooseVirologist", CALL, v);
+        List<Virologist> choosable = virologists.stream().filter(vir -> vir != v).collect(Collectors.toList());
+        //ehelyett majd pickel egyet, NEM FOGOM most megoldani...
+        Random r = new Random();
+        Virologist chosen = choosable.get(r.nextInt(choosable.size()));
+        Logger.log(this, "chosen="+ TestSetup.getName(chosen), RETURN);
+        return chosen;
+    }
+
     //region GETTEREK ÉS SETTEREK
 
     /**
@@ -179,16 +194,6 @@ public class Field implements ISteppable {
         Logger.log(this, "removeVirologist", CALL, virologist);
         this.virologists.remove(virologist);
         Logger.log(this, "", RETURN);
-    }
-
-    public Virologist chooseVirologist(Virologist v) {
-        Logger.log(this, "chooseVirologist", CALL, v);
-        List<Virologist> choosable = virologists.stream().filter(vir -> vir != v).collect(Collectors.toList());
-        //ehelyett majd pickel egyet, NEM FOGOM most megoldani...
-        Random r = new Random();
-        Virologist chosen = choosable.get(r.nextInt(choosable.size()));
-        Logger.log(this, "chosen="+ TestSetup.getName(chosen), RETURN);
-        return chosen;
     }
 
     //endregion
