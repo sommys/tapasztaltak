@@ -28,8 +28,8 @@ public class Warehouse extends Field {
         Logger.log(this, "getItem", CALL, v);
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
         for (IStealable m : chosen) {
-            m.add(v.getInventory());
             if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
+                m.add(v.getInventory());
                 materials.remove(m);
             }
         }

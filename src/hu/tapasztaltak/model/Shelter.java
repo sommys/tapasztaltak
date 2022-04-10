@@ -36,6 +36,7 @@ public class Shelter extends Field {
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
         }
+        //Van-e elég helye? - ellenőrzés
         for(IStealable s : chosen){
             s.add(v.getInventory());
         }
