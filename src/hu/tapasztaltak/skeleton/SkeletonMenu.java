@@ -12,10 +12,10 @@ public class SkeletonMenu {
      * Az alkalmazást futtató metódus
      * @param args parancssori argumentumok
      */
-    public static void main(String[] args) {
+    public static void oldMain(String[] args) {
         Scanner sc = new Scanner(System.in);
         help();
-        String input = "";
+        String input;
         do{
             Logger.log(null,"Válasszon menüpontot:", QUESTION);
             input = sc.nextLine();
