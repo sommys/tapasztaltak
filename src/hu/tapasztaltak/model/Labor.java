@@ -12,12 +12,7 @@ public class Labor extends Field {
     /**
      * Labor falán lévő genetikai kód.
      */
-    private Gene gene = null;
-
-    /**
-     * Medve fertőzés van-e a laborban? [Medvés-e?]
-     */
-    private boolean infected = false;
+    protected Gene gene = null;
 
     /**
      * A {@code v} virológusnak adja a rajta található genetikai kódot.
@@ -28,10 +23,6 @@ public class Labor extends Field {
     public void getItem(Virologist v) {
         Logger.log(this, "getItem", CALL, v);
         v.learn(gene);
-        if(infected){
-            Bear b = new Bear();
-            v.useAgent(b,v); //Átírtam, hogy ez is csak akkor menjen végbe, ha nincs védelem alatt a virológus.
-        }
         Logger.log(this, "", RETURN);
     }
 
@@ -50,22 +41,6 @@ public class Labor extends Field {
      * @param gene a laborban található {@link Gene}
      */
     public void setGene(Gene gene) { this.gene = gene; }
-
-    /**
-     * Visszaadja, hogy a labor medvés-e?
-     * @return medvés-e?
-     */
-    public boolean isInfected() {
-        return infected;
-    }
-
-    /**
-     * Beállítja, hogy a labor medvés-e?
-     * @param infected medvés-e?
-     */
-    public void setInfected(boolean infected) {
-        this.infected = infected;
-    }
 
     //endregion
 }
