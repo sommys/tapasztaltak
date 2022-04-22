@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -35,40 +36,42 @@ public class Inventory {
 	 * @return kiválasztott {@link IStealable} vagy null, ha nincs ellopható elem
 	 */
 	public IStealable pickItem() {
-		Logger.log(this, "pickItem", CALL);
+		ProtoLogger.logMessage("Virologist has the following items:");
 		if (materials.isEmpty() && suites.isEmpty()){
-			System.out.println("A virológus tárja üres.");
-			Logger.log(this, "selected=null", RETURN);
+			ProtoLogger.logMessage("Virologist's inventory is empty, nothing can be stolen.");
 			return null;
 		}
 
 		int id = 1;
 		for (IMaterial m : materials) {
-			Logger.log(null,String.format("%d. %s",id,TestSetup.getName(m)),COMMENT);
+			ProtoLogger.logMessage(String.format("%d. %s", id, TestSetup.getName(m)));
 			id++;
 		}
 
 		for (Suite s : suites) {
-			Logger.log(null,String.format("%d. %s",id,TestSetup.getName(s)),COMMENT);
+			ProtoLogger.logMessage(String.format("%d. %s",id,TestSetup.getName(s)));
 			id++;
 		}
 
 		int stealableSize = materials.size() + suites.size();
 
-		Logger.log(null,"Add meg a választott elem indexét:",QUESTION);
-		Scanner input = new Scanner(System.in);
-		int value = input.nextInt();
-		while(value < 1 || value > stealableSize) {
-			Logger.log(null,String.format("Érvénytelen index, kérlek adj meg 1 és %d közötti számot!",stealableSize),COMMENT);
-			Logger.log(null,"Add meg a választott elem indexét:",QUESTION);
-			value = input.nextInt();
+		int value = 0;
+
+		// Az exceptiont nem tudom, hogy így kéne-e, btw itt nem is kaphatok
+		try {
+			value = ProtoLogger.logQuestion("Pick an item’s index you want to steal:", false);
+			while(value < 1 || value > stealableSize) {
+				ProtoLogger.logMessage(String.format("Invalid index, please give a number between 1 and %d!",stealableSize));
+				value = ProtoLogger.logQuestion("Pick an item’s index you want to steal:", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		IStealable selected = value > materials.size()
 				? suites.get(value - materials.size() - 1)
 				: materials.get(value - 1);
 
-		Logger.log(this, "selected="+TestSetup.getName(selected), RETURN);
 		return selected;
 	}
 
