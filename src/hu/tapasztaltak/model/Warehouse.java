@@ -6,7 +6,9 @@ import hu.tapasztaltak.skeleton.TestSetup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -112,6 +114,13 @@ public class Warehouse extends Field {
      * @param material a törlendő {@link IMaterial}
      */
     public void removeMaterials(IMaterial material) { materials.remove(material);  }
+
+    @Override
+    public String toString() {
+        int amino = materials.stream().filter(it -> it instanceof Aminoacid).collect(Collectors.toList()).size();
+        int ncl = materials.stream().filter(it -> it instanceof Nucleotid).collect(Collectors.toList()).size();
+        return super.toString() + amino + " " + ncl + "[" + refreshCounter + "]";
+    }
 
     //endregion
 }

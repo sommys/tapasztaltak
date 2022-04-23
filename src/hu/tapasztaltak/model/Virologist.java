@@ -461,5 +461,11 @@ public class Virologist implements ISteppable {
 	public void removeDefense(IDefense d){
 		this.defenses.remove(d);
 	}
+
+	@Override
+	public String toString() {
+		//TODO
+		return getIdForObject(this);
+	}
 	//endregion
 }

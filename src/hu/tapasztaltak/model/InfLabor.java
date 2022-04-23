@@ -1,5 +1,7 @@
 package hu.tapasztaltak.model;
 
+import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
+
 public class InfLabor extends Labor{
     @Override
     public void getItem(Virologist v) {

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -94,5 +95,9 @@ public class Shelter extends Field {
      */
     public void setSuite(Suite suite) { this.suite = suite; }
 
+    @Override
+    public String toString() {
+        return super.toString() + getSuiteId(suite) + "[" + refreshCounter + "]";
+    }
     //endregion
 }

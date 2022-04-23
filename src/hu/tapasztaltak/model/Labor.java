@@ -2,6 +2,7 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
 
+import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -41,6 +42,11 @@ public class Labor extends Field {
      * @param gene a laborban található {@link Gene}
      */
     public void setGene(Gene gene) { this.gene = gene; }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + getGeneId(gene);
+    }
 
     //endregion
 }

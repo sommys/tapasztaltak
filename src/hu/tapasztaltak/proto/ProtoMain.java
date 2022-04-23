@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -110,9 +111,44 @@ public class ProtoMain {
         }
     }
 
+    public static int getGeneId(Gene g){
+        switch(g.getAgent().getClass().getSimpleName()){
+            case "Dance": return 0;
+            case "Forget": return 1;
+            case "Protect": return 2;
+            case "Stun": return 3;
+            default: return -1;
+        }
+    }
+
+    public static int getSuiteId(Suite s){
+        if(s == null) return 4;
+        switch(s.getClass().getSimpleName()){
+            case "Bag": return 0;
+            case "Cape": return 1;
+            case "Gloves": return 2;
+            case "Axe": return 3;
+            default: return -1;
+        }
+    }
+
     private static String currentState(){
-        //TODO
         StringBuilder state = new StringBuilder();
+        state.append("fields:\n");
+        List<Object> fields = storage.values().stream().filter(it -> it instanceof Field).collect(Collectors.toList());
+        for(Object f : fields){
+            state.append("\t").append(f.toString()).append("\n");
+        }
+        state.append("virologists:\n");
+        for(Object v : storage.values().stream().filter(it -> it instanceof Virologist).collect(Collectors.toList())){
+            state.append("\t").append(v.toString()).append("\n");
+        }
+        state.append("connections:\n");
+        for(Object f : fields){
+            Field actField = (Field)f;
+            String n = getIdForObject(actField) + ": " + actField.getNeighbours().stream().map(ProtoMain::getIdForObject).collect(Collectors.joining(" "));
+            state.append("\t").append(n).append("\n");
+        }
         return state.toString();
     }
 
@@ -172,7 +208,7 @@ public class ProtoMain {
                     if(infos.length == 3){
                         int rc = parseInt(infos[3]);
                         if(s == null && rc == -1) throw new Exception();
-                        if(s != null && (rc < 4 || rc > 8)) throw new Exception();
+                        if(s != null && (rc > 8)) throw new Exception();
                         f.setRefreshCounter(rc);
                     } else {
                         if(s == null) f.setRefreshCounter(4);
@@ -200,7 +236,7 @@ public class ProtoMain {
                     }
                     if(infos.length == 4){
                         int rc = parseInt(infos[3]);
-                        if((aminoNum + nclNum) == 0 && (rc < 4 || rc > 8)) throw new Exception();
+                        if((aminoNum + nclNum) == 0 && (rc > 8)) throw new Exception();
                         if((aminoNum + nclNum) > 0 && rc != -1) throw new Exception();
                         f.setRefreshCounter(rc);
                     } else {

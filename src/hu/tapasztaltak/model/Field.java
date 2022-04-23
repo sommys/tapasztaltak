@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -194,6 +195,11 @@ public class Field implements ISteppable {
         Logger.log(this, "removeVirologist", CALL, virologist);
         this.virologists.remove(virologist);
         Logger.log(this, "", RETURN);
+    }
+
+    @Override
+    public String toString() {
+        return getIdForObject(this);
     }
 
     //endregion
