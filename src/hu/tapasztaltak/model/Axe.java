@@ -1,5 +1,7 @@
 package hu.tapasztaltak.model;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
+
 /**
  * A baltát reprezentáló osztály
  */
@@ -39,6 +41,9 @@ public class Axe extends Suite{
     public boolean isUsed() { return used; }
 
     public void setUsed(boolean used) { this.used = used; }
+
+    @Override
+    public String toString() { return super.toString() + "[" + (used ? 1 : 0) + "]"; }
 
     //endregion
 }

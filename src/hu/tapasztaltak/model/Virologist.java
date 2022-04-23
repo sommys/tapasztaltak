@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -464,8 +465,46 @@ public class Virologist implements ISteppable {
 
 	@Override
 	public String toString() {
-		//TODO
-		return getIdForObject(this);
+		StringBuilder vDetails = new StringBuilder();
+		vDetails.append(getIdForObject(this)).append("\n");
+		vDetails.append("\t\t").append(getIdForObject(field)).append("\n");
+		List<Suite> wornSuites = inventory.getSuites().stream().filter(Suite::isActive).collect(Collectors.toList());
+		if(wornSuites.isEmpty()){
+			vDetails.append("\t\t-\n");
+		} else {
+			vDetails.append("\t\t").append(wornSuites.stream().map(Suite::toString).collect(Collectors.joining(" "))).append("\n");
+		}
+		List<Suite> storedSuites = inventory.getSuites().stream().filter(it -> !it.isActive()).collect(Collectors.toList());
+		if(storedSuites.isEmpty()){
+			vDetails.append("\t\t-\n");
+		} else {
+			vDetails.append("\t\t").append(storedSuites.stream().map(Suite::toString).collect(Collectors.joining(" "))).append("\n");
+		}
+		if(inventory.getMaterials().isEmpty()){
+			vDetails.append("\t\t-\n");
+		} else{
+			vDetails.append("\t\t").append(inventory.getMaterials().stream().map(ProtoMain::getIdForObject).collect(Collectors.joining(" "))).append("\n");
+		}
+		if(inventory.getAgents().isEmpty()){
+			vDetails.append("\t\t-\n");
+		} else {
+			vDetails.append("\t\t").append(inventory.getAgents().stream().map(it -> getIdForObject(it)+"["+it.getTimeLeft()+"]").collect(Collectors.joining(" "))).append("\n");
+		}
+		List<Agent> defenseAgents = defenses.stream().filter(it -> it instanceof Agent).map(it -> (Agent)it).collect(Collectors.toList());
+		if(modifiers.isEmpty() && defenseAgents.isEmpty()){
+			vDetails.append("\t\t-\n");
+		} else {
+			vDetails.append("\t\t");
+			vDetails.append(modifiers.stream().map(it -> getIdForObject(it)+"["+((Agent)it).getTimeLeft()+"]").collect(Collectors.joining(" ")));
+			vDetails.append(defenseAgents.stream().map(it -> getIdForObject(it)+"["+it.getTimeLeft()+"]").collect(Collectors.joining(" ")));
+			vDetails.append("\n");
+		}
+		if(learnt.isEmpty()){
+			vDetails.append("\t\t-");
+		} else {
+			vDetails.append("\t\t").append(learnt.stream().map(ProtoMain::getIdForObject).collect(Collectors.joining(" ")));
+		}
+		return vDetails.toString();
 	}
 	//endregion
 }

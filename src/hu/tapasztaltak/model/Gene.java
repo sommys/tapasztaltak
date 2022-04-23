@@ -1,10 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -97,5 +99,8 @@ public class Gene {
 	public void removeMaterial(IMaterial material){
 		this.materials.remove(material);
 	}
+
+	@Override
+	public String toString() { return getIdForObject(this)+"["+ProtoMain.getGeneId(this)+"]";	}
 	//endregion
 }
