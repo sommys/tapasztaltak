@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
@@ -248,7 +250,22 @@ public class Virologist implements ISteppable {
 		Logger.log(this, "step", CALL);
 		moved=false;
 
+		inventory.getAgents().forEach(a -> {
+			if(a.getTimeLeft() <= 0){
+				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(a)));
+			}
+		});
 		inventory.getAgents().removeIf(a -> a.getTimeLeft() <= 0);
+		modifiers.forEach(m -> {
+			if(!m.isActive()){
+				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(m)));
+			}
+		});
+		defenses.forEach(d -> {
+			if(!d.stillActive()){
+				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(d)));
+			}
+		});
 		modifiers.removeIf(m -> !m.isActive());
 		defenses.removeIf(d -> !d.stillActive());
 
@@ -395,6 +412,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void addModifier(SpecialModifier m){
 		this.modifiers.add(m);
+		ProtoLogger.logMessage(String.format("%s agent added with %d rounds left from its effect to %s", m.getClass().getSimpleName(), ((Agent)m).getTimeLeft(), getIdForObject(this)));
 	}
 	/**
 	 * Törli {@code m}-et a virológusra ható modósítók közül.

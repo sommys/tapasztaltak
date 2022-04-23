@@ -44,10 +44,6 @@ public class Stun extends Agent implements SpecialModifier {
 		Aminoacid stunA1 = new Aminoacid();
 		Aminoacid stunA2 = new Aminoacid();
 		Aminoacid stunA3 = new Aminoacid();
-
-		TestSetup.addObject(stunA1, "stunA1");
-		TestSetup.addObject(stunA2, "stunA2");
-		TestSetup.addObject(stunA3, "stunA3");
 		return List.of(stunA1, stunA2, stunA3);
 	}
 
@@ -56,10 +52,7 @@ public class Stun extends Agent implements SpecialModifier {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		Logger.log(this, "spread", CALL, v);
 		v.addModifier(this);
-		Logger.log(this, "", RETURN);
-		ProtoLogger.logMessage(String.format("Stun agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
 	}
 
 	/**

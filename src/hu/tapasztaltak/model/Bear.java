@@ -31,10 +31,11 @@ public class Bear extends Agent implements SpecialModifier{
      */
     @Override
     public void spread(Virologist v) {
-        Logger.log(this, "spread", CALL, v);
+        boolean originalLoggerSwitch = ProtoLogger.loggingSwitch;
+        if(ProtoLogger.loggingSwitch) ProtoLogger.loggingSwitch = false;
         v.addModifier(this);
-        Logger.log(this, "", RETURN);
-        ProtoLogger.logMessage(String.format("Bear agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
+        if(originalLoggerSwitch) ProtoLogger.loggingSwitch = true;
+        ProtoLogger.logMessage(String.format("%s infected with Bear", getIdForObject(v)));
     }
 
     /**

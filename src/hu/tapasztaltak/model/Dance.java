@@ -50,8 +50,6 @@ public class Dance extends Agent implements SpecialModifier {
 	public List<IMaterial> getRecipe() {
 		Nucleotid danceN = new Nucleotid();
 		Aminoacid danceA = new Aminoacid();
-		TestSetup.addObject(danceN, "danceN");
-		TestSetup.addObject(danceA, "danceA");
 		return List.of(danceN, danceA);
 	}
 
@@ -60,10 +58,7 @@ public class Dance extends Agent implements SpecialModifier {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		Logger.log(this, "spread", CALL, v);
 		v.addModifier(this);
-		Logger.log(this, "", RETURN);
-		ProtoLogger.logMessage(String.format("Dance agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
 	}
 
 	/**

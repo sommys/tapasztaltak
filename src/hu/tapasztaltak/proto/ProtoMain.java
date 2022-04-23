@@ -6,9 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Inflater;
 
 import static java.lang.Integer.parseInt;
 
@@ -387,10 +385,15 @@ public class ProtoMain {
                                     throw new Exception();
                                 }
                                 int timeLeft = getExtraInfo(ua);
-                                if (timeLeft < 0) throw new Exception();
+                                if ("Bear".equals(a.getClass().getSimpleName())) {
+                                    if (timeLeft != -1) throw new Exception();
+                                } else {
+                                    if (timeLeft < 0) throw new Exception();
+                                }
                                 a.setTimeLeft(timeLeft);
                                 storage.put(getIdForObject(a), a);
                                 a.spread(v);
+                                ProtoLogger.loggingSwitch = false;
                             }
                             break;
                         }

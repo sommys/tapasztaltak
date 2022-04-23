@@ -45,10 +45,6 @@ public class Forget extends Agent implements SpecialModifier {
 		Nucleotid forgetN1 = new Nucleotid();
 		Nucleotid forgetN2 = new Nucleotid();
 		Nucleotid forgetN3 = new Nucleotid();
-
-		TestSetup.addObject(forgetN1, "forgetN1");
-		TestSetup.addObject(forgetN2, "forgetN2");
-		TestSetup.addObject(forgetN3, "forgetN3");
 		return List.of(forgetN1, forgetN2, forgetN3);
 	}
 
@@ -57,10 +53,7 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		Logger.log(this, "spread", CALL, v);
 		v.addModifier(this);
-		Logger.log(this, "", RETURN);
-		ProtoLogger.logMessage(String.format("Forget agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
 	}
 
 	/**

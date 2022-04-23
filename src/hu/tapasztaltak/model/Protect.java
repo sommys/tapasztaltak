@@ -1,10 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.List;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -45,10 +47,6 @@ public class Protect extends Agent implements IDefense {
 		Nucleotid protectN2 = new Nucleotid();
 		Aminoacid protectA1 = new Aminoacid();
 		Aminoacid protectA2 = new Aminoacid();
-		TestSetup.addObject(protectN1, "protectN1");
-		TestSetup.addObject(protectN2, "protectN2");
-		TestSetup.addObject(protectA1, "protectA1");
-		TestSetup.addObject(protectA2, "protectA2");
 		return List.of(protectA1, protectA2, protectN1, protectN2);
 	}
 
@@ -57,9 +55,8 @@ public class Protect extends Agent implements IDefense {
 	 * @param v a {@link Virologist}, akire felkenődik
 	 */
 	public void spread(Virologist v) {
-		Logger.log(this, "spread", CALL, v);
 		v.addDefense(this);
-		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("Protect agent added with %d rounds left from its effect to %s", timeLeft, getIdForObject(v)));
 	}
 
 	/**
