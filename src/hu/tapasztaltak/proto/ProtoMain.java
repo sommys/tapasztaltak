@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static hu.tapasztaltak.proto.ProtoTestRunner.runCommand;
 import static java.lang.Integer.parseInt;
 
 public class ProtoMain {
@@ -18,6 +19,8 @@ public class ProtoMain {
     public static HashMap<String, Integer> ids = new HashMap<>();
 
     public static Gene[] genes = {new Gene(), new Gene(), new Gene(), new Gene()};
+
+    public static boolean randomness = true;
 
     public final static String MENU = "1. Parancsok kézi használata\n" +
             "2. Parancsok importálása fájlból\n" +
@@ -90,7 +93,7 @@ public class ProtoMain {
         storage.put(getIdForObject(genes[3]), genes[3]);
     }
 
-    private static void runTests() {
+    private static void runTests() throws Exception {
         System.out.println(TESTS);
         System.out.print("Válasszon menüpontot: ");
         int input;
@@ -106,8 +109,8 @@ public class ProtoMain {
                 ProtoTestRunner.runTest(input);
             }
         } catch (Exception e) {
-            System.err.println("Hiba történt! [hibás menüpont]");
-            return;
+            System.err.println("Hiba történt! [hibás teszt menüpont]");
+            throw new Exception();
         }
     }
 
@@ -156,7 +159,7 @@ public class ProtoMain {
         System.out.println(currentState());
     }
 
-    private static void exportState() {
+    private static void exportState() throws Exception {
         System.out.print("Mi legyen a fájl neve (kiterjesztés nélkül!), ahova exportálja az állapotot?: ");
         Scanner sc = new Scanner(System.in);
         String fileName = sc.nextLine();
@@ -165,7 +168,8 @@ public class ProtoMain {
             fw.write(currentState());
             fw.close();
         } catch(Exception e){
-            System.err.println("Hiba történt! [fájl mentés]");
+            System.err.println("Hiba történt! [állapot exportálás]");
+            throw new Exception();
         }
     }
 
@@ -175,7 +179,7 @@ public class ProtoMain {
         Scanner sc = new Scanner(System.in);
         String fileName = sc.nextLine();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            BufferedReader br = new BufferedReader(new FileReader(fileName+".txt"));
             String line = br.readLine();
             if(!line.equals("fields:")) throw new Exception();
             while((line = br.readLine()) != null){
@@ -472,7 +476,7 @@ public class ProtoMain {
             }
         } catch(Exception e){
             e.printStackTrace();
-            System.err.println("Hiba történt! [fájl importálás]");
+            System.err.println("Hiba történt! [állapot importálás]");
             throw new Exception();
         } finally {
             ProtoLogger.loggingSwitch = true;
@@ -524,14 +528,35 @@ public class ProtoMain {
         return identifier+ids.get(className);
     }
 
-    private static void importCommands() {
+    private static void importCommands() throws Exception {
+        System.out.print("Mi a fájl neve (kiterjesztés nélkül!), ahonnan importálja az parancsokat?: ");
+        Scanner sc = new Scanner(System.in);
+        String fileName = sc.nextLine();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName+".txt"));
+            String line;
+            while((line = br.readLine()) != null){
+                if(!runCommand(line.trim())) throw new Exception();
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            System.err.println("Hiba történt! [parancsok importálása]");
+            throw new Exception();
+        }
     }
 
-    private static void commandsByHand() {
-        System.out.println("Kilépni az 'exit' paranccsal lehet (illetve hibás parancsra is kilép!)");
+    private static void commandsByHand() throws Exception {
+        System.out.println("Kilépni az 'Exit' paranccsal lehet (illetve hibás parancsra is kilép!)");
         boolean error = false;
         Scanner sc = new Scanner(System.in);
         String cmd;
-        while(ProtoTestRunner.runCommand(cmd = sc.nextLine()));
+        while(true){
+            cmd = sc.nextLine().trim();
+            try{
+                if(!runCommand(cmd)) return;
+            } catch(Exception e){
+                throw new Exception();
+            }
+        }
     }
 }
