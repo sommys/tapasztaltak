@@ -1,10 +1,13 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.List;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -16,6 +19,8 @@ public class Dance extends Agent implements SpecialModifier {
 	 * v-t egy random szomszédos mezőre mozgatja.
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
+
+	//[dnc1 effect] vir1 moved to wrh1
 	public void effect(Virologist v) {
 		Logger.log(this, "effect", CALL, v);
 		if(!v.isStunned()) {
@@ -23,6 +28,7 @@ public class Dance extends Agent implements SpecialModifier {
 			Field randField = f.getRandomNeighbour();
 			f.removeVirologist(v);
 			randField.addVirologist(v);
+			ProtoLogger.logMessage(String.format("[%s effect] %s moved to %s", getIdForObject(this), getIdForObject(v), getIdForObject(randField)));
 		}
 		Logger.log(this, "", RETURN);
 	}
@@ -57,6 +63,7 @@ public class Dance extends Agent implements SpecialModifier {
 		Logger.log(this, "spread", CALL, v);
 		v.addModifier(this);
 		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("Dance agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
 	}
 
 	/**

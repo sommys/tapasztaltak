@@ -1,11 +1,13 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -32,6 +34,7 @@ public class Bear extends Agent implements SpecialModifier{
         Logger.log(this, "spread", CALL, v);
         v.addModifier(this);
         Logger.log(this, "", RETURN);
+        ProtoLogger.logMessage(String.format("Bear agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
     }
 
     /**
@@ -57,20 +60,26 @@ public class Bear extends Agent implements SpecialModifier{
         //ha béna, akkor nem történik semmi
         if(v.isStunned() || v.isMoved()) return;
         //random mozgás
+        ProtoLogger.logMessage(String.format("[%s effect started]", getIdForObject(this)));
         Field f = v.getField();
         Field randField = f.getRandomNeighbour();
         f.removeVirologist(v);
         randField.addVirologist(v);
+        ProtoLogger.logMessage(String.format("%s moved to %s", getIdForObject(v), getIdForObject(randField)));
         //törés, zúzás
         randField.destroyStuff();
+        ProtoLogger.logMessage(String.format("%s destroyed materials on %s", getIdForObject(v), getIdForObject(randField)));
         //fertőzés
         List<Virologist> toInfect = v.getField().getVirologists();
         for(Virologist i : toInfect){
+            ProtoLogger.logMessage(String.format("%s tries to infect %s", getIdForObject(v), getIdForObject(i)));
             v.useAgent(new Bear(), i); //köszi Lilla :)
         }
         //cselekvőképtelenség és kör vége
         v.setMoved(true);
+        ProtoLogger.logMessage(String.format("%s ended round", getIdForObject(v)));
         v.endRound();
+        ProtoLogger.logMessage(String.format("[%s effect ended]", getIdForObject(this)));
     }
 
     /**

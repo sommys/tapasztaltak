@@ -1,10 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.List;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -21,6 +23,7 @@ public class Stun extends Agent implements SpecialModifier {
 		Logger.log(this, "effect", CALL, v);
 		v.setStunned(true);
 		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("[%s effect] %s stunned", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**
@@ -56,6 +59,7 @@ public class Stun extends Agent implements SpecialModifier {
 		Logger.log(this, "spread", CALL, v);
 		v.addModifier(this);
 		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("Stun agent added with %d rounds left from its effect to %s", getTimeLeft(),getIdForObject(v)));
 	}
 
 	/**
