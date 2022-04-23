@@ -88,5 +88,9 @@ public class Gloves extends Suite implements IDefense {
 		this.used = used;
 	}
 
+	public int getUseCount() { return useCount; }
+
+	public void setUseCount(int useCount) { this.useCount = useCount; }
+
 	//endregion
 }
