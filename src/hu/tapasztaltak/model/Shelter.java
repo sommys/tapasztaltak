@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
 
@@ -27,6 +30,9 @@ public class Shelter extends Field {
      * @param v a {@link Virologist}, aki a védőfelszerelést kapja.
      */
     public void getItem(Virologist v) throws Exception {
+        String vList = virologists.isEmpty() ? "-" : virologists.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(v), getIdForObject(this), suite == null ? "-" : getIdForObject(suite), vList));
+
         if(suite == null){
             return;
         }

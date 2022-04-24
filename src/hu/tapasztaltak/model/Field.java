@@ -24,11 +24,11 @@ public class Field implements ISteppable {
     /**
      * A mezővel szomszédos mezők listája.
      */
-    private List<Field> neighbours = new ArrayList<>();
+    protected List<Field> neighbours = new ArrayList<>();
     /**
      * A mezőn tartózkodó virológusok listája.
      */
-    private List<Virologist> virologists = new ArrayList<>();
+    protected List<Virologist> virologists = new ArrayList<>();
 
     /**
      * A {@code v} virológusnak adja, a mezőn található dolgo[ka]t.
