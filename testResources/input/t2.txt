@@ -1,0 +1,39 @@
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+AddUAgent vir1 0 3 //dnc1
+AddUAgent vir1 0 3 //dnc2
+AddUAgent vir1 0 3 //dnc3
+AddUAgent vir2 0 3 //dnc4
+AddUAgent vir2 0 3 //dnc5
+AddUAgent vir2 0 3 //dnc6
+AddUAgent vir3 0 3 //dnc7
+AddUAgent vir4 1 3 //frgt1
+AddUAgent vir4 2 3 //prot1
+AddUAgent vir5 0 3 //dnc8
+AddSuite vir2 2 1 //glv1
+ActivateSuite vir2 glv1
+AddSuite vir3 1 1 //cape1
+ActivateSuite vir3 cape1
+AddSuite vir5 2 2 3 //glv2, glv3
+ActivateSuite vir5 glv2
+ActivateSuite vir5 glv3
+UseAgent vir4 prot1 vir4 //magára védelem nélk.
+ActivateEffects vir4
+UseAgent vir1 dnc1 vir2 //másra, kesztyűsre
+UseAgent vir1 dnc2 vir3 //másra, köpenyesre
+UseAgent vir1 dnc3 vir4 //másra, védekező ágensre
+UseAgent vir2 dnc4 vir1 //másra, védelem nélkül
+UseAgent vir2 dnc5 vir2 //magára, kesztyűvel
+UseAgent vir3 dnc7 vir3 //magára, köpeny
+UseAgent vir4 frgt1 vir4 //magára, védő ágenssel
+UseAgent vir2 dnc6 vir5 //másra, rajtam kesztyű, de rajta több
+UseAgent vir5 dnc8 vir2 //másra, rajtam kesztyű, több mint rajta
+UseAgent vir1 dnc9 vir2 //nincs nálam ilyen
+AddEAgent vir4 3 3
+ActivateEffects vir4
+AddUAgent vir4 0 3
+UseAgent vir4 dnc9 vir1

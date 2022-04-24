@@ -1,0 +1,15 @@
+fld1 created
+fld2 created
+fld3 created
+fld2, fld3 added to fld1 neighbours
+fld1 added to fld2 neighbours
+fld1 added to fld3 neighbours
+vir1 created on fld1
+vir2 created on fld1
+vir3 created on fld1
+Dance added with 3 rounds left from its effect to vir2
+Stun added with 3 rounds left from its effect to vir3
+vir1 moved to fld2
+[dnc1 effect] vir2 moved to *RANDOM FIELD FROM FLD1 NEIGHBOURS*
+[stn1 effect] vir3 stunned
+vir3 can’t move to fld2 [stunned]

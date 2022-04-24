@@ -1,0 +1,21 @@
+CreateField
+CreateWarehouse 2 1
+CreateLabor 1 false
+CreateLabor 1 true
+CreateShelter 1
+CreateVirologist fld1
+CreateVirologist wrh1
+AddMaterial vir2 1 9
+CreateVirologist lab1
+CreateVirologist ilab1
+LearnCode vir4 1
+CreateVirologist ilab1
+AddEAgent vir5 2 3
+ActivateEffects vir5
+CreateVirologist shlt1
+Scan vir1
+Scan vir2
+Scan vir3
+Scan vir4
+Scan vir5
+Scan vir6

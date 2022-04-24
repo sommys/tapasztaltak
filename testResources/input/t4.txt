@@ -1,0 +1,21 @@
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+AddSuite vir2 0 1 10
+ActivateSuite vir2 bag1
+AddSuite vir2 1 1
+AddMaterial vir2 0 1
+AddMaterial vir2 1 1
+AddEAgent vir2 3 3
+ActivateEffects vir2
+AddSuite vir3 1 1
+AddMaterial vir3 0 10
+Steal vir1 vir2
+Steal vir1 vir2
+Steal vir1 vir2
+Steal vir1 vir3
+Steal vir3 vir2
+Steal vir2 vir1
+Steal vir1 vir2
+Steal vir1 vir2

@@ -1,0 +1,15 @@
+CreateField
+CreateField
+CreateField
+SetNeighbours fld1 fld2,fld3
+SetNeighbours fld2 fld1
+SetNeighbours fld3 fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+AddEAgent vir2 0 3
+AddEAgent vir3 3 3
+Move vir1 fld2
+ActivateEffects vir2
+ActivateEffects vir3
+Move vir3 fld2
