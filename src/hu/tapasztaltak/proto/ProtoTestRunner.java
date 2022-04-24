@@ -4,10 +4,11 @@ import hu.tapasztaltak.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.proto.ProtoMain.storage;
+import static hu.tapasztaltak.proto.ProtoLogger.logQuestion;
+import static hu.tapasztaltak.proto.ProtoMain.*;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
@@ -27,11 +28,11 @@ public class ProtoTestRunner {
         }
 
         public void run(){
-            //todo
-            // input megnyitasa
-            // soronkent beolvassuk a parancsokat, meghivjuk a runCommand-ot
-            // kiirjuk az outputFile-ba az eredmenyt: ProtoLogger.actOutput.toString, majd ProtoLogger.actOutput = new StringBuilder();
-            // ellenőrizzük az eredményt okosba
+            // todo
+            //  input megnyitasa
+            //  soronkent beolvassuk a parancsokat, meghivjuk a runCommand-ot
+            //  kiirjuk az outputFile-ba az eredmenyt: ProtoLogger.actOutput.toString, majd ProtoLogger.actOutput = new StringBuilder();
+            //  ellenőrizzük az eredményt okosba
         }
     }
 
@@ -92,7 +93,7 @@ public class ProtoTestRunner {
                     }
                     int geneType = parseInt(args[0]);
                     if(geneType < 0 || geneType > 3) throw new Exception();
-                    l.setGene(ProtoMain.genes[geneType]);
+                    l.setGene(genes[geneType]);
                     storage.put(getIdForObject(l), l);
                     logMessage(String.format("%s created: genectic code: %s", getIdForObject(l), l.getGene().getAgent().getClass().getSimpleName()));
                 } catch(Exception e){
@@ -100,7 +101,7 @@ public class ProtoTestRunner {
                 }
             }
             case "CreateShelter":{
-                if(!(args.length == 1 || args.length == 2)) throw new Exception("Hiba történt [hibás paraméter]");
+                if(!(args.length == 1 || args.length == 2)) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
                 Suite s;
                 try{
                     int suiteType = parseInt(args[0]);
@@ -132,7 +133,7 @@ public class ProtoTestRunner {
                 break;
             }
             case "CreateWarehouse": {
-                if(!(args.length == 2 || args.length == 3)) throw new Exception("Hiba történt [hibás paraméter]");
+                if(!(args.length == 2 || args.length == 3)) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
                 Warehouse w = new Warehouse();
                 try{
                     int amino = parseInt(args[0]);
@@ -151,14 +152,19 @@ public class ProtoTestRunner {
                     if(args.length == 3){
                         rc = parseInt(args[2]);
                         if(rc < -1 || rc > 8) throw new Exception();
-                        if(!w.getMaterials().isEmpty() && rc != -1) throw new Exception("Can't set refresh counter for a field with items!");
-                        if(w.getMaterials().isEmpty() && rc == -1) throw new Exception("Can't set refresh counter to -1 for a field without items!");
+                        if(!w.getMaterials().isEmpty() && rc != -1){
+                            logMessage("Can't set refresh counter for a field with items!");
+                            break;
+                        }
+                        if(w.getMaterials().isEmpty() && rc == -1){
+                            logMessage("Can't set refresh counter to -1 for a field without items!");
+                            break;
+                        }
                     }
                     w.setRefreshCounter(rc);
                     storage.put(getIdForObject(w), w);
                     logMessage(String.format("%s created with %d aminoacid and %d nucleotid", getIdForObject(w), amino, ncl));
                 } catch(Exception e){
-                    if(e.getMessage() != null && e.getMessage().startsWith("Can't set")) logMessage(e.getMessage());
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }
                 break;
@@ -189,17 +195,315 @@ public class ProtoTestRunner {
                     int amount = parseInt(args[2]);
                     if(v.getInventory().getSize()-v.getInventory().getUsedSize() < amount){
                         logMessage(String.format("Not enough space in %s inventory", getIdForObject(v)));
+                        break;
                     }
-                    switch(matType){
-                        //TODO
-                        case 0:{
-                            break;
+                    if(!(matType == 0 || matType == 1)) throw new Exception();
+                    for(int i = 0; i < amount; i++){
+                        IMaterial m = matType == 0 ? new Aminoacid() : new Nucleotid();
+                        storage.put(getIdForObject(m), m);
+                        v.getInventory().addMaterial(m);
+                    }
+                    //logMessage(String.format("%d %s added for %s inventory %d spaces left", amount, matType == 0 ? "aminoacid" : "nucleotid", getIdForObject(v), v.getInventory().getSize()-v.getInventory().getUsedSize()));
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "AddSuite":{
+                if(!(args.length == 3 || args.length == 4)) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    int suiteType = parseInt(args[1]);
+                    if(suiteType < 0 || suiteType > 3) throw new Exception();
+                    int amount = parseInt(args[2]);
+                    if(v.getInventory().getSize()-v.getInventory().getUsedSize() < amount){
+                        logMessage(String.format("Not enough space in %s inventory", getIdForObject(v)));
+                        break;
+                    }
+                    for(int i = 0; i < amount; i++){
+                        Suite s;
+                        switch(suiteType){
+                            case 0:{
+                                s = new Bag();
+                                if(args.length == 4){
+                                    int bagSize = parseInt(args[3]);
+                                    if(bagSize < 0) throw new Exception();
+                                    ((Bag)s).setSize(bagSize);
+                                }
+                                break;
+                            }
+                            case 1:{
+                                s = new Cape();
+                                if(args.length == 4) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                                break;
+                            }
+                            case 2:{
+                                s = new Gloves();
+                                if(args.length == 4){
+                                    int useCount = parseInt(args[3]);
+                                    if(useCount < 1 || useCount > 3) throw new Exception();
+                                    ((Gloves)s).setUseCount(useCount);
+                                }
+                                break;
+                            }
+                            case 3:{
+                                s = new Axe();
+                                if(args.length == 4){
+                                    int used = parseInt(args[3]);
+                                    if(used < 0 || used > 1) throw new Exception();
+                                    ((Axe)s).setUsed(used == 1);
+                                }
+                                break;
+                            }
+                            default: throw new Exception();
                         }
-                        case 1:{
-                            break;
-                        }
+                        storage.put(getIdForObject(s), s);
+                        s.add(v.getInventory());
+                        logMessage(String.format("%s added for %s inventory %d spaces left", getIdForObject(s), getIdForObject(v), v.getInventory().getSize() - v.getInventory().getUsedSize()));
+                    }
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "LearnCode":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    int geneId = parseInt(args[1]);
+                    if(geneId < 0 || geneId > 3) throw new Exception();
+                    v.learn(genes[geneId]);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "AddUAgent":{
+                if(args.length != 3) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    int agentId = parseInt(args[1]);
+                    int timeLeft = parseInt(args[2]);
+                    if(timeLeft < 1 || timeLeft > 3) throw new Exception();
+                    Agent a;
+                    switch(agentId){
+                        case 0: a = new Dance();break;
+                        case 1: a = new Forget();break;
+                        case 2: a = new Protect();break;
+                        case 3: a = new Stun();break;
                         default: throw new Exception();
                     }
+                    a.setTimeLeft(timeLeft);
+                    storage.put(getIdForObject(a), a);
+                    v.getInventory().addAgent(a);
+                    logMessage(String.format("%s [usable for %d rounds] added for %s", getIdForObject(a), a.getTimeLeft(), getIdForObject(v)));
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "AddEAgent":{
+                if(args.length != 3) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    int agentId = parseInt(args[1]);
+                    int timeLeft = parseInt(args[2]);
+                    if(timeLeft == 0 || timeLeft < -1) throw new Exception();
+                    Agent a;
+                    switch(agentId){
+                        case 0: a = new Dance();break;
+                        case 1: a = new Forget();break;
+                        case 2: a = new Protect();break;
+                        case 3: a = new Stun();break;
+                        case 4: a = new Bear();break;
+                        default: throw new Exception();
+                    }
+                    a.setTimeLeft(timeLeft);
+                    storage.put(getIdForObject(a), a);
+                    a.spread(v);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "ActivateSuite":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Suite s = (Suite) storage.get(args[1]);
+                    if(s == null) throw new Exception();
+                    if(v.getInventory().getSuites().stream().filter(Suite::isActive).count() == 3){
+                        logMessage(String.format("%s is already wearing 3 suites", getIdForObject(v)));
+                        break;
+                    }
+                    if(!v.getInventory().getSuites().contains(s)){
+                        logMessage(String.format("%s doesn't own %s", getIdForObject(v), getIdForObject(s)));
+                        break;
+                    }
+                    s.activate(v);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "DeactivateSuite":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Suite s = (Suite) storage.get(args[1]);
+                    if(s == null) throw new Exception();
+                    if(!v.getInventory().getSuites().contains(s)){
+                        logMessage(String.format("%s doesn't own %s", getIdForObject(v), getIdForObject(s)));
+                        break;
+                    }
+                    if(!s.isActive()){
+                        logMessage(String.format("%s is not wearing %s", getIdForObject(v), getIdForObject(s)));
+                        break;
+                    }
+                    s.deactivate(v);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "Move":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Field f = (Field) storage.get(args[1]);
+                    if(f == null) throw new Exception();
+                    v.move(f);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "Scan":{
+                if(args.length != 1) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    v.scanning();
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "MakeAgent":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    int geneId = parseInt(args[1]);
+                    if(geneId < 0 || geneId > 3) throw new Exception();
+                    v.makeAgent(genes[geneId]);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "UseAgent":{
+                if(args.length != 3) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Agent a = (Agent) storage.get(args[1]);
+                    if(a == null) throw new Exception();
+                    if(!v.getInventory().getAgents().contains(a)){
+                        logMessage(String.format("%s doesn’t have %s", getIdForObject(v), getIdForObject(a)));
+                        break;
+                    }
+                    Virologist victim = (Virologist) storage.get(args[2]);
+                    if(victim == null) throw new Exception();
+                    v.useAgent(a, victim);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "Steal":{
+                if(args.length != 2) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Virologist victim = (Virologist) storage.get(args[1]);
+                    if(victim == null) throw new Exception();
+                    v.steal(victim);
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "EndRound":{
+                if(args.length != 1) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    v.endRound();
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "ActivateEffects":{
+                if(args.length != 1) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    for(SpecialModifier sm : v.getModifiers()){
+                        sm.effect(v);
+                    }
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "SwitchSuite":{
+                if(args.length != 1) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    List<Suite> worn = v.getInventory().getSuites().stream().filter(Suite::isActive).collect(Collectors.toList());
+                    List<Suite> stored = v.getInventory().getSuites().stream().filter(it -> !it.isActive()).collect(Collectors.toList());
+                    logMessage(String.format("%s is wearing the following suites:", getIdForObject(v)));
+                    for(int i = 0; i < worn.size(); i++){
+                        logMessage(String.format("%d. %s", i+1, getIdForObject(worn.get(i))));
+                    }
+                    int fromIdx = logQuestion("Pick a suite’s index you want to switch from: ", false) - 1;
+                    while(fromIdx < 0 || fromIdx >= worn.size()){
+                        fromIdx = logQuestion(String.format("No such item in %s’s inventory, pick again:", getIdForObject(v)), false) - 1;
+                    }
+                    logMessage(String.format("%s has the following non-worn suites:", getIdForObject(v)));
+                    for(int i = 0; i < stored.size(); i++){
+                        logMessage(String.format("%d. %s", i+1, getIdForObject(stored.get(i))));
+                    }
+                    int toIdx = logQuestion("Pick a suite’s index you want to switch to: ", false) - 1;
+                    while(toIdx < 0 || toIdx >= stored.size()){
+                        toIdx = logQuestion(String.format("No such item in %s’s inventory, pick again:", getIdForObject(v)), false) - 1;
+                    }
+                    v.switchSuite(worn.get(fromIdx), stored.get(toIdx));
+                } catch(Exception e){
+                    throw new Exception("Hiba történt [hibás paraméter]");
+                }
+                break;
+            }
+            case "UseAxe":{
+                if(args.length != 3) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
+                try {
+                    Virologist v = (Virologist) storage.get(args[0]);
+                    if(v == null) throw new Exception();
+                    Axe a = (Axe) storage.get(args[1]);
+                    if(a == null) throw new Exception();
+                    Virologist victim = (Virologist) storage.get(args[2]);
+                    if(victim == null) throw new Exception();
+                    v.attack(a, victim);
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }

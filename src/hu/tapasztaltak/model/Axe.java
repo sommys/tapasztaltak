@@ -30,23 +30,19 @@ public class Axe extends Suite{
      * Ha már használt kilépünk
      * Ha használjuk kivesszük a megtámadott virológust a steppebleből és a virológusok közül és false lesz az activateja
      */
-    public void use(Virologist v) {
-        //TODO kommenttel meg minden
-
-        if(!isActive()) {
+    public void use(Virologist v, Virologist toKill) {
+        if(!active){
+            ProtoLogger.logMessage(String.format("%s is not wearing %s", getIdForObject(v), getIdForObject(this)));
+            return;
+        }
+        if(used) {
             ProtoLogger.logMessage(String.format("%s cant use %s [broken]",getIdForObject(v),getIdForObject(this)));
             return;
         }
-        if(used){
-            ProtoLogger.logMessage(String.format("%s doest have %s",getIdForObject(v),getIdForObject(this)));
-            return;
-        }
-        Virologist toKill = v.getField().chooseVirologist(v);
-        RoundManager.getInstance().removeSteppable(toKill);
-        RoundManager.getInstance().removeVirologist(toKill);
+        toKill.die();
         ProtoLogger.logMessage(String.format("%s used %s on %s",getIdForObject(v),getIdForObject(this),getIdForObject(toKill)));
         ProtoLogger.logMessage(String.format("%s died %s broke",getIdForObject(toKill),getIdForObject(this)));
-        setActive(false);
+        used = true;
     }
 
     /**
@@ -54,8 +50,8 @@ public class Axe extends Suite{
      * @param v a {@link Virologist}, aki eldobja a baltát
      */
     @Override
-    public void deactivate(Virologist v)
-    {
+    public void deactivate(Virologist v) {
+        active = false;
         remove(v.getInventory());
         ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
     }

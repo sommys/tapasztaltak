@@ -141,7 +141,7 @@ public class Inventory {
 	 * @param suite a hozzáadandó {@link Suite}
 	 */
 	public void addSuite(Suite suite) {
-		if(getUsedSize()< size) suites.add(suite);
+		if(getUsedSize() < size) suites.add(suite);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class Inventory {
 	 * Hozzáadja {@code agent}-et a tárolt ágensek listájához.
 	 * @param agent a hozzáadandó {@link Agent}
 	 */
-	public void addAgent(Agent agent) { agents.add(agent);	}
+	public void addAgent(Agent agent) { agents.add(agent); }
 
 	/**
 	 * Törli {@code agent}-et a tárolt ágensek listájából

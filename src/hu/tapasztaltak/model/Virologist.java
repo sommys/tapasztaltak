@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
@@ -332,12 +333,21 @@ public class Virologist implements ISteppable {
 		RoundManager.getInstance().virologistMoved();
 	}
 
+	public void attack(Axe a, Virologist victim){
+		if(!inventory.getSuites().contains(a)){
+			logMessage(String.format("%s doesn’t have %s", getIdForObject(this), getIdForObject(a)));
+			return;
+		}
+		a.use(this, victim);
+	}
+
 	/**
 	 * Kiveszi a virológust a {@link Field}-ről, kiveszi {@link RoundManager} stepable-jei közül.
 	 * A virológus meghal, így irányíthatóvá válik.
 	 */
 	public void die(){
-		//TODO
+		RoundManager.getInstance().removeSteppable(this);
+		RoundManager.getInstance().removeVirologist(this);
 	}
 
 	//region GETTEREK ÉS SETTEREK
