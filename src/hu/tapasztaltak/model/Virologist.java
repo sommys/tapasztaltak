@@ -105,6 +105,7 @@ public class Virologist implements ISteppable {
 			return;
 		}
 		g.make(this.inventory);
+		ProtoLogger.logMessage(String.format("%s [usable for %s rounds] added for %s", getIdForObject(g.getAgent()), getIdForObject(g.getAgent().timeLeft),  getIdForObject(this)));
 		Logger.log(this, "", RETURN);
 	}
 
@@ -120,6 +121,7 @@ public class Virologist implements ISteppable {
 			return;
 		}
 		spreadInitiation(a, v);
+		ProtoLogger.logMessage(String.format("%s used %s on %s", getIdForObject(this), getIdForObject(a),  getIdForObject(v)));
 		Logger.log(this, "", RETURN);
 	}
 
