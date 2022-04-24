@@ -5,6 +5,8 @@ import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 import java.util.Random;
 import java.util.Scanner;
+
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
@@ -19,7 +21,7 @@ public class Cape extends Suite implements IDefense {
 	 * @param a a használt {@link Agent}
 	 * @return a védés sikeressége
 	 */
-	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
 		/**
 		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
 		Logger.log(null, "Sikeres volt a köpeny védése [valós játékban 82.3%-ban igen]? (I/N):", QUESTION);
@@ -30,12 +32,25 @@ public class Cape extends Suite implements IDefense {
 		 **/
 		Random r = new Random();
 		double result = r.nextDouble();
-		if(result <= 0.823){
-			ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + " protected");
+		if(ProtoMain.randomness) {
+			if (result <= 0.823) {
+				ProtoLogger.logMessage(getIdForObject(this) + " protected");
+			} else {
+				ProtoLogger.logMessage(getIdForObject(this) + " didn't protect");
+			}
+			return (result <= 0.823);
 		}else{
-			ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + " didn't protect");
+			int choice = ProtoLogger.logQuestion("Do you want " + getIdForObject(this) + " to protect? (Y/N):",true);
+			if(choice == 'Y'){
+				ProtoLogger.logMessage(getIdForObject(this) + " protected");
+				return true;
+			} else if(choice == 'N'){
+				ProtoLogger.logMessage(getIdForObject(this) + " didn't protect");
+				return false;
+			} else {
+				return false;
+			}
 		}
-		return (result <= 0.823);
 	}
 
 	/**
@@ -54,7 +69,7 @@ public class Cape extends Suite implements IDefense {
 	public void activate(Virologist v) {
 		v.addDefense(this);
 		setActive(true);
-		ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + "is now worn by" + ProtoMain.getIdForObject(v));
+		ProtoLogger.logMessage(getIdForObject(this) + "is now worn by" + getIdForObject(v));
 	}
 
 	/**

@@ -11,7 +11,7 @@ public interface IDefense {
 	 * @param a a használt {@link Agent}
 	 * @return sikeres volt-e a támadás
 	 */
-	boolean tryToBlock(Virologist atc, Virologist vict, Agent a);
+	boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception;
 
 	/**
 	 * Megadja, hogy aktívan hat-e még a védő
