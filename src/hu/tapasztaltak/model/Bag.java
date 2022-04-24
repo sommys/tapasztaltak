@@ -1,9 +1,11 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.Random;
 
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -27,6 +29,7 @@ public class Bag extends Suite {
 		v.getInventory().setSize(currentSize + size);
 		setActive(true);
 		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
 	/**
@@ -40,6 +43,7 @@ public class Bag extends Suite {
 		v.getInventory().setSize(currentSize - size);
 		setActive(false);
 		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
 	/**
