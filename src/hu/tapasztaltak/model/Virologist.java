@@ -7,6 +7,7 @@ import hu.tapasztaltak.skeleton.TestSetup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -99,9 +100,14 @@ public class Virologist implements ISteppable {
 		if(stunned||moved){
 			return;
 		}
-		g.make(this.inventory);
-		ProtoLogger.logMessage(String.format("%s [usable for %s rounds] added for %s", getIdForObject(g.getAgent()), getIdForObject(g.getAgent().timeLeft),  getIdForObject(this)));
-		Logger.log(this, "", RETURN);
+		int originalMatSize = inventory.getMaterials().size();
+		g.make(inventory);
+		int afterMatSize = inventory.getMaterials().size();
+		if(originalMatSize != afterMatSize){
+			logMessage(String.format("%s made %s", getIdForObject(this), getIdForObject(inventory.getAgents().get(inventory.getAgents().size()-1))));
+		} else {
+			logMessage(String.format("%s doesn’t have enough material to make %s agent", getIdForObject(this), g.getAgent().getClass().getSimpleName().toLowerCase()));
+		}
 	}
 
 	/**
