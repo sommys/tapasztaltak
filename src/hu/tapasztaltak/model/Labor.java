@@ -1,8 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 
+import java.util.stream.Collectors;
+
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -22,6 +26,9 @@ public class Labor extends Field {
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
     public void getItem(Virologist v) {
+        String virologists = getVirologists().isEmpty() ? "-" : getVirologists().stream().map(Object::toString).collect(Collectors.joining(", "));
+        String code = getGene() == null ? "-" : String.format("%s[%s]", getGene().toString(), getGene().getClass().getSimpleName());
+        ProtoLogger.logMessage(String.format("%s scanned %s -> geneticCode: %s | virologists: %s", getIdForObject(this), this.toString(), code, virologists));
         v.learn(gene);
     }
 

@@ -148,27 +148,6 @@ public class Virologist implements ISteppable {
 		if(stunned||moved){
 			return;
 		}
-		String virologists = field.getVirologists().isEmpty() ? "-" : field.getVirologists().stream().map(Object::toString).collect(Collectors.joining(", "));
-		switch (field.getClass().getSimpleName()) {
-			case "Warehouse":
-				Warehouse wh = (Warehouse) field;
-				String materials = wh.getMaterials().isEmpty() ? "-" : wh.getMaterials().stream().map(Object::toString).collect(Collectors.joining(", "));
-				ProtoLogger.logMessage(String.format("%s scanned %s -> materials: %s | virologists: %s", getIdForObject(this), field.toString(), materials, virologists));
-				break;
-			case "Shelter":
-				Shelter sh = (Shelter) field;
-				String suite = sh.getSuite() == null ? "-" : getIdForObject(sh.getSuite());
-				ProtoLogger.logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(this), field.toString(), suite, virologists));
-				break;
-			case "Labor":
-				Labor lb = (Labor) field;
-				String gene = lb.getGene() == null ? "-" : String.format("%s[%s]", lb.getGene().toString(), lb.getGene().getClass().getSimpleName());
-				ProtoLogger.logMessage(String.format("%s scanned %s -> geneticCode: %s | virologists: %s", getIdForObject(this), field.toString(), gene, virologists));
-				break;
-			default:
-				ProtoLogger.logMessage(String.format("%s scanned %s -> virologists: %s", getIdForObject(this), field.toString(), virologists));
-				break;
-		}
 	}
 
 	/**
