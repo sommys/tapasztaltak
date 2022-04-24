@@ -116,7 +116,7 @@ public class Virologist implements ISteppable {
 	 * @param a a felhasznált {@link Agent}
 	 * @param v a megkent {@link Virologist}
 	 */
-	public void useAgent(Agent a, Virologist v) {
+	public void useAgent(Agent a, Virologist v) throws Exception {
 		Logger.log(this, "useAgent", CALL, a, v);
 		if(stunned || moved || !canReach(v)){
 			Logger.log(this, "", RETURN);
@@ -306,7 +306,7 @@ public class Virologist implements ISteppable {
 	 * @param a a használt {@link Agent}
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
-	public void spreadInitiation(Agent a, Virologist v) {
+	public void spreadInitiation(Agent a, Virologist v) throws Exception {
 		Logger.log(this, "spreadInitiation", CALL, a, v);
 		inventory.removeAgent(a);
 		for(IDefense d : v.getDefenses()){

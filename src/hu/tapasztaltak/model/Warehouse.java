@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -9,6 +10,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
@@ -27,19 +29,21 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
-        Logger.log(this, "getItem", CALL, v);
+        int mat = 0;
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
         for (IStealable m : chosen) {
             if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
                 m.add(v.getInventory());
                 materials.remove(m);
+                mat++;
             }
         }
+        int size  = v.getInventory().getSize() - v.getInventory().getUsedSize();
+        ProtoLogger.logMessage(String.format("%d %s added to %s inventory %d spaces left",mat,getIdForObject(chosen),getIdForObject(v),size));
         if(materials.isEmpty() && refreshCounter == -1){
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
         }
-        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -54,9 +58,7 @@ public class Warehouse extends Field {
      * Random anyagokat tesz a mezőre.
      */
     public void refresh() {
-        Logger.log(this, "refresh", CALL);
         if(!materials.isEmpty()){
-            Logger.log(this, "", RETURN);
             return;
         }
         refreshCounter = -1;
@@ -70,17 +72,18 @@ public class Warehouse extends Field {
             if (randomNumber == 0) {
                 Aminoacid a = new Aminoacid();
                 TestSetup.addObject(a, "a"+i);
-                Logger.log(a, "<<create>>", CALL);
-                Logger.log(a, "newAminoacid="+TestSetup.getName(a), RETURN);
                 materials.add(a);
             }
             else {
                 Nucleotid n = new Nucleotid();
                 TestSetup.addObject(n, "n"+i);
-                Logger.log(n, "<<create>>", CALL);
-                Logger.log(n, "newNucleotid="+TestSetup.getName(n), RETURN);
                 materials.add(n);
             }
+        }
+        List<IMaterial> mats = getMaterials();
+        ProtoLogger.logMessage(String.format("%s refreshed with ",getIdForObject(this));
+        for (IMaterial m: mats) {
+
         }
         Logger.log(this, "", RETURN);
     }

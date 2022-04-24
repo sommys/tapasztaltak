@@ -23,8 +23,9 @@ public class Protect extends Agent implements IDefense {
 	 * @return sikeres volt-e a támadás
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
-		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
+		/*Logger.log(this, "tryToBlock", CALL, atc, vict, a);
 		Logger.log(this, "blockingSuccess=true", RETURN);
+		*/
 		return true;
 	}
 
@@ -64,10 +65,8 @@ public class Protect extends Agent implements IDefense {
 	 * @return felhasználható másolat
 	 */
 	public Agent clone(){
-		Logger.log(this, "clone", CALL);
 		Protect newAgent = new Protect();
 		newAgent.setTimeLeft(3);
-		Logger.log(this, "newAgent", RETURN);
 		return newAgent;
 	}
 }

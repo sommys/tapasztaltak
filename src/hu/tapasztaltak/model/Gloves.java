@@ -1,9 +1,11 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
-
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import java.util.Scanner;
 
+import static hu.tapasztaltak.proto.ProtoMain.randomness;
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
@@ -28,22 +30,22 @@ public class Gloves extends Suite implements IDefense {
 	 * @param a a használt {@link Agent}
 	 * @return az, hogy visszakenjük-e a támadóra
 	 */
-	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
-		Logger.log(this, "tryToBlock", CALL, atc, vict, a);
+	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
 		if(atc != vict && !used && useCount > 0 && !vict.isStunned()){
 			Scanner sc = new Scanner(System.in);
-			Logger.log(null, "Visszakennéd a támadóra? (I/N):", QUESTION);
+			ProtoLogger.logQuestion(String.format("Do you want to use %s [%s uses left]?",getIdForObject(this),useCount),true);
 			String input = sc.nextLine();
 			if(input.equalsIgnoreCase("I")){
 				used = true;
 				useCount--;
 				vict.useAgent(a,atc);
-				if(useCount==0) remove(vict.getInventory());
-				Logger.log(this, "blockingSuccess="+true, RETURN);
+				if(useCount==0) {
+					ProtoLogger.logMessage(String.format("%s used away, you can no longer use it",getIdForObject(this)));
+					remove(vict.getInventory());
+				}
 				return true;
 			}
 		}
-		Logger.log(this, "blockingSuccess="+false, RETURN);
 		return false;
 	}
 
@@ -61,10 +63,9 @@ public class Gloves extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
-		Logger.log(this, "activate", CALL, v);
 		v.addDefense(this);
 		setActive(true);
-		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**
@@ -72,10 +73,9 @@ public class Gloves extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
-		Logger.log(this, "deactivate", CALL, v);
 		v.removeDefense(this);
 		setActive(false);
-		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	//region GETTEREK ÉS SETTEREK

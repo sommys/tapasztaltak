@@ -1,8 +1,9 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
-
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,46 +51,41 @@ public class Game {
         for(int i = 1; i <= fieldNum; i++){
             Field f = new Field();
             TestSetup.addObject(f, "f"+i);
-            Logger.log(f, "<<create>>", CALL);
-            Logger.log(f, "", RETURN);
+            ProtoLogger.logMessage(String.format("%s created",getIdForObject(f)));
             fields.add(f);
             rm.addSteppable(f);
         }
         for(int i = 1; i <= laborNum; i++){
             Labor l= new Labor();
             TestSetup.addObject(l, "l"+i);
-            Logger.log(l, "<<create>>", CALL);
-            Logger.log(l, "", RETURN);
+            ProtoLogger.logMessage(String.format("%s created",getIdForObject(l)));
             fields.add(l);
             rm.addSteppable(l);
         }
         for(int i = 1; i <= warehouseNum; i++){
             Warehouse w = new Warehouse();
             TestSetup.addObject(w,"w"+i);
-            Logger.log(w, "<<create>>", CALL);
-            Logger.log(w, "", RETURN);
+            ProtoLogger.logMessage(String.format("%s created",getIdForObject(w)));
             fields.add(w);
             rm.addSteppable(w);
         }
         for(int i = 1; i <= shelterNum; i++){
             Shelter s = new Shelter();
             TestSetup.addObject(s,"s"+i);
-            Logger.log(s, "<<create>>", CALL);
-            Logger.log(s, "", RETURN);
+            ProtoLogger.logMessage(String.format("%s created",getIdForObject(s)));
             fields.add(s);
             rm.addSteppable(s);
         }
         for(int i = 1; i <= virologistNum; i++){
             Virologist v = new Virologist();
             TestSetup.addObject(v,"v"+i);
-            Logger.log(v, "<<create>>", CALL);
-            Logger.log(v, "", RETURN);
             rm.addSteppable(v);
             rm.addVirologist(v);
             Random r = new Random();
-            v.setField(fields.get(r.nextInt(fields.size())));
+            Field f =fields.get(r.nextInt(fields.size()));
+            v.setField(f);
+            ProtoLogger.logMessage(String.format("%s created on %s",getIdForObject(v),getIdForObject(f)));
         }
-        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -98,12 +94,10 @@ public class Game {
      * @param v a potenciális győztes {@link Virologist}
      */
     public void checkEndGame(Virologist v) {
-        Logger.log(this, "checkEndGame", CALL, v);
         if (v.getLearnt().size() == maxAgent) {
-            Logger.log(this, String.format("%s játékos győzött!", TestSetup.getName(v)), COMMENT);
+            ProtoLogger.logMessage(String.format("%s játékos győzött!",getIdForObject(v)));
             // Todo: Peti, játék leállítása, egyéb teendők
         }
-        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK
