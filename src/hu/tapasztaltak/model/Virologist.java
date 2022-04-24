@@ -72,7 +72,6 @@ public class Virologist implements ISteppable {
 	 * @param s a {@link Suite}, amit fel szeretne venni
 	 */
 	public void putOnSuite(Suite s) {
-		Logger.log(this, "putOnSuite", CALL, s);
 		if(stunned||moved){
 			Logger.log(this, "", RETURN);
 			return;
@@ -88,7 +87,6 @@ public class Virologist implements ISteppable {
 		}else{
 			ProtoLogger.logMessage(String.format("%s is already wearing 3 suites", getIdForObject(this)));
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -151,24 +149,25 @@ public class Virologist implements ISteppable {
 	 * @return a kiválaszott tárgyak ({@link IStealable})
 	 */
 	public List<IStealable> chooseItem(List<IStealable> available) {
-		TestSetup.addObject(available, "available");
-		TestSetup.removeObject("available");
 		List<IStealable> chosen = new ArrayList<>();
-		Scanner sc = new Scanner(System.in);
-		String pickupDecision = sc.nextLine();
-		if(!pickupDecision.equalsIgnoreCase("I")){
-			return chosen;
-		}
-		int remaining = inventory.getSize() - inventory.getUsedSize();
-		for(IStealable a : available){
-			String currentPickupDecision = sc.nextLine();
-			if(currentPickupDecision.equalsIgnoreCase("I")){
-				if(remaining>0){
-					chosen.add(a);
-					remaining--;
+		try {
+			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup materials from %s?", getIdForObject(field)), true);
+			if (pickupDecision == 0) {
+				return chosen;
+			}
+			int remaining = inventory.getSize() - inventory.getUsedSize();
+			for (IStealable a : available) {
+				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup %s?", getIdForObject(a)), true);
+				if (currentPickupDecision == 1) {
+					if (remaining > 0) {
+						chosen.add(a);
+						remaining--;
+						ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left", getIdForObject(a), getIdForObject(this), remaining));
+					}
 				}
 			}
 		}
+		catch (Exception e) {e.printStackTrace();}
 
 		moved = !chosen.isEmpty();
 
