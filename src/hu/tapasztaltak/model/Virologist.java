@@ -89,6 +89,8 @@ public class Virologist implements ISteppable {
 		}
 		if(activeSuites < 3){
 			s.activate(this);
+		}else{
+			ProtoLogger.logMessage(String.format("%s is already wearing 3 suites", getIdForObject(this)));
 		}
 		Logger.log(this, "", RETURN);
 	}

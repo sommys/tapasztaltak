@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
