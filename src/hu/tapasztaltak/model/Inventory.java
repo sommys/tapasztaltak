@@ -1,14 +1,10 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
-import hu.tapasztaltak.skeleton.TestSetup;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.*;
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A virológus tárhelyét reprezentáló osztály.
@@ -36,20 +32,23 @@ public class Inventory {
 	 * @return kiválasztott {@link IStealable} vagy null, ha nincs ellopható elem
 	 */
 	public IStealable pickItem() {
-		ProtoLogger.logMessage("Virologist has the following items:");
-		if (materials.isEmpty() && suites.isEmpty()){
-			ProtoLogger.logMessage("Virologist's inventory is empty, nothing can be stolen.");
+		if (materials.isEmpty() && suites.isEmpty()) {
 			return null;
 		}
 
 		int id = 1;
 		for (IMaterial m : materials) {
-			ProtoLogger.logMessage(String.format("%d. %s", id, TestSetup.getName(m)));
+			ProtoLogger.logMessage(String.format("%d. %s", id, getIdForObject(m)));
 			id++;
 		}
 
 		for (Suite s : suites) {
-			ProtoLogger.logMessage(String.format("%d. %s",id,TestSetup.getName(s)));
+			if (s.isActive()) {
+				ProtoLogger.logMessage(String.format("%d. %s[used]", id, getIdForObject(s)));
+			}
+			else {
+				ProtoLogger.logMessage(String.format("%d. %s", id, getIdForObject(s)));
+			}
 			id++;
 		}
 

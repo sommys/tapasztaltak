@@ -51,26 +51,22 @@ public class RoundManager {
      * Elindít egy új kört.
      */
     private void newRound() {
-        Logger.log(this, "newRound", CALL);
         for (var s : steppables) {
             s.step();
         }
 
         movedCounter = 0;
-        Logger.log(this, "", RETURN);
     }
 
     /**
      * Növeli a lépett virológusok számát és a kör végén újat indít.
      */
     public void virologistMoved() {
-        Logger.log(this, "virologistMoved", CALL);
         movedCounter++;
         if (movedCounter == virologists.size()) {
             movedCounter = 0;
             newRound();
         }
-        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

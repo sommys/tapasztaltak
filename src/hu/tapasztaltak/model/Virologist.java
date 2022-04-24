@@ -143,13 +143,30 @@ public class Virologist implements ISteppable {
 	 * Tapogatózás, a virológus megismeri a mezőn lévő virológusokat és tárgyakat/genetikai kódot.
 	 */
 	public void scanning() {
-		Logger.log(this, "scanning", CALL);
 		if(stunned||moved){
-			Logger.log(this, "", RETURN);
 			return;
 		}
-		field.getItem(this);
-		Logger.log(this, "", RETURN);
+		String virologists = field.getVirologists().isEmpty() ? "-" : field.getVirologists().stream().map(Object::toString).collect(Collectors.joining(", "));
+		switch (field.getClass().getSimpleName()) {
+			case "Warehouse":
+				Warehouse wh = (Warehouse) field;
+				String materials = wh.getMaterials().isEmpty() ? "-" : wh.getMaterials().stream().map(Object::toString).collect(Collectors.joining(", "));
+				ProtoLogger.logMessage(String.format("%s scanned %s -> materials: %s | virologists: %s", getIdForObject(this), field.toString(), materials, virologists));
+				break;
+			case "Shelter":
+				Shelter sh = (Shelter) field;
+				String suite = sh.getSuite() == null ? "-" : getIdForObject(sh.getSuite());
+				ProtoLogger.logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(this), field.toString(), suite, virologists));
+				break;
+			case "Labor":
+				Labor lb = (Labor) field;
+				String gene = lb.getGene() == null ? "-" : String.format("%s[%s]", lb.getGene().toString(), lb.getGene().getClass().getSimpleName());
+				ProtoLogger.logMessage(String.format("%s scanned %s -> geneticCode: %s | virologists: %s", getIdForObject(this), field.toString(), gene, virologists));
+				break;
+			default:
+				ProtoLogger.logMessage(String.format("%s scanned %s -> virologists: %s", getIdForObject(this), field.toString(), virologists));
+				break;
+		}
 	}
 
 	/**
@@ -193,21 +210,38 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
-		Logger.log(this, "steal", CALL, from);
-		if(stunned || moved || !canReach(from) || inventory.getUsedSize()==inventory.getSize()){
-			Logger.log(this, "", RETURN);
+		if(!from.isStunned()) {
+			ProtoLogger.logMessage(String.format("%s can’t steal from %s [not stunned]", getIdForObject(this), getIdForObject(from)));
 			return;
 		}
+		if (stunned) {
+			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [stunned]");
+			return;
+		}
+		if(!canReach(from)){
+			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [can't reach]");
+			return;
+		}
+		if (moved) {
+			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [moved]");
+			return;
+		}
+
+		ProtoLogger.logMessage(getIdForObject(this) + " stealing from " + getIdForObject(from));
+		ProtoLogger.logMessage(getIdForObject(from) + " has the following items:");
+
 		Inventory inv2 = from.getInventory();
 		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) {
-			Logger.log(this, "", RETURN);
+			ProtoLogger.logMessage(String.format("%s inventory empty, %s can't steal anything", getIdForObject(from), getIdForObject(this)));
 			return;
 		}
+
 		IStealable item = inv2.pickItem();
-		if(!from.isStunned()) {
-			Logger.log(this, "", RETURN);
-			return;
+
+		if (inventory.getUsedSize()==inventory.getSize()) {
+			ProtoLogger.logMessage("Inventory full, can’t pickup more items");
 		}
+
 		from.stolen(this, item);
 		Logger.log(this, "", RETURN);
 	}
@@ -219,14 +253,12 @@ public class Virologist implements ISteppable {
 	 * @param what az ellopni kívánt {@link IStealable}
 	 */
 	public void stolen(Virologist stealer, IStealable what) {
-		Logger.log(this, "stolen", CALL, stealer, what);
 		if(!stunned){
-			Logger.log(this, "", RETURN);
 			return;
 		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
-		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage("Chosen item stolen from " + getIdForObject(this));
 	}
 
 	/**
@@ -234,14 +266,13 @@ public class Virologist implements ISteppable {
 	 * @param g a megtanulandó {@link Gene}
 	 */
 	public void learn(Gene g) {
-		Logger.log(this, "learn", CALL, g);
 		if(!learnt.contains(g)){
 			learnt.add(g);
+			ProtoLogger.logMessage(getIdForObject(this) + " learnt " + g.getClass().getSimpleName());
 			Game.getInstance().checkEndGame(this);
 		} else {
-			Logger.log(this, "A genetikai kód már ismert.", COMMENT);
+			ProtoLogger.logMessage(getIdForObject(this) + " already learnt this genetic code");
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -309,9 +340,13 @@ public class Virologist implements ISteppable {
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
 	public void endRound() {
-		Logger.log(this, "endRound", CALL);
+		if (RoundManager.getInstance().getMovedCounter() == RoundManager.getInstance().getVirologists().size()) {
+			ProtoLogger.logMessage(getIdForObject(this) + " ended round. New round starts");
+		}
+		else {
+			ProtoLogger.logMessage(getIdForObject(this) + " ended round");
+		}
 		RoundManager.getInstance().virologistMoved();
-		Logger.log(this, "", RETURN);
 	}
 
 	/**

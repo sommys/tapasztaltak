@@ -22,9 +22,7 @@ public class Labor extends Field {
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
     public void getItem(Virologist v) {
-        Logger.log(this, "getItem", CALL, v);
         v.learn(gene);
-        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK
