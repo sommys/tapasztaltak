@@ -32,7 +32,6 @@ public class Shelter extends Field {
     public void getItem(Virologist v) throws Exception {
         String vList = virologists.isEmpty() ? "-" : virologists.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(v), getIdForObject(this), suite == null ? "-" : getIdForObject(suite), vList));
-
         if(suite == null){
             return;
         }
