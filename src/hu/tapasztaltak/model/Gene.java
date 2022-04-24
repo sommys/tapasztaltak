@@ -47,6 +47,7 @@ public class Gene {
 		if(materials.size() == found.size()){
 			Agent newAgent = (Agent) agent.clone();
 			inv.addAgent(newAgent);
+			RoundManager.getInstance().addSteppable(newAgent);
 		}
 	}
 	//region GETTEREK ÉS SETTEREK

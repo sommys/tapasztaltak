@@ -9,16 +9,15 @@ vir4 created on fld1
 vir5 created on fld1
 Dance agent added with 3 rounds left from its effect to vir1
 Forget agent added with 1 rounds left from its effect to vir2
-Protect added with 3 rounds left from its effect to vir3
-Stun added with 3 rounds left from its effect to vir4
-Bear agent added with 3 rounds left from its effect to vir5
+Protect agent added with 3 rounds left from its effect to vir3
+Stun agent added with 3 rounds left from its effect to vir4
+Bear agent added with -1 rounds left from its effect to vir5
 [dnc1 effect] vir1 moved to wrh1
 vir2 learnt Dance
 vir2 already learnt this genetic code [Dance]
 [frgt1 effect] vir2 forgets their learnt genetic codes
 vir2 learnt Dance
-[prot1 effect] protect agent added to defenses for vir3
-[stn1 effect] vir4 stunned
+[stun1 effect] vir4 stunned
 vir4 can’t move to wrh1 [stunned]
 vir3 moved to wrh1
 [bear1 effect started]

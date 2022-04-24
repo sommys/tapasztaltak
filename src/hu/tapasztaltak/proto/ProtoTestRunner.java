@@ -110,6 +110,8 @@ public class ProtoTestRunner {
                 Virologist v = new Virologist();
                 v.setField(f);
                 f.addVirologist(v);
+                RoundManager.getInstance().addVirologist(v);
+                RoundManager.getInstance().addSteppable(v);
                 storage.put(getIdForObject(v), v);
                 logMessage(String.format("%s created on %s", getIdForObject(v), getIdForObject(f)));
                 break;
@@ -118,6 +120,7 @@ public class ProtoTestRunner {
                 if(args.length != 0) throw new Exception("Hiba történt [túl sok/kevés paraméter]");
                 Field f = new Field();
                 storage.put(getIdForObject(f), f);
+                RoundManager.getInstance().addSteppable(f);
                 logMessage(String.format("%s created", getIdForObject(f)));
                 break;
             }
@@ -134,6 +137,7 @@ public class ProtoTestRunner {
                     if(geneType < 0 || geneType > 3) throw new Exception();
                     l.setGene(genes[geneType]);
                     storage.put(getIdForObject(l), l);
+                    RoundManager.getInstance().addSteppable(l);
                     logMessage(String.format("%s created: genectic code: %s", getIdForObject(l), l.getGene().getAgent().getClass().getSimpleName()));
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
@@ -163,6 +167,7 @@ public class ProtoTestRunner {
                     }
                     sh.setRefreshCounter(rc);
                     storage.put(getIdForObject(sh), sh);
+                    RoundManager.getInstance().addSteppable(sh);
                     if(s != null) storage.put(getIdForObject(s), s);
                     logMessage(String.format("%s created with %s", getIdForObject(sh), s == null ? "Nothing" : s.getClass().getSimpleName()));
                 } catch(Exception e){
@@ -202,6 +207,7 @@ public class ProtoTestRunner {
                     }
                     w.setRefreshCounter(rc);
                     storage.put(getIdForObject(w), w);
+                    RoundManager.getInstance().addSteppable(w);
                     logMessage(String.format("%s created with %d aminoacid and %d nucleotid", getIdForObject(w), amino, ncl));
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
@@ -337,6 +343,7 @@ public class ProtoTestRunner {
                     }
                     a.setTimeLeft(timeLeft);
                     storage.put(getIdForObject(a), a);
+                    RoundManager.getInstance().addSteppable(a);
                     v.getInventory().addAgent(a);
                     logMessage(String.format("%s [usable for %d rounds] added for %s", getIdForObject(a), a.getTimeLeft(), getIdForObject(v)));
                 } catch(Exception e){
@@ -358,12 +365,18 @@ public class ProtoTestRunner {
                         case 1: a = new Forget();break;
                         case 2: a = new Protect();break;
                         case 3: a = new Stun();break;
-                        case 4: a = new Bear();break;
+                        case 4: {
+                            a = new Bear();
+                            loggingSwitch = false;
+                            break;
+                        }
                         default: throw new Exception();
                     }
                     a.setTimeLeft(timeLeft);
                     storage.put(getIdForObject(a), a);
+                    RoundManager.getInstance().addSteppable(a);
                     a.spread(v);
+                    loggingSwitch=true;
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }

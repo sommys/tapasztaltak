@@ -6,6 +6,7 @@ import hu.tapasztaltak.skeleton.Logger;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
@@ -31,10 +32,9 @@ public class Bear extends Agent implements SpecialModifier{
      */
     @Override
     public void spread(Virologist v) {
-        boolean originalLoggerSwitch = ProtoLogger.loggingSwitch;
-        if(ProtoLogger.loggingSwitch) ProtoLogger.loggingSwitch = false;
+        ProtoLogger.loggingSwitch = !ProtoLogger.loggingSwitch;
         v.addModifier(this);
-        if(originalLoggerSwitch) ProtoLogger.loggingSwitch = true;
+        ProtoLogger.loggingSwitch = !ProtoLogger.loggingSwitch;
         ProtoLogger.logMessage(String.format("%s infected with Bear", getIdForObject(v)));
     }
 
@@ -66,19 +66,19 @@ public class Bear extends Agent implements SpecialModifier{
         Field randField = f.getRandomNeighbour();
         f.removeVirologist(v);
         randField.addVirologist(v);
+        v.setField(randField);
         ProtoLogger.logMessage(String.format("%s moved to %s", getIdForObject(v), getIdForObject(randField)));
         //törés, zúzás
         randField.destroyStuff();
         ProtoLogger.logMessage(String.format("%s destroyed materials on %s", getIdForObject(v), getIdForObject(randField)));
         //fertőzés
-        List<Virologist> toInfect = v.getField().getVirologists();
+        List<Virologist> toInfect = v.getField().getVirologists().stream().filter(it -> it != v).collect(Collectors.toList());
         for(Virologist i : toInfect){
             ProtoLogger.logMessage(String.format("%s tries to infect %s", getIdForObject(v), getIdForObject(i)));
-            v.useAgent(new Bear(), i); //köszi Lilla :)
+            v.spreadInitiation(new Bear(), i); //köszi Lilla :)
         }
         //cselekvőképtelenség és kör vége
         v.setMoved(true);
-        ProtoLogger.logMessage(String.format("%s ended round", getIdForObject(v)));
         v.endRound();
         ProtoLogger.logMessage(String.format("[%s effect ended]", getIdForObject(this)));
     }

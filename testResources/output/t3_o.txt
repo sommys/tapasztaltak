@@ -1,0 +1,31 @@
+fld1 created
+wrh1 created with 1 aminoacid and 1 nucleotid
+wrh1 added to fld1 neighbours
+fld1 added to wrh1 neighbours
+vir1 created on fld1
+vir2 created on fld1
+vir3 created on fld1
+vir4 created on fld1
+vir5 created on fld1
+Dance agent added with 3 rounds left from its effect to vir1
+Forget agent added with 1 rounds left from its effect to vir2
+Protect agent added with 3 rounds left from its effect to vir3
+Stun agent added with 3 rounds left from its effect to vir4
+Bear agent added with -1 rounds left from its effect to vir5
+[dnc1 effect] vir1 moved to wrh1
+vir2 learnt Dance
+vir2 already learnt this genetic code [Dance]
+[frgt1 effect] vir2 forgets their learnt genetic codes
+vir2 learnt Dance
+[stun1 effect] vir4 stunned
+vir4 can’t move to wrh1 [stunned]
+vir3 moved to wrh1
+[bear1 effect started]
+vir5 moved to wrh1
+vir5 destroyed materials on wrh1
+vir5 tries to infect vir1
+vir1 infected with Bear
+vir5 tries to infect vir3
+prot1 protected
+vir5 ended round
+[bear1 effect ended]

@@ -4,6 +4,7 @@ import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	public void effect(Virologist v) {
-		v.setLearnt(Collections.emptyList());
+		v.getLearnt().clear();
 		ProtoLogger.logMessage(String.format("[%s effect] %s forgets their learnt genetic codes", getIdForObject(this),getIdForObject(v)));
 	}
 

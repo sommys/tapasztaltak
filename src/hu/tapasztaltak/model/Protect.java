@@ -11,6 +11,7 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
  * Ha ez fel van kenve egy virológusra, nem lehet rá ágenst kenni.
  */
 public class Protect extends Agent implements IDefense {
+
 	/**
 	 * Egy virológus által felkenni próbált ágenst véd le 100% hatékonysággal
 	 * @param atc a támadó {@link Virologist}
@@ -19,9 +20,7 @@ public class Protect extends Agent implements IDefense {
 	 * @return sikeres volt-e a támadás
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
-		/*Logger.log(this, "tryToBlock", CALL, atc, vict, a);
-		Logger.log(this, "blockingSuccess=true", RETURN);
-		*/
+		ProtoLogger.logMessage(String.format("%s protected",getIdForObject(this)));
 		return true;
 	}
 

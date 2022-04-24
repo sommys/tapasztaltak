@@ -52,24 +52,18 @@ public class Virologist implements ISteppable {
 	 * @param f a {@link Field}, amire mozogni szeretne
 	 */
 	public void move(Field f) {
-		Logger.log(this, "move", CALL, f);
 		if(stunned||moved){
-			Logger.log(this, "", RETURN);
+			logMessage(String.format("%s can’t move to %s [%s]", getIdForObject(this), getIdForObject(f), stunned ? "stunned" : "already moved"));
 			return;
-		}
-		Scanner sc = new Scanner(System.in);
-		Logger.log(this, "Szomszédos mezőre akar lépni a virológus? (I/N):", QUESTION);
-		String neighbourDecision = sc.nextLine();
-		if(neighbourDecision.equalsIgnoreCase("I")){
-			field.addNeighbour(f);
-			f.addNeighbour(field);
 		}
 		if(field.isNeighbour(f)){
 			field.removeVirologist(this);
 			f.addVirologist(this);
 			field = f;
+			logMessage(String.format("%s moved to %s", getIdForObject(this), getIdForObject(f)));
+		} else {
+			logMessage(String.format("%s can’t move to %s [not neighbour]", getIdForObject(this), getIdForObject(f)));
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -102,9 +96,7 @@ public class Virologist implements ISteppable {
 	 * @param g a {@link Gene} amiből az ágens elő tud állni
 	 */
 	public void makeAgent(Gene g) {
-		Logger.log(this, "makeAgent", CALL, g);
 		if(stunned||moved){
-			Logger.log(this, "", RETURN);
 			return;
 		}
 		g.make(this.inventory);
@@ -118,7 +110,6 @@ public class Virologist implements ISteppable {
 	 * @param v a megkent {@link Virologist}
 	 */
 	public void useAgent(Agent a, Virologist v) throws Exception {
-		Logger.log(this, "useAgent", CALL, a, v);
 		if(stunned || moved || !canReach(v)){
 			return;
 		}
@@ -240,10 +231,10 @@ public class Virologist implements ISteppable {
 	public void learn(Gene g) {
 		if(!learnt.contains(g)){
 			learnt.add(g);
-			ProtoLogger.logMessage(getIdForObject(this) + " learnt " + g.getClass().getSimpleName());
+			ProtoLogger.logMessage(getIdForObject(this) + " learnt " + g.getAgent().getClass().getSimpleName());
 			Game.getInstance().checkEndGame(this);
 		} else {
-			ProtoLogger.logMessage(getIdForObject(this) + " already learnt this genetic code");
+			ProtoLogger.logMessage(getIdForObject(this) + " already learnt this genetic code ["+g.getAgent().getClass().getSimpleName()+"]");
 		}
 	}
 
