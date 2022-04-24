@@ -18,7 +18,7 @@ public class ProtoLogger {
         int choice;
         if(yesNo){
             String decision = sc.nextLine();
-            if(decision.equalsIgnoreCase("I")){
+            if(decision.equalsIgnoreCase("Y")){
                 choice = 1;
             } else if(decision.equalsIgnoreCase("N")){
                 choice = 0;

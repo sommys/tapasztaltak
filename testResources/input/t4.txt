@@ -10,7 +10,7 @@ AddMaterial vir2 1 1
 AddEAgent vir2 3 3
 ActivateEffects vir2
 AddSuite vir3 1 1
-AddMaterial vir3 0 10
+AddMaterial vir3 0 9
 Steal vir1 vir2
 Steal vir1 vir2
 Steal vir1 vir2

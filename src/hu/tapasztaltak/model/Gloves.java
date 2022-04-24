@@ -33,16 +33,15 @@ public class Gloves extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
 		if(atc != vict && !used && useCount > 0 && !vict.isStunned()){
 			Scanner sc = new Scanner(System.in);
-			ProtoLogger.logQuestion(String.format("Do you want to use %s [%s uses left]?",getIdForObject(this),useCount),true);
-			String input = sc.nextLine();
-			if(input.equalsIgnoreCase("I")){
+			int choice = ProtoLogger.logQuestion(String.format("Do you want to use %s [%d uses left]? (Y/N):",getIdForObject(this), useCount),true);
+			if(choice == 1){
 				used = true;
 				useCount--;
-				vict.useAgent(a,atc);
 				if(useCount==0) {
 					ProtoLogger.logMessage(String.format("%s used away, you can no longer use it",getIdForObject(this)));
 					remove(vict.getInventory());
 				}
+				vict.useAgent(a,atc);
 				return true;
 			}
 		}

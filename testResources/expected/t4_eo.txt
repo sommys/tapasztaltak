@@ -4,13 +4,13 @@ vir2 created on fld1
 vir3 created on fld1
 bag1 with 10 size added for vir2 inventory 9 spaces left
 bag1 is now worn by vir2
-cape1 added for vir2
-1 aminoacid added for vir2 inventory 8 spaces left
-1 nucleotid added for vir2 inventory 7 spaces left
-Stun added with 3 rounds left from its effect to vir2
-[stn1] vir2 stunned
-cape2 added for vir3
-10 aminoacid added for vir3 inventory 0 spaces left
+cape1 added for vir2 inventory 19 spaces left
+1 aminoacid added for vir2 inventory 18 spaces left
+1 nucleotid added for vir2 inventory 17 spaces left
+Stun agent added with 3 rounds left from its effect to vir2
+[stun1 effect] vir2 stunned
+cape2 added for vir3 inventory 9 spaces left
+9 aminoacid added for vir3 inventory 0 spaces left
 vir1 stealing from vir2
 vir2 has the following items:
 1. bag1[used]

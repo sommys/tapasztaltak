@@ -1,4 +1,3 @@
-Kimenet:
 fld1 created
 vir1 created on fld1
 vir2 created on fld1
@@ -24,36 +23,40 @@ glv3 with 3 uses left added for vir5 inventory 8 spaces left
 glv2 is now worn by vir5
 glv3 is now worn by vir5
 vir4 used prot1 on vir4
-[prot1 effect] protect agent added to defenses for vir4
+Protect agent added with 3 rounds left from its effect to vir4
 vir1 used dnc1 on vir2
-Do you want to use glv1[3 uses left]? (Y/N):Y
+Do you want to use glv1 [3 uses left]? (Y/N):Y
 vir2 used dnc1 on vir1
+Dance agent added with 3 rounds left from its effect to vir1
 vir1 used dnc2 on vir3
 cape1 *protected OR didn't protect*
 vir1 used dnc3 on vir4
 prot1 protected
 vir2 used dnc4 on vir1
+Dance agent added with 3 rounds left from its effect to vir1
 vir2 used dnc5 on vir2
+Dance agent added with 3 rounds left from its effect to vir2
 vir3 used dnc7 on vir3
 cape1 *protected OR didn't protect*
 vir4 used frgt1 on vir4
 prot1 protected
 vir2 used dnc6 on vir5
-Do you want to use glv2[3 uses left]? (Y/N):Y
+Do you want to use glv2 [3 uses left]? (Y/N):Y
 vir5 used dnc6 on vir2
-Do you want to use glv1[2 uses left]? (Y/N):Y
+Do you want to use glv1 [2 uses left]? (Y/N):Y
 vir2 used dnc6 on vir5
-Do you want to use glv3[3 uses left]? (Y/N):Y
+Do you want to use glv3 [3 uses left]? (Y/N):Y
 vir5 used dnc6 on vir2
-vir5 used dnc8 on vir2 //másra, rajtam kesztyű, több mint rajta
-Do you want to use glv1[1 uses left]? (Y/N):Y
+Dance agent added with 3 rounds left from its effect to vir2
+vir5 used dnc8 on vir2
+Do you want to use glv1 [1 uses left]? (Y/N):Y
 glv1 used away, you can no longer use it
 vir2 used dnc8 on vir5
-Do you want to use glv2[2 uses left]? (Y/N):Y
+Do you want to use glv2 [2 uses left]? (Y/N):Y
 vir5 used dnc8 on vir2
+Dance agent added with 3 rounds left from its effect to vir2
 vir1 doesn't have dnc9
-Stun added with 3 rounds left from its effect to vir4
-[prot1] protect agent added to defenses for vir4
-[stn1] vri4 stunned
+Stun agent added with 3 rounds left from its effect to vir4
+[stun1 effect] vir4 stunned
 dnc9 [usable for 3 rounds] added for vir4
 vir4 can’t use agent [stunned]

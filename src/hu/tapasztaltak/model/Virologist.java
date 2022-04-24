@@ -115,10 +115,15 @@ public class Virologist implements ISteppable {
 	 */
 	public void useAgent(Agent a, Virologist v) throws Exception {
 		if(stunned || moved || !canReach(v)){
+			if(stunned){
+				logMessage(String.format("%s can’t use agent [stunned]", getIdForObject(this)));
+			} else if(moved){
+				logMessage(String.format("%s can’t use agent [already moved]", getIdForObject(this)));
+			}
 			return;
 		}
-		spreadInitiation(a, v);
 		ProtoLogger.logMessage(String.format("%s used %s on %s", getIdForObject(this), getIdForObject(a),  getIdForObject(v)));
+		spreadInitiation(a, v);
 	}
 
 	/**
@@ -209,6 +214,7 @@ public class Virologist implements ISteppable {
 
 		if (inventory.getUsedSize()==inventory.getSize()) {
 			ProtoLogger.logMessage("Inventory full, can’t pickup more items");
+			return;
 		}
 
 		from.stolen(this, item);
@@ -294,6 +300,8 @@ public class Virologist implements ISteppable {
 				return;
 			}
 		}
+		inventory.getSuites().stream().filter(it -> it instanceof Gloves).forEach(it -> ((Gloves) it).setUsed(false));
+		v.getInventory().getSuites().stream().filter(it -> it instanceof Gloves).forEach(it -> ((Gloves) it).setUsed(false));
 		a.spread(v);
 	}
 

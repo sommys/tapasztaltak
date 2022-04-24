@@ -1,0 +1,62 @@
+fld1 created
+vir1 created on fld1
+vir2 created on fld1
+vir3 created on fld1
+vir4 created on fld1
+vir5 created on fld1
+dnc1 [usable for 3 rounds] added for vir1
+dnc2 [usable for 3 rounds] added for vir1
+dnc3 [usable for 3 rounds] added for vir1
+dnc4 [usable for 3 rounds] added for vir2
+dnc5 [usable for 3 rounds] added for vir2
+dnc6 [usable for 3 rounds] added for vir2
+dnc7 [usable for 3 rounds] added for vir3
+frgt1 [usable for 3 rounds] added for vir4
+prot1 [usable for 3 rounds] added for vir4
+dnc8 [usable for 3 rounds] added for vir5
+glv1 with 3 uses left added for vir2 inventory 9 spaces left
+glv1 is now worn by vir2
+cape1 added for vir3 inventory 9 spaces left
+cape1 is now worn by vir3
+glv2 with 3 uses left added for vir5 inventory 9 spaces left
+glv3 with 3 uses left added for vir5 inventory 8 spaces left
+glv2 is now worn by vir5
+glv3 is now worn by vir5
+vir4 used prot1 on vir4
+Protect agent added with 3 rounds left from its effect to vir4
+vir1 used dnc1 on vir2
+Do you want to use glv1 [3 uses left]? (Y/N):Y
+vir2 used dnc1 on vir1
+Dance agent added with 3 rounds left from its effect to vir1
+vir1 used dnc2 on vir3
+cape1 protected
+vir1 used dnc3 on vir4
+prot1 protected
+vir2 used dnc4 on vir1
+Dance agent added with 3 rounds left from its effect to vir1
+vir2 used dnc5 on vir2
+Dance agent added with 3 rounds left from its effect to vir2
+vir3 used dnc7 on vir3
+cape1 protected
+vir4 used frgt1 on vir4
+prot1 protected
+vir2 used dnc6 on vir5
+Do you want to use glv2 [3 uses left]? (Y/N):Y
+vir5 used dnc6 on vir2
+Do you want to use glv1 [2 uses left]? (Y/N):Y
+vir2 used dnc6 on vir5
+Do you want to use glv3 [3 uses left]? (Y/N):Y
+vir5 used dnc6 on vir2
+Dance agent added with 3 rounds left from its effect to vir2
+vir5 used dnc8 on vir2
+Do you want to use glv1 [1 uses left]? (Y/N):Y
+glv1 used away, you can no longer use it
+vir2 used dnc8 on vir5
+Do you want to use glv2 [2 uses left]? (Y/N):Y
+vir5 used dnc8 on vir2
+Dance agent added with 3 rounds left from its effect to vir2
+vir1 doesn't have dnc9
+Stun agent added with 3 rounds left from its effect to vir4
+[stun1 effect] vir4 stunned
+dnc9 [usable for 3 rounds] added for vir4
+vir4 can’t use agent [stunned]

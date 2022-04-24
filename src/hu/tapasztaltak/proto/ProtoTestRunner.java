@@ -85,6 +85,7 @@ public class ProtoTestRunner {
     public static void runTest(int idx){
         Test toRun = testList.get(idx-1);
         toRun.run();
+        resetState();
         System.out.println(toRun.name + " result: " + (toRun.result ? "SUCCESS" : "FAIL"));
     }
 
@@ -248,7 +249,7 @@ public class ProtoTestRunner {
                         storage.put(getIdForObject(m), m);
                         v.getInventory().addMaterial(m);
                     }
-                    //logMessage(String.format("%d %s added for %s inventory %d spaces left", amount, matType == 0 ? "aminoacid" : "nucleotid", getIdForObject(v), v.getInventory().getSize()-v.getInventory().getUsedSize()));
+                    logMessage(String.format("%d %s added for %s inventory %d spaces left", amount, matType == 0 ? "aminoacid" : "nucleotid", getIdForObject(v), v.getInventory().getSize()-v.getInventory().getUsedSize()));
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }
@@ -268,6 +269,7 @@ public class ProtoTestRunner {
                     }
                     for(int i = 0; i < amount; i++){
                         Suite s;
+                        String plusInfo = " ";
                         switch(suiteType){
                             case 0:{
                                 s = new Bag();
@@ -276,6 +278,7 @@ public class ProtoTestRunner {
                                     if(bagSize < 0) throw new Exception();
                                     ((Bag)s).setSize(bagSize);
                                 }
+                                plusInfo = " with "+((Bag)s).getSize()+" size ";
                                 break;
                             }
                             case 1:{
@@ -290,6 +293,7 @@ public class ProtoTestRunner {
                                     if(useCount < 1 || useCount > 3) throw new Exception();
                                     ((Gloves)s).setUseCount(useCount);
                                 }
+                                plusInfo = " with "+((Gloves)s).getUseCount()+" uses left ";
                                 break;
                             }
                             case 3:{
@@ -305,7 +309,7 @@ public class ProtoTestRunner {
                         }
                         storage.put(getIdForObject(s), s);
                         s.add(v.getInventory());
-                        logMessage(String.format("%s added for %s inventory %d spaces left", getIdForObject(s), getIdForObject(v), v.getInventory().getSize() - v.getInventory().getUsedSize()));
+                        logMessage(String.format("%s%sadded for %s inventory %d spaces left", getIdForObject(s), plusInfo, getIdForObject(v), v.getInventory().getSize() - v.getInventory().getUsedSize()));
                     }
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
@@ -467,9 +471,8 @@ public class ProtoTestRunner {
                     Virologist v = (Virologist) storage.get(args[0]);
                     if(v == null) throw new Exception();
                     Agent a = (Agent) storage.get(args[1]);
-                    if(a == null) throw new Exception();
-                    if(!v.getInventory().getAgents().contains(a)){
-                        logMessage(String.format("%s doesn’t have %s", getIdForObject(v), getIdForObject(a)));
+                    if(a == null || !v.getInventory().getAgents().contains(a)){
+                        logMessage(String.format("%s doesn't have %s", getIdForObject(v), args[1]));
                         break;
                     }
                     Virologist victim = (Virologist) storage.get(args[2]);

@@ -61,7 +61,7 @@ public class Cape extends Suite implements IDefense {
 	public void activate(Virologist v) {
 		v.addDefense(this);
 		setActive(true);
-		ProtoLogger.logMessage(getIdForObject(this) + "is now worn by" + getIdForObject(v));
+		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**
