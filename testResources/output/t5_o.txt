@@ -12,22 +12,24 @@ vir4 learnt Forget
 vir5 created on ilab1
 Protect agent added with 3 rounds left from its effect to vir5
 vir6 created on shlt1
-Do you want to pickup stuff from wrh1? (Y/N):Y
-Do you want to pickup amin1? (Y/N):N
-Do you want to pickup amin2? (Y/N):Y
+vir1 scanned fld1 -> virologists: -
+vir2 scanned wrh1 -> materials: amin1, amin2, ncl1 | virologists: -
+Do you want to pick up stuff from wrh1? (Y/N):Y
+Do you want to pick up amin1? (Y/N):N
+Do you want to pick up amin2? (Y/N):Y
 amin2 added for vir2 inventory 0 spaces left
-Inventory full, can’t pickup more items
-1 1 added to vir2 inventory 0 spaces left
-vir3 scanned lab1 -> geneticCode: gene2[Forget] | virologists: vir3
+Inventory full, can’t pick up more items
+vir3 scanned lab1 -> geneticCode: gene2[Forget] | virologists: -
 vir3 learnt Forget
-vir4 tries to infect gene2 with Bear
+vir4 scanned ilab1 -> geneticCode: gene2[Forget] | virologists: vir5
 vir4 already learnt this genetic code [Forget]
-vir4 used bear1 on vir4
+ilab1 tries to infect vir4 with Bear
 vir4 infected with Bear
-vir5 tries to infect gene2 with Bear
+vir5 scanned ilab1 -> geneticCode: gene2[Forget] | virologists: vir4
 vir5 learnt Forget
-vir5 used bear2 on vir5
+ilab1 tries to infect vir5 with Bear
 prot1 protected
-Do you want to pickup stuff from shlt1? (Y/N):Y
-Do you want to pickup cape1? (Y/N):Y
+vir6 scanned shlt1 -> suite: cape1 | virologists: -
+Do you want to pick up stuff from shlt1? (Y/N):Y
+Do you want to pick up cape1? (Y/N):Y
 cape1 added for vir6 inventory 9 spaces left

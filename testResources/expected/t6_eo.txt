@@ -19,6 +19,6 @@ glv5 with 3 uses left added for vir5 inventory 6 spaces left
 glv2 is now worn by vir5
 glv3 is now worn by vir5
 glv4 is now worn by vir5
-vir5 is alredy wearing 3 suites
+vir5 is already wearing 3 suites
 glv2 is no longer worn by vir5
 glv5 is now worn by vir5

@@ -1,0 +1,24 @@
+fld1 created
+vir1 created on fld1
+bag1 with 10 size added for vir1 inventory 9 spaces left
+bag1 is now worn by vir1
+vir2 created on fld1
+cape1 added for vir2 inventory 9 spaces left
+cape1 is now worn by vir2
+vir3 created on fld1
+glv1 with 3 uses left added for vir3 inventory 9 spaces left
+glv1 is now worn by vir3
+vir4 created on fld1
+axe1 added for vir4 inventory 9 spaces left
+axe1 is now worn by vir4
+vir5 created on fld1
+glv2 with 3 uses left added for vir5 inventory 9 spaces left
+glv3 with 3 uses left added for vir5 inventory 8 spaces left
+glv4 with 3 uses left added for vir5 inventory 7 spaces left
+glv5 with 3 uses left added for vir5 inventory 6 spaces left
+glv2 is now worn by vir5
+glv3 is now worn by vir5
+glv4 is now worn by vir5
+vir5 is already wearing 3 suites
+glv2 is no longer worn by vir5
+glv5 is now worn by vir5

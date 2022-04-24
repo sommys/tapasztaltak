@@ -157,17 +157,17 @@ public class Virologist implements ISteppable {
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
 		try {
-			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup stuff from %s? (Y/N):", getIdForObject(field)), true);
+			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pick up stuff from %s? (Y/N):", getIdForObject(field)), true);
 			if (pickupDecision == 0) {
 				return chosen;
 			}
 			int remaining = inventory.getSize() - inventory.getUsedSize();
 			for (IStealable a : available) {
 				if(remaining == 0){
-					logMessage("Inventory full, can’t pickup more items");
+					logMessage("Inventory full, can’t pick up more items");
 					return chosen;
 				}
-				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup %s? (Y/N):", getIdForObject(a)), true);
+				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pick up %s? (Y/N):", getIdForObject(a)), true);
 				if (currentPickupDecision == 1) {
 					if (remaining > 0) {
 						chosen.add(a);
@@ -218,7 +218,7 @@ public class Virologist implements ISteppable {
 		IStealable item = inv2.pickItem();
 
 		if (inventory.getUsedSize()==inventory.getSize()) {
-			ProtoLogger.logMessage("Inventory full, can't pickup more items");
+			ProtoLogger.logMessage("Inventory full, can't pick up more items");
 			return;
 		}
 

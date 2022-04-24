@@ -30,7 +30,7 @@ public class Shelter extends Field {
      * @param v a {@link Virologist}, aki a védőfelszerelést kapja.
      */
     public void getItem(Virologist v) throws Exception {
-        String vList = virologists.isEmpty() ? "-" : virologists.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        String vList = virologists.size() == 1 ? "-" : virologists.stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(v), getIdForObject(this), suite == null ? "-" : getIdForObject(suite), vList));
         if(suite == null){
             return;
@@ -47,7 +47,7 @@ public class Shelter extends Field {
                 }
             }
             else{
-                ProtoLogger.logMessage(String.format("Inventory full, can't pickup more items"));
+                ProtoLogger.logMessage(String.format("Inventory full, can't pick up more items"));
             }
         } else{
             return;

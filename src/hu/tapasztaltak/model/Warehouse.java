@@ -27,7 +27,7 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
-        String virologists = getVirologists().isEmpty() ? "-" : getVirologists().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        String virologists = getVirologists().size() == 1 ? "-" : getVirologists().stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         String materialsList = getMaterials().isEmpty() ? "-" : getMaterials().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         ProtoLogger.logMessage(String.format("%s scanned %s -> materials: %s | virologists: %s", getIdForObject(v), getIdForObject(this), materialsList, virologists));
         int mat = 0;
@@ -39,8 +39,6 @@ public class Warehouse extends Field {
                 mat++;
             }
         }
-        int size  = v.getInventory().getSize() - v.getInventory().getUsedSize();
-        ProtoLogger.logMessage(String.format("%d %s added to %s inventory %d spaces left",mat,getIdForObject(chosen),getIdForObject(v),size));
         if(materials.isEmpty() && refreshCounter == -1){
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;

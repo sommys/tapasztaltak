@@ -12,7 +12,7 @@ CreateVirologist fld1
 AddSuite vir4 3 1
 ActivateSuite vir4 axe1
 CreateVirologist fld1
-AddSuite vir5 2 4 3 10
+AddSuite vir5 2 4 3
 ActivateSuite vir5 glv2
 ActivateSuite vir5 glv3
 ActivateSuite vir5 glv4

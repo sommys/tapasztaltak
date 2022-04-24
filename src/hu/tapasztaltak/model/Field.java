@@ -36,7 +36,7 @@ public class Field implements ISteppable {
      * @param v a {@link Virologist}, aki a dolgo[ka]t kapja.
      */
     public void getItem(Virologist v) throws Exception {
-        String vList = virologists.isEmpty() ? "-" : virologists.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        String vList = virologists.size() == 1 ? "-" : virologists.stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         logMessage(String.format("%s scanned %s -> virologists: %s", getIdForObject(v), getIdForObject(this), vList));
     }
 
