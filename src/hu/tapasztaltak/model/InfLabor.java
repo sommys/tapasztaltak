@@ -4,7 +4,7 @@ import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
 
 public class InfLabor extends Labor{
     @Override
-    public void getItem(Virologist v) {
+    public void getItem(Virologist v) throws Exception {
         v.learn(gene);
         Bear b = new Bear();
         v.useAgent(b,v);

@@ -6,8 +6,6 @@ import hu.tapasztaltak.skeleton.Logger;
 import java.util.Random;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A zsák felszerelést reprezentáló osztály.
@@ -24,11 +22,9 @@ public class Bag extends Suite {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
-		Logger.log(this, "activate", CALL, v);
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize + size);
 		setActive(true);
-		Logger.log(this, "", RETURN);
 		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
@@ -37,12 +33,10 @@ public class Bag extends Suite {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
-		Logger.log(this, "deactivate", CALL, v);
 		clearInventoryFromBag(v.getInventory());
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize - size);
 		setActive(false);
-		Logger.log(this, "", RETURN);
 		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
@@ -76,10 +70,8 @@ public class Bag extends Suite {
 	 */
 	@Override
 	public void remove(Inventory inv){
-		Logger.log(this, "remove", CALL, inv);
 		clearInventoryFromBag(inv);
 		inv.removeSuite(this);
-		Logger.log(this, "", RETURN);
 	}
 
 	//region GETTEREK ÉS SETTEREK

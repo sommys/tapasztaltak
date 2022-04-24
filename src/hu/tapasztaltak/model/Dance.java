@@ -4,12 +4,8 @@ import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
-
 import java.util.List;
-
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A játékban lévő vitustánc ágens reprezentációja.
@@ -22,7 +18,6 @@ public class Dance extends Agent implements SpecialModifier {
 
 	//[dnc1 effect] vir1 moved to wrh1
 	public void effect(Virologist v) {
-		Logger.log(this, "effect", CALL, v);
 		if(!v.isStunned()) {
 			Field f = v.getField();
 			Field randField = f.getRandomNeighbour();
@@ -30,7 +25,6 @@ public class Dance extends Agent implements SpecialModifier {
 			randField.addVirologist(v);
 			ProtoLogger.logMessage(String.format("[%s effect] %s moved to %s", getIdForObject(this), getIdForObject(v), getIdForObject(randField)));
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -66,10 +60,8 @@ public class Dance extends Agent implements SpecialModifier {
 	 * @return felhasználható másolat
 	 */
 	public Agent clone(){
-		Logger.log(this, "clone", CALL);
 		Dance newAgent = new Dance();
 		newAgent.setTimeLeft(3);
-		Logger.log(this, "newAgent", RETURN);
 		return newAgent;
 	}
 }

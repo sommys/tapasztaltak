@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Random;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
+
 
 /**
  * A pályán lévő óvóhely mező reprezentálása.

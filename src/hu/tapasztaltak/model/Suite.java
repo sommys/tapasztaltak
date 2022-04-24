@@ -4,8 +4,6 @@ import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A felszereléseknek az összefoglaló absztrakt ősosztálya,
@@ -34,9 +32,7 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájához adja a felszerelést.
 	 */
 	public void add(Inventory inv) {
-		Logger.log(this, "add", CALL, inv);
 		inv.getSuites().add(this);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -44,10 +40,8 @@ public abstract class Suite implements IStealable {
 	 * @param inv az {@link Inventory}, aminek a suites listájából elveszi a felszerelést.
 	 */
 	public void remove(Inventory inv) {
-		Logger.log(this, "remove", CALL, inv);
 		inv.getSuites().remove(this);
 		active = false;
-		Logger.log(this, "", RETURN);
 	}
 
 	//region GETTEREK ÉS SETTEREK

@@ -4,8 +4,6 @@ import hu.tapasztaltak.skeleton.Logger;
 
 import java.util.List;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * Az ágenseknek az összefoglaló absztrakt ősosztálya,
@@ -21,9 +19,7 @@ public abstract class Agent implements ISteppable {
 	 * Lépteti az ágens hátralevő idejét.
 	 */
 	public void step() {
-		Logger.log(this, "step", CALL);
 		if(timeLeft>0) timeLeft--;
-		Logger.log(this, "", RETURN);
 	}
 
 	/**

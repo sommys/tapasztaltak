@@ -7,8 +7,6 @@ import hu.tapasztaltak.skeleton.TestSetup;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A bénító ágenst reprezentáló osztály.
@@ -20,9 +18,7 @@ public class Stun extends Agent implements SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	public void effect(Virologist v) {
-		Logger.log(this, "effect", CALL, v);
 		v.setStunned(true);
-		Logger.log(this, "", RETURN);
 		ProtoLogger.logMessage(String.format("[%s effect] %s stunned", getIdForObject(this),getIdForObject(v)));
 	}
 
@@ -60,10 +56,8 @@ public class Stun extends Agent implements SpecialModifier {
 	 * @return felhasználható másolat
 	 */
 	public Agent clone(){
-		Logger.log(this, "clone", CALL);
 		Stun newAgent = new Stun();
 		newAgent.setTimeLeft(3);
-		Logger.log(this, "newAgent", RETURN);
 		return newAgent;
 	}
 }

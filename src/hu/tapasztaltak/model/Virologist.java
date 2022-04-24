@@ -120,12 +120,10 @@ public class Virologist implements ISteppable {
 	public void useAgent(Agent a, Virologist v) throws Exception {
 		Logger.log(this, "useAgent", CALL, a, v);
 		if(stunned || moved || !canReach(v)){
-			Logger.log(this, "", RETURN);
 			return;
 		}
 		spreadInitiation(a, v);
 		ProtoLogger.logMessage(String.format("%s used %s on %s", getIdForObject(this), getIdForObject(a),  getIdForObject(v)));
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -134,14 +132,11 @@ public class Virologist implements ISteppable {
 	 * @param to a felvenni kívánt {@link Suite}
 	 */
 	public void switchSuite(Suite from, Suite to) {
-		Logger.log(this, "switchSuite", CALL, from, to);
 		if(stunned||moved){
-			Logger.log(this, "", RETURN);
 			return;
 		}
 		from.deactivate(this);
 		to.activate(this);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -160,32 +155,26 @@ public class Virologist implements ISteppable {
 	 */
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		TestSetup.addObject(available, "available");
-		Logger.log(this, "chooseItem", CALL, available);
 		TestSetup.removeObject("available");
 		List<IStealable> chosen = new ArrayList<>();
-		Logger.log(null, "Szeretnél felvenni dolgokat? (I/N):", QUESTION);
 		Scanner sc = new Scanner(System.in);
 		String pickupDecision = sc.nextLine();
 		if(!pickupDecision.equalsIgnoreCase("I")){
-			Logger.log(this, "chosen=EmptyList", RETURN);
 			return chosen;
 		}
 		int remaining = inventory.getSize() - inventory.getUsedSize();
 		for(IStealable a : available){
-			Logger.log(null, String.format("Fel szeretnéd venni %s[%s]-t? (I/N):", TestSetup.getName(a), a.getClass().getSimpleName()), QUESTION);
 			String currentPickupDecision = sc.nextLine();
 			if(currentPickupDecision.equalsIgnoreCase("I")){
 				if(remaining>0){
 					chosen.add(a);
 					remaining--;
-					Logger.log(null, "Hátralevő helyek: "+remaining, COMMENT);
 				}
 			}
 		}
 
 		moved = !chosen.isEmpty();
 
-		Logger.log(this, "chosen="+chosen.stream().map(TestSetup::getName).collect(Collectors.joining(",", "[", "]")), RETURN);
 		return chosen;
 	}
 
@@ -227,7 +216,6 @@ public class Virologist implements ISteppable {
 		}
 
 		from.stolen(this, item);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -263,7 +251,6 @@ public class Virologist implements ISteppable {
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
 	public void step() {
-		Logger.log(this, "step", CALL);
 		moved=false;
 
 		inventory.getAgents().forEach(a -> {
@@ -288,7 +275,6 @@ public class Virologist implements ISteppable {
 		for(SpecialModifier m : modifiers){
 			m.effect(this);
 		}
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -297,8 +283,6 @@ public class Virologist implements ISteppable {
 	 * @return érinthető-e
 	 */
 	public boolean canReach(Virologist v) {
-		Logger.log(this, "canReach", CALL, v);
-		Logger.log(this, "can="+(v.getField()==field), RETURN);
 		return v.getField() == field;
 	}
 
@@ -308,16 +292,13 @@ public class Virologist implements ISteppable {
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
 	public void spreadInitiation(Agent a, Virologist v) throws Exception {
-		Logger.log(this, "spreadInitiation", CALL, a, v);
 		inventory.removeAgent(a);
 		for(IDefense d : v.getDefenses()){
 			if(d.tryToBlock(this, v, a)){
-				Logger.log(this, "", RETURN);
 				return;
 			}
 		}
 		a.spread(v);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**

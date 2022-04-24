@@ -22,14 +22,6 @@ public class Cape extends Suite implements IDefense {
 	 * @return a védés sikeressége
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
-		/**
-		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
-		Logger.log(null, "Sikeres volt a köpeny védése [valós játékban 82.3%-ban igen]? (I/N):", QUESTION);
-		Scanner sc = new Scanner(System.in);
-		String success = sc.nextLine();
-		Logger.log(this, "blockingSuccess="+success.equalsIgnoreCase("I"), RETURN);
-		return success.equalsIgnoreCase("I");
-		 **/
 		Random r = new Random();
 		double result = r.nextDouble();
 		if(ProtoMain.randomness) {

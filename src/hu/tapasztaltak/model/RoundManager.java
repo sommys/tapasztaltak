@@ -5,9 +5,6 @@ import hu.tapasztaltak.skeleton.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
-
 /**
  * Körök irányításáért felelős singleton osztály.
  */

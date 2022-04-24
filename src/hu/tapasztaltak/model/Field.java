@@ -1,5 +1,7 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -9,8 +11,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A játék alapmezőit reprezentáló osztály.
@@ -45,7 +45,6 @@ public class Field implements ISteppable {
      * Refreshcountert csökkenti és ha nulla, akkor a refresh függvényt meghívja.
      */
     public void step() {
-        Logger.log(this, "step", CALL);
         if (refreshCounter > 0) {
             refreshCounter--;
         }
@@ -54,7 +53,6 @@ public class Field implements ISteppable {
             refresh();
             refreshCounter = -1;
         }
-        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -69,8 +67,6 @@ public class Field implements ISteppable {
      * @return szomszédos-e a mező
      */
     public boolean isNeighbour(Field f) {
-        Logger.log(this, "isNeighbour", CALL, f);
-        Logger.log(this, "neighbour="+neighbours.contains(f), RETURN);
         return neighbours.contains(f);
     }
 
@@ -80,9 +76,7 @@ public class Field implements ISteppable {
      * @return random szomszédos {@link Field}
      */
     public Field getRandomNeighbour() {
-        Logger.log(this, "getRandomNeighbour", CALL);
         Random random = new Random();
-        Logger.log(this, "random neighbour", RETURN);
         return neighbours.get(random.nextInt(neighbours.size()));
     }
 
@@ -92,12 +86,10 @@ public class Field implements ISteppable {
      * @return kiválasztott {@link Virologist}
      */
     public Virologist chooseVirologist(Virologist v) {
-        Logger.log(this, "chooseVirologist", CALL, v);
         List<Virologist> choosable = virologists.stream().filter(vir -> vir != v).collect(Collectors.toList());
-        //ehelyett majd pickel egyet, NEM FOGOM most megoldani...
+
         Random r = new Random();
         Virologist chosen = choosable.get(r.nextInt(choosable.size()));
-        Logger.log(this, "chosen="+ TestSetup.getName(chosen), RETURN);
         return chosen;
     }
 
@@ -181,9 +173,7 @@ public class Field implements ISteppable {
      * @param virologist a hozzáadandó {@link Virologist}
      */
     public void addVirologist(Virologist virologist) {
-        Logger.log(this, "addVirologist", CALL, virologist);
         this.virologists.add(virologist);
-        Logger.log(this, "", RETURN);
     }
 
     /**
@@ -192,9 +182,7 @@ public class Field implements ISteppable {
      * @param virologist a törlendő {@link Virologist}
      */
     public void removeVirologist(Virologist virologist) {
-        Logger.log(this, "removeVirologist", CALL, virologist);
         this.virologists.remove(virologist);
-        Logger.log(this, "", RETURN);
     }
 
     @Override

@@ -57,7 +57,7 @@ public class Bear extends Agent implements SpecialModifier{
      * @param v {@link Virologist}, akire kifejti a hatását
      */
     @Override
-    public void effect(Virologist v) {
+    public void effect(Virologist v) throws Exception {
         //ha béna, akkor nem történik semmi
         if(v.isStunned() || v.isMoved()) return;
         //random mozgás

@@ -2,9 +2,6 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.skeleton.Logger;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
-
 /**
  * Az anyagok összefogó interfésze, belőlük lehet ágenseket készteni.
  * Az IStealable interfész leszármazottja.
@@ -22,9 +19,7 @@ public interface IMaterial extends IStealable {
 	 * @param inv az {@link Inventory}, amihez hozzáadja
 	 */
 	default void add(Inventory inv) {
-		Logger.log(this, "add", CALL, inv);
 		inv.getMaterials().add(this);
-		Logger.log(this, "", RETURN);
 	}
 
 	/**
@@ -32,8 +27,6 @@ public interface IMaterial extends IStealable {
 	 * @param inv az {@link Inventory}, amiből kiveszi
 	 */
 	default void remove(Inventory inv) {
-		Logger.log(this, "remove", CALL, inv);
 		inv.getMaterials().remove(this);
-		Logger.log(this, "", RETURN);
 	}
 }

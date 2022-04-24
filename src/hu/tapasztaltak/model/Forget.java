@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A játékban lévő felejtő ágens reprezentációja.
@@ -21,9 +19,7 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @param v {@link Virologist}, akire kifejti a hatását
 	 */
 	public void effect(Virologist v) {
-		Logger.log(this, "effect", CALL, v);
 		v.setLearnt(Collections.emptyList());
-		Logger.log(this, "", RETURN);
 		ProtoLogger.logMessage(String.format("[%s effect] %s forgets their learnt genetic codes", getIdForObject(this),getIdForObject(v)));
 	}
 
@@ -61,10 +57,8 @@ public class Forget extends Agent implements SpecialModifier {
 	 * @return felhasználható másolat
 	 */
 	public Agent clone(){
-		Logger.log(this, "clone", CALL);
 		Forget newAgent = new Forget();
 		newAgent.setTimeLeft(3);
-		Logger.log(this, "newAgent", RETURN);
 		return newAgent;
 	}
 }

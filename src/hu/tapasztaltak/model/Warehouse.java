@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A pályán lévő raktár mező reprezentálása.
@@ -81,7 +79,6 @@ public class Warehouse extends Field {
             }
         }
         ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),materials.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(" "))));
-        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK
