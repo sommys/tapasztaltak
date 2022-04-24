@@ -2,12 +2,15 @@ package hu.tapasztaltak.proto;
 
 import hu.tapasztaltak.model.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
-import static hu.tapasztaltak.proto.ProtoLogger.logQuestion;
+import static hu.tapasztaltak.proto.ProtoLogger.*;
 import static hu.tapasztaltak.proto.ProtoMain.*;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
@@ -22,9 +25,9 @@ public class ProtoTestRunner {
 
         public Test(String name, String inputFile, String outputFile, String expectedOutputFile) {
             this.name = name;
-            this.inputFile = inputFile;
-            this.outputFile = outputFile;
-            this.expectedOutputFile = expectedOutputFile;
+            this.inputFile = "testResources\\input\\"+inputFile;
+            this.outputFile = "testResources\\output\\"+outputFile;
+            this.expectedOutputFile = "testResources\\expected\\"+expectedOutputFile;
         }
 
         public void run(){
@@ -33,6 +36,41 @@ public class ProtoTestRunner {
             //  soronkent beolvassuk a parancsokat, meghivjuk a runCommand-ot
             //  kiirjuk az outputFile-ba az eredmenyt: ProtoLogger.actOutput.toString, majd ProtoLogger.actOutput = new StringBuilder();
             //  ellenőrizzük az eredményt okosba
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(inputFile));
+                String line;
+                while((line = br.readLine()) != null){
+                    if(!runCommand(line.trim())){
+                        System.out.println(line);
+                        throw new Exception();
+                    }
+                }
+                FileWriter fw = new FileWriter(outputFile);
+                fw.write(actOutput.toString().trim());
+                fw.close();
+                br = new BufferedReader(new FileReader(expectedOutputFile));
+                String[] actLines = actOutput.toString().trim().split("\n");
+                int i = 0;
+                while((line = br.readLine()) != null){
+                    if(i < actLines.length){
+                        if(!line.equals(actLines[i++])){
+                            result = false;
+                            actOutput = new StringBuilder();
+                            return;
+                        }
+                    } else {
+                        result = false;
+                        actOutput = new StringBuilder();
+                        return;
+                    }
+                }
+                result = true;
+                actOutput = new StringBuilder();
+            } catch(Exception e){
+                e.printStackTrace();
+                System.err.println("Hiba történt! ["+name+" teszt futtatása]");
+                actOutput = new StringBuilder();
+            }
         }
     }
 
@@ -45,7 +83,7 @@ public class ProtoTestRunner {
     }
 
     public static void runTest(int idx){
-        Test toRun = testList.get(idx);
+        Test toRun = testList.get(idx-1);
         toRun.run();
         System.out.println(toRun.name + " result: " + (toRun.result ? "SUCCESS" : "FAIL"));
     }
@@ -53,7 +91,7 @@ public class ProtoTestRunner {
     public static boolean runCommand(String command) throws Exception {
         if(command.equalsIgnoreCase("Exit")) return false;
         String cmd = command.contains(" ") ? command.substring(0, command.indexOf(" ")) : command;
-        String[] args = command.contains(" ") ? command.substring(cmd.length()).split(" ") : new String[]{};
+        String[] args = command.contains(" ") ? command.substring(cmd.length()+1).split(" ") : new String[]{};
         switch(cmd){
             case "Reset": resetState(); break;
             case "SetRandomness": {
@@ -71,6 +109,7 @@ public class ProtoTestRunner {
                 Field f = (Field)storage.get(args[0]);
                 Virologist v = new Virologist();
                 v.setField(f);
+                f.addVirologist(v);
                 storage.put(getIdForObject(v), v);
                 logMessage(String.format("%s created on %s", getIdForObject(v), getIdForObject(f)));
                 break;

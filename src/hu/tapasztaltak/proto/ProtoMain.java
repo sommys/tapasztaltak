@@ -100,7 +100,7 @@ public class ProtoMain {
         Scanner sc = new Scanner(System.in);
         try {
             input = sc.nextInt();
-            if(input < 0 || input > ALL_TEST_IDX) throw new Exception();
+            if(input < 1 || input > ALL_TEST_IDX) throw new Exception();
             if(input == ALL_TEST_IDX){
                 for(int i = 0; i < ALL_TEST_IDX; i++){
                     ProtoTestRunner.runTest(input);
@@ -555,7 +555,7 @@ public class ProtoMain {
             try{
                 if(!runCommand(cmd)) return;
             } catch(Exception e){
-                throw new Exception();
+                throw new Exception(e.getMessage());
             }
         }
     }

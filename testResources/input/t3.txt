@@ -1,0 +1,24 @@
+CreateField
+CreateWarehouse 1 1
+SetNeighbours fld1 wrh1
+SetNeighbours wrh1 fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+AddEAgent vir1 0 3
+AddEAgent vir2 1 1
+AddEAgent vir3 2 3
+AddEAgent vir4 3 3
+AddEAgent vir5 4 -1
+ActivateEffects vir1
+LearnCode vir2 0
+LearnCode vir2 0
+ActivateEffects vir2
+LearnCode vir2 0
+ActivateEffects vir3
+ActivateEffects vir4
+Move vir4 wrh1
+Move vir3 wrh1
+ActivateEffects vir5
