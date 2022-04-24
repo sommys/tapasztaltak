@@ -1,10 +1,10 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
-
 import java.util.Random;
 import java.util.Scanner;
-
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
@@ -20,17 +20,22 @@ public class Cape extends Suite implements IDefense {
 	 * @return a védés sikeressége
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
+		/**
 		Logger.log(this, "tryToBlock", CALL, atc,vict, a);
 		Logger.log(null, "Sikeres volt a köpeny védése [valós játékban 82.3%-ban igen]? (I/N):", QUESTION);
 		Scanner sc = new Scanner(System.in);
 		String success = sc.nextLine();
 		Logger.log(this, "blockingSuccess="+success.equalsIgnoreCase("I"), RETURN);
 		return success.equalsIgnoreCase("I");
-		/*Valós függvény megvalósítás
+		 **/
 		Random r = new Random();
 		double result = r.nextDouble();
-		Logger.log(this, "blockingSuccess="+(result <= 0.823), RETURN);
-		return (result <= 0.823);*/
+		if(result <= 0.823){
+			ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + " protected");
+		}else{
+			ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + " didn't protect");
+		}
+		return (result <= 0.823);
 	}
 
 	/**
@@ -47,10 +52,9 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, aki viselni kezdi a felszerelést
 	 */
 	public void activate(Virologist v) {
-		Logger.log(this, "activate", CALL, v);
 		v.addDefense(this);
 		setActive(true);
-		Logger.log(this, "", RETURN);
+		ProtoLogger.logMessage(ProtoMain.getIdForObject(this) + "is now worn by" + ProtoMain.getIdForObject(v));
 	}
 
 	/**
@@ -58,9 +62,7 @@ public class Cape extends Suite implements IDefense {
 	 * @param v a {@link Virologist}, akin megszünteti az aktív viselést
 	 */
 	public void deactivate(Virologist v) {
-		Logger.log(this, "deactivate", CALL, v);
 		v.removeDefense(this);
 		setActive(false);
-		Logger.log(this, "", RETURN);
 	}
 }
