@@ -178,7 +178,7 @@ public class TestSetup {
      * A virológus magára keni az ágenst.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void useAgentOnThemself(){
+    public static void useAgentOnThemself() throws Exception {
         System.out.println("--- Setting up Test Environment for useAgentOnThemself ---");
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
@@ -218,7 +218,7 @@ public class TestSetup {
      * A virológus egy másik virológusra keni az ágenst.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void useAgentOnOtherVirologist(){
+    public static void useAgentOnOtherVirologist() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist uses agent on other virologist ---");
         Inventory inv = new Inventory();
         Virologist v = new Virologist();
@@ -1021,7 +1021,7 @@ public class TestSetup {
      * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistDances(){
+    public static void virologistDances() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist dances ---");
         Field f1 = new Field();
         Field f2 = new Field();
@@ -1058,7 +1058,7 @@ public class TestSetup {
      * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistForgets(){
+    public static void virologistForgets() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist forgets ---");
         Virologist v = new Virologist();
         Forget f = new Forget();
@@ -1083,7 +1083,7 @@ public class TestSetup {
      * A virológuson meghívjuk a step függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistIsBeingStunned(){
+    public static void virologistIsBeingStunned() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist is being stunned ---");
         Virologist v = new Virologist();
         Stun s = new Stun();
@@ -1110,7 +1110,7 @@ public class TestSetup {
      * A virológuson meghívjuk az endround függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistEndsRoundRoundManagerReacts(){
+    public static void virologistEndsRoundRoundManagerReacts() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist ends round, round manager reacts ---");
         Virologist v = new Virologist();
         Virologist v1 = new Virologist();

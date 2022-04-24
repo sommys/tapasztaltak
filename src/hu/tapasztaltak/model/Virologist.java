@@ -250,7 +250,7 @@ public class Virologist implements ISteppable {
 	/**
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
-	public void step() {
+	public void step() throws Exception {
 		moved=false;
 
 		inventory.getAgents().forEach(a -> {
@@ -304,7 +304,7 @@ public class Virologist implements ISteppable {
 	/**
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
-	public void endRound() {
+	public void endRound() throws Exception {
 		if (RoundManager.getInstance().getMovedCounter() == RoundManager.getInstance().getVirologists().size()) {
 			ProtoLogger.logMessage(getIdForObject(this) + " ended round. New round starts");
 		}
