@@ -37,10 +37,6 @@ public class Inventory {
 		}
 
 		int id = 1;
-		for (IMaterial m : materials) {
-			ProtoLogger.logMessage(String.format("%d. %s", id, getIdForObject(m)));
-			id++;
-		}
 
 		for (Suite s : suites) {
 			if (s.isActive()) {
@@ -49,6 +45,11 @@ public class Inventory {
 			else {
 				ProtoLogger.logMessage(String.format("%d. %s", id, getIdForObject(s)));
 			}
+			id++;
+		}
+
+		for (IMaterial m : materials) {
+			ProtoLogger.logMessage(String.format("%d. %s", id, getIdForObject(m)));
 			id++;
 		}
 
@@ -67,9 +68,9 @@ public class Inventory {
 			e.printStackTrace();
 		}
 
-		IStealable selected = value > materials.size()
-				? suites.get(value - materials.size() - 1)
-				: materials.get(value - 1);
+		IStealable selected = value > suites.size()
+				? materials.get(value - suites.size() - 1)
+				: suites.get(value - 1);
 
 		return selected;
 	}
