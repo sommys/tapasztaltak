@@ -27,6 +27,9 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
+        String virologists = getVirologists().isEmpty() ? "-" : getVirologists().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        String materialsList = getMaterials().isEmpty() ? "-" : getMaterials().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+        ProtoLogger.logMessage(String.format("%s scanned %s -> materials: %s | virologists: %s", getIdForObject(v), getIdForObject(this), materialsList, virologists));
         int mat = 0;
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
         for (IStealable m : chosen) {
