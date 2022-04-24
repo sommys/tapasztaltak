@@ -1,0 +1,24 @@
+CreateField
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld2
+SetNeighbours fld1 fld2
+SetNeighbours fld2 fld1
+AddSuite vir1 2 3 310
+ActivateSuite vir1 glv1
+AddSuite vir2 1 3
+ActivateSuite vir2 cape1
+AddEAgent vir3 2 3
+AddUAgent vir1 3 3
+AddUAgent vir2 3 3
+AddUAgent vir3 3 3
+AddUAgent vir4 3 3
+AddUAgent vir1 3 3
+UseAgent vir1 stun1 vir2
+UseAgent vir2 stun2 vir3
+UseAgent vir3 stun3 vir4
+UseAgent vir4 stun4 vir1
+UseAgent vir1 stun5 vir5

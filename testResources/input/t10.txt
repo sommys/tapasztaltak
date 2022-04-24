@@ -1,0 +1,13 @@
+CreateField
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld1
+CreateVirologist fld2
+AddEAgent vir1 4
+AddSuite vir2 3 false
+ActivateSuite vir2 axe1
+UseAxe vir2 vir1
+UseAxe vir2 vir3
+UseAxe vir2 vir4
+UseAxe vir3 vir2

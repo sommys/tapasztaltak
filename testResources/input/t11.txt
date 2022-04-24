@@ -1,0 +1,5 @@
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+EndRound vir1
+EndRound vir2

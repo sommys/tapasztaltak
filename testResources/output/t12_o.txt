@@ -1,0 +1,6 @@
+fld1 created
+vir1 created on fld1
+dnc1 added with 1 rounds left from its effect to vir1
+frg1 added with 2 rounds left from its effect to vir1
+vir1 ended round. New round starts
+dnc1 expired

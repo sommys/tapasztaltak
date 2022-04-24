@@ -1,0 +1,5 @@
+fld1 created
+vir1 created on fld1
+vir2 created on fld1
+vir1 ended round
+vir2 ended round. New round starts

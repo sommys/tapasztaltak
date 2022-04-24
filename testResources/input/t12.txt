@@ -1,0 +1,5 @@
+CreateField
+AddVirologist fld1
+AddEAgent vir1 0 1
+AddEAgent vir1 1 2
+EndRound vir1

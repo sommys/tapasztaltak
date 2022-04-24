@@ -1,0 +1,5 @@
+fld1 created
+wrh1 created with 0 aminoacid and 0 nucleotid
+shlt1 created with Nothing
+whr1 refreshed with ncl1 ncl2
+shlt1 refreshed with glv1

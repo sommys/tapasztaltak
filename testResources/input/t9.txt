@@ -1,0 +1,25 @@
+CreateField
+CreateVirologist fld1
+CreateVirologist fld1
+AddMaterial vir2 0 3
+AddMaterial vir2 1 3
+CreateVirologist fld1
+CreateVirologist fld1
+AddMaterial vir4 0 3
+AddMaterial vir4 1 3
+CreateVirologist fld1
+CreateVirologist fld1
+AddMaterial vir6 0 3
+AddMaterial vir6 1 3
+CreateVirologist fld1
+CreateVirologist fld1
+AddMaterial vir8 0 3
+AddMaterial vir8 1 3
+MakeAgent vir1 0
+MakeAgent vir2 0
+MakeAgent vir3 1
+MakeAgent vir4 1
+MakeAgent vir5 2
+MakeAgent vir6 2
+MakeAgent vir7 3
+MakeAgent vir8 3

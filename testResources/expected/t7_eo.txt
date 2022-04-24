@@ -1,0 +1,56 @@
+fld1 created
+vir1 created on fld1
+bag1 with 10 size added for vir1 inventory 9 spaces left
+cape1 added for vir1 inventory 8 spaces left
+glv1 added for vir1 inventory 7 spaces left
+axe1 added for vir1 inventory 6 spaces left
+bag1 is now worn by vir1
+vir1 is wearing the following suites:
+1. bag1
+Pick a suite’s index you want to switch from: 1
+virX has the following non-worn suites:
+1. cape1
+2. glv1
+3. axe1
+Pick a suite’s index you want to switch to: 1
+vir1 is now wearing cape1 instead of bag1
+vir1 is wearing the following suites:
+1. cape1
+Pick a suite’s index you want to switch from: 1
+virX has the following non-worn suites:
+1. bag1
+2. glv1
+3. axe1
+Pick a suite’s index you want to switch to: 2
+vir1 is now wearing glv1 instead of cape1
+vir1 is wearing the following suites:
+1. glv1
+Pick a suite’s index you want to switch from: 1
+virX has the following non-worn suites:
+1. cape1
+2. bag1
+3. axe1
+Pick a suite’s index you want to switch to: 5
+No such item in virX’s inventory, pick again: 3
+vir1 is now wearing axe1 instead of bag1
+vir1 is wearing the following suites:
+1. axe1
+Pick a suite’s index you want to switch from: 2
+No such item in virX’s inventory, pick again: 1
+virX has the following non-worn suites:
+1. cape1
+2. glv1
+3. bag1
+Pick a suite’s index you want to switch to: 3
+vir1 is now wearing bag1 instead of axe1
+cape1 is now worn by vir1
+glv1 is now worn by vir1
+vir1 is wearing the following suites:
+1. bag1
+2. cape1
+3. glv1
+Pick a suite’s index you want to switch from: 3
+virX has the following non-worn suites:
+1. axe1
+Pick a suite’s index you want to switch to: 1
+vir1 is now wearing axe1 instead of glv1
