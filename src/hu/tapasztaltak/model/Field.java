@@ -34,7 +34,9 @@ public class Field implements ISteppable {
      *
      * @param v a {@link Virologist}, aki a dolgo[ka]t kapja.
      */
-    public void getItem(Virologist v) throws Exception {}
+    public void getItem(Virologist v) throws Exception {
+
+    }
 
     /**
      * Újratölti a mezőre jellemző dolgo[ka]t.

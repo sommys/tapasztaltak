@@ -139,10 +139,11 @@ public class ProtoTestRunner {
                     l.setGene(genes[geneType]);
                     storage.put(getIdForObject(l), l);
                     RoundManager.getInstance().addSteppable(l);
-                    logMessage(String.format("%s created: genectic code: %s", getIdForObject(l), l.getGene().getAgent().getClass().getSimpleName()));
+                    logMessage(String.format("%s created: genetic code: %s", getIdForObject(l), l.getGene().getAgent().getClass().getSimpleName()));
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }
+                break;
             }
             case "CreateShelter":{
                 if(!(args.length == 1 || args.length == 2)) throw new Exception("Hiba történt [túl sok/kevés paraméter]");

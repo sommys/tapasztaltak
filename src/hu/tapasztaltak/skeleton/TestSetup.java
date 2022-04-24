@@ -405,7 +405,7 @@ public class TestSetup {
      * A virológus meghívja a tapogat függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistScansWarehouse(){
+    public static void virologistScansWarehouse() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist Scans Warehouse ---");
         Warehouse w = new Warehouse();
         Virologist v = new Virologist();
@@ -493,7 +493,7 @@ public class TestSetup {
      * A virológuson meghívjuk a tapogat függvényt.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistScansLabor(){
+    public static void virologistScansLabor() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist Scans Labor ---");
         Labor l = new Labor();
         Virologist v = new Virologist();
@@ -547,7 +547,7 @@ public class TestSetup {
      * A létrehozott objektumokat beletesszük a HashMapbe.
      * A létrehozott objektumokat kivesszük a HashMapből.
      */
-    public static void virologistScansShelter(){
+    public static void virologistScansShelter() throws Exception {
         System.out.println("--- Setting up Test Environment for Virologist scans shelter ---");
         Shelter s = new Shelter();
         Virologist v = new Virologist();

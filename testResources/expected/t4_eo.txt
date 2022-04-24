@@ -32,13 +32,13 @@ vir2 has the following items:
 2. ncl1
 Pick an item’s index you want to steal:1
 Chosen item stolen from vir2
-vir1 can’t steal from vir3 [not stunned]
+vir1 can't steal from vir3 [not stunned]
 vir3 stealing from vir2
 vir2 has the following items:
 1. ncl1
 Pick an item’s index you want to steal:1
-Inventory full, can’t pickup more items
-vir2 can’t steal [stunned]
+Inventory full, can't pickup more items
+vir2 can't steal [stunned]
 vir1 stealing from vir2
 vir2 has the following items:
 1. ncl1

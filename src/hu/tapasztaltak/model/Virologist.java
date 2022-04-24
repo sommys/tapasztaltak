@@ -142,10 +142,11 @@ public class Virologist implements ISteppable {
 	/**
 	 * Tapogatózás, a virológus megismeri a mezőn lévő virológusokat és tárgyakat/genetikai kódot.
 	 */
-	public void scanning() {
+	public void scanning() throws Exception {
 		if(stunned||moved){
 			return;
 		}
+		field.getItem(this);
 	}
 
 	/**
@@ -156,13 +157,17 @@ public class Virologist implements ISteppable {
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
 		try {
-			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup materials from %s?", getIdForObject(field)), true);
+			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup stuff from %s? (Y/N):", getIdForObject(field)), true);
 			if (pickupDecision == 0) {
 				return chosen;
 			}
 			int remaining = inventory.getSize() - inventory.getUsedSize();
 			for (IStealable a : available) {
-				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup %s?", getIdForObject(a)), true);
+				if(remaining == 0){
+					logMessage("Inventory full, can’t pickup more items");
+					return chosen;
+				}
+				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pickup %s? (Y/N):", getIdForObject(a)), true);
 				if (currentPickupDecision == 1) {
 					if (remaining > 0) {
 						chosen.add(a);
@@ -184,20 +189,20 @@ public class Virologist implements ISteppable {
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */
 	public void steal(Virologist from) {
-		if(!from.isStunned()) {
-			ProtoLogger.logMessage(String.format("%s can’t steal from %s [not stunned]", getIdForObject(this), getIdForObject(from)));
-			return;
-		}
 		if (stunned) {
 			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [stunned]");
+			return;
+		}
+		if (moved) {
+			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [moved]");
 			return;
 		}
 		if(!canReach(from)){
 			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [can't reach]");
 			return;
 		}
-		if (moved) {
-			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [moved]");
+		if(!from.isStunned()) {
+			ProtoLogger.logMessage(String.format("%s can't steal from %s [not stunned]", getIdForObject(this), getIdForObject(from)));
 			return;
 		}
 
@@ -213,7 +218,7 @@ public class Virologist implements ISteppable {
 		IStealable item = inv2.pickItem();
 
 		if (inventory.getUsedSize()==inventory.getSize()) {
-			ProtoLogger.logMessage("Inventory full, can’t pickup more items");
+			ProtoLogger.logMessage("Inventory full, can't pickup more items");
 			return;
 		}
 

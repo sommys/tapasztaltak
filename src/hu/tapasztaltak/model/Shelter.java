@@ -32,24 +32,20 @@ public class Shelter extends Field {
         }
         List<IStealable> chosen = v.chooseItem(List.of(suite));
         if(!chosen.isEmpty() && refreshCounter == -1){
-            int chose = ProtoLogger.logQuestion(String.format("Do you want to pick up %s?",getSuiteId(suite)),true);
-            if(chose == 'Y'){
-                Random random = new Random();
-                refreshCounter = random.nextInt(5) + 4;
-                if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
-                    for (IStealable s : chosen) {
-                        s.add(v.getInventory());
-                        int space = v.getInventory().getSize() - v.getInventory().getUsedSize();
-                        ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left",getSuiteId(suite),getIdForObject(v),space));
-                    }
-                }
-                else{
-                    ProtoLogger.logMessage(String.format("Invenory full, can't pickup more items"));
+            Random random = new Random();
+            refreshCounter = random.nextInt(5) + 4;
+            if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
+                for (IStealable s : chosen) {
+                    s.add(v.getInventory());
+                    int space = v.getInventory().getSize() - v.getInventory().getUsedSize();
+                    ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left",getSuiteId(suite),getIdForObject(v),space));
                 }
             }
             else{
-                return;
+                ProtoLogger.logMessage(String.format("Inventory full, can't pickup more items"));
             }
+        } else{
+            return;
         }
     }
 
