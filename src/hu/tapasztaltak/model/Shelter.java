@@ -1,5 +1,6 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
 import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
 import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
@@ -26,31 +27,38 @@ public class Shelter extends Field {
      *
      * @param v a {@link Virologist}, aki a védőfelszerelést kapja.
      */
-    public void getItem(Virologist v) {
-        Logger.log(this, "getItem", CALL, v);
+    public void getItem(Virologist v) throws Exception {
         if(suite == null){
-            Logger.log(this, "", RETURN);
             return;
         }
         List<IStealable> chosen = v.chooseItem(List.of(suite));
         if(!chosen.isEmpty() && refreshCounter == -1){
-            Random random = new Random();
-            refreshCounter = random.nextInt(5) + 4;
+            int chose = ProtoLogger.logQuestion(String.format("Do you want to pick up %s?",getSuiteId(suite)),true);
+            if(chose == 'Y'){
+                Random random = new Random();
+                refreshCounter = random.nextInt(5) + 4;
+                if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
+                    for (IStealable s : chosen) {
+                        s.add(v.getInventory());
+                        int space = v.getInventory().getSize() - v.getInventory().getUsedSize();
+                        ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left",getSuiteId(suite),getIdForObject(v),space));
+                    }
+                }
+                else{
+                    ProtoLogger.logMessage(String.format("Invenory full, can't pickup more items"));
+                }
+            }
+            else{
+                return;
+            }
         }
-        //Van-e elég helye? - ellenőrzés
-        for(IStealable s : chosen){
-            s.add(v.getInventory());
-        }
-        Logger.log(this, "", RETURN);
     }
 
     /**
      * Random védőfelszerelést tesz az óvóhelyre
      */
     public void refresh() {
-        Logger.log(this, "refresh", CALL);
         if(suite != null){
-            Logger.log(this, "", RETURN);
             return;
         }
         refreshCounter = -1;
@@ -62,21 +70,21 @@ public class Shelter extends Field {
             case 0:
                 suite = new Bag();
                 TestSetup.storage.put("b", suite);
+                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
 
             case 1:
                 suite = new Cape();
                 TestSetup.storage.put("c", suite);
+                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
 
             case 2:
                 suite = new Gloves();
                 TestSetup.storage.put("g", suite);
+                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
         }
-        Logger.log(suite, "<<create>>", CALL);
-        Logger.log(suite, "suite="+TestSetup.getName(suite), RETURN);
-        Logger.log(this, "", RETURN);
     }
 
     //region GETTEREK és SETTEREK

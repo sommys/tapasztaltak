@@ -80,11 +80,7 @@ public class Warehouse extends Field {
                 materials.add(n);
             }
         }
-        List<IMaterial> mats = getMaterials();
-        ProtoLogger.logMessage(String.format("%s refreshed with ",getIdForObject(this));
-        for (IMaterial m: mats) {
-
-        }
+        ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),materials.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(" "))));
         Logger.log(this, "", RETURN);
     }
 
