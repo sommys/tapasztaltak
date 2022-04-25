@@ -9,7 +9,7 @@ vir3 created on fld1
 glv1 with 3 uses left added for vir3 inventory 9 spaces left
 glv1 is now worn by vir3
 vir4 created on fld1
-axe1 added for vir4 inventory 9 spaces left
+axe1 [not used] added for vir4 inventory 9 spaces left
 axe1 is now worn by vir4
 vir5 created on fld1
 glv2 with 3 uses left added for vir5 inventory 9 spaces left

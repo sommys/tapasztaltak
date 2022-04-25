@@ -5,6 +5,7 @@ import hu.tapasztaltak.model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -82,7 +83,7 @@ public class ProtoMain {
         System.out.println("Köszi, hogy letesztelted! :) @ tapasztaltak");
     }
 
-    private static void geneInit() {
+    public static void geneInit() {
         genes[0].setAgent(new Dance());
         genes[1].setAgent(new Forget());
         genes[2].setAgent(new Protect());
@@ -98,15 +99,21 @@ public class ProtoMain {
         System.out.print("Válasszon menüpontot: ");
         int input;
         Scanner sc = new Scanner(System.in);
+        SimpleDateFormat format = new SimpleDateFormat("YYYY_MM_dd_HH_mm_ss");
+        FileWriter fwResult = new FileWriter("testResults_"+format.format(new Date())+".txt");
         try {
             input = sc.nextInt();
             if(input < 1 || input > ALL_TEST_IDX) throw new Exception();
             if(input == ALL_TEST_IDX){
-                for(int i = 0; i < ALL_TEST_IDX; i++){
-                    ProtoTestRunner.runTest(input);
+                for(int i = 1; i < ALL_TEST_IDX; i++){
+                    ProtoTestRunner.runTest(i);
+                    fwResult.write(ProtoTestRunner.testList.get(i-1).name+" result: "+(ProtoTestRunner.testList.get(i-1).result ? "SUCESS" : "FAIL")+"\n");
                 }
+                fwResult.close();
             } else {
                 ProtoTestRunner.runTest(input);
+                fwResult.write(ProtoTestRunner.testList.get(input-1).name+" result: "+(ProtoTestRunner.testList.get(input-1).result ? "SUCESS" : "FAIL"));
+                fwResult.close();
             }
         } catch (Exception e) {
             System.err.println("Hiba történt! [hibás teszt menüpont]");

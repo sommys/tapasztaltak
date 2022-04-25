@@ -37,7 +37,7 @@ vir3 stealing from vir2
 vir2 has the following items:
 1. ncl1
 Pick an item's index you want to steal:1
-Inventory full, can't pickup more items
+Inventory full, can't pick up more items
 vir2 can't steal [stunned]
 vir1 stealing from vir2
 vir2 has the following items:

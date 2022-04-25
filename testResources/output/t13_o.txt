@@ -3,5 +3,5 @@ vir1 created on fld1
 wrh1 created with 0 aminoacid and 0 nucleotid
 shlt1 created with Nothing
 vir1 ended round. New round starts
-wrh1 refreshed with ncl1 amin1 amin2
-shlt1 refreshed with cape1
+wrh1 refreshed with amin1
+shlt1 refreshed with bag1

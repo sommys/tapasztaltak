@@ -3,7 +3,7 @@ vir1 created on fld1
 bag1 with 10 size added for vir1 inventory 9 spaces left
 cape1 added for vir1 inventory 8 spaces left
 glv1 with 3 uses left added for vir1 inventory 7 spaces left
-axe1 added for vir1 inventory 6 spaces left
+axe1 [not used] added for vir1 inventory 6 spaces left
 bag1 is now worn by vir1
 vir1 is wearing the following suites:
 1. bag1

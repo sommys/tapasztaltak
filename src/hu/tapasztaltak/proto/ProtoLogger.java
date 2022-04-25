@@ -23,7 +23,7 @@ public class ProtoLogger {
             } else if(decision.equalsIgnoreCase("N")){
                 choice = 0;
             } else {
-                throw new Exception("Vmi frappáns haha");
+                throw new Exception("Ez teljes mértékben különböző, nem valami más... Annyira sznob ez a swag hogy én úgy ejtem SZVÁZS.");
             }
             actOutput.append(q).append(choice == 1 ? "Y" : "N").append("\n");
         } else {

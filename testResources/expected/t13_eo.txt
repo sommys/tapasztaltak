@@ -1,5 +1,7 @@
 fld1 created
+vir1 created on fld1
 wrh1 created with 0 aminoacid and 0 nucleotid
 shlt1 created with Nothing
-whr1 refreshed with ncl1 ncl2
-shlt1 refreshed with glv1
+vir1 ended round. New round starts
+whr1 refreshed with *something*
+shlt1 refreshed with *something*

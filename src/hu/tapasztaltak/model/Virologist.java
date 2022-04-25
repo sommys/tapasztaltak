@@ -131,10 +131,11 @@ public class Virologist implements ISteppable {
 		if(stunned||moved){
 			return;
 		}
-		loggingSwitch=false;
+		boolean originalSwitch = loggingSwitch;
+		if(loggingSwitch) loggingSwitch=false;
 		from.deactivate(this);
 		to.activate(this);
-		loggingSwitch=true;
+		loggingSwitch=originalSwitch;
 		logMessage(String.format("%s is now wearing %s instead of %s", getIdForObject(this), getIdForObject(to), getIdForObject(from)));
 	}
 

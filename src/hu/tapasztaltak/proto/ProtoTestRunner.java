@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoLogger.*;
@@ -16,12 +15,12 @@ import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
 public class ProtoTestRunner {
-    private static class Test{
-        String name;
+    public static class Test{
+        public String name;
         String inputFile;
         String outputFile;
         String expectedOutputFile;
-        boolean result = false;
+        public boolean result = false;
 
         public Test(String name, String inputFile, String outputFile, String expectedOutputFile) {
             this.name = name;
@@ -53,7 +52,33 @@ public class ProtoTestRunner {
                 int i = 0;
                 while((line = br.readLine()) != null){
                     if(i < actLines.length){
-                        if(!line.equals(actLines[i++])){
+                        if(line.contains("*")){
+                            if(line.contains("protected") && actLines[i].contains("protected")){
+                                i++;
+                                continue;
+                            } else if(line.contains("didn't protect") && actLines[i].contains("didn't protect")){
+                                i++;
+                            } else if(line.contains("RANDOM FIELD FROM")){
+                                String fld = line.substring(line.indexOf("FROM ")+5, line.indexOf(" NEIGHBOURS"));
+                                Field f = (Field)storage.get(fld.toLowerCase());
+                                if(f != null){
+                                    String actFld = actLines[i].substring(actLines[i].indexOf("to")+3);
+                                    Field n = (Field)storage.get(actFld);
+                                    if(n == null || !f.getNeighbours().contains(n)){
+                                        result = false;
+                                        actOutput = new StringBuilder();
+                                        return;
+                                    }
+                                }
+                            } else if(line.contains("something")){
+                                if(!(actLines[i].contains("ncl")||actLines[i].contains("amin")||actLines[i].contains("glv")||actLines[i].contains("cape")||actLines[i].contains("axe")||actLines[i].contains("bag"))){
+                                    result = false;
+                                    actOutput = new StringBuilder();
+                                    return;
+                                }
+                            }
+                            i++;
+                        } else if(!line.equals(actLines[i++])){
                             result = false;
                             actOutput = new StringBuilder();
                             return;
@@ -74,7 +99,7 @@ public class ProtoTestRunner {
         }
     }
 
-    private static final List<Test> testList = new ArrayList<>();
+    public static final List<Test> testList = new ArrayList<>();
 
     public static void init(){
         for(int i = 1; i < ProtoMain.ALL_TEST_IDX; i++){
@@ -573,8 +598,10 @@ public class ProtoTestRunner {
     private static void resetState(){
         storage.clear();
         ProtoMain.ids.clear();
+        ProtoMain.geneInit();
         RoundManager.getInstance().getSteppables().clear();
         RoundManager.getInstance().getVirologists().clear();
+        RoundManager.getInstance().setMovedCounter(0);
     }
 
 }

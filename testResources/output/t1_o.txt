@@ -10,6 +10,6 @@ vir3 created on fld1
 Dance agent added with 3 rounds left from its effect to vir2
 Stun agent added with 3 rounds left from its effect to vir3
 vir1 moved to fld2
-[dnc1 effect] vir2 moved to fld2
+[dnc1 effect] vir2 moved to fld3
 [stun1 effect] vir3 stunned
 vir3 can't move to fld2 [stunned]
