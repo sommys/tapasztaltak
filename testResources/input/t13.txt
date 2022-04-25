@@ -1,5 +1,5 @@
 CreateField
+CreateVirologist fld1
 CreateWarehouse 0 0 1
 CreateShelter 4 1
-Refresh wrh1
-Refresh shlt1
+EndRound vir1

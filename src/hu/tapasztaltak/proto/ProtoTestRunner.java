@@ -112,7 +112,6 @@ public class ProtoTestRunner {
                 v.setField(f);
                 f.addVirologist(v);
                 RoundManager.getInstance().addVirologist(v);
-                RoundManager.getInstance().addSteppable(v);
                 storage.put(getIdForObject(v), v);
                 logMessage(String.format("%s created on %s", getIdForObject(v), getIdForObject(f)));
                 break;
@@ -304,6 +303,7 @@ public class ProtoTestRunner {
                                     if(used < 0 || used > 1) throw new Exception();
                                     ((Axe)s).setUsed(used == 1);
                                 }
+                                plusInfo = " ["+(((Axe)s).isUsed()?"":"not ")+"used] ";
                                 break;
                             }
                             default: throw new Exception();
@@ -534,7 +534,7 @@ public class ProtoTestRunner {
                     }
                     int fromIdx = logQuestion("Pick a suite’s index you want to switch from: ", false) - 1;
                     while(fromIdx < 0 || fromIdx >= worn.size()){
-                        fromIdx = logQuestion(String.format("No such item in %s’s inventory, pick again:", getIdForObject(v)), false) - 1;
+                        fromIdx = logQuestion(String.format("No such item in %s's inventory, pick again: ", getIdForObject(v)), false) - 1;
                     }
                     logMessage(String.format("%s has the following non-worn suites:", getIdForObject(v)));
                     for(int i = 0; i < stored.size(); i++){
@@ -542,7 +542,7 @@ public class ProtoTestRunner {
                     }
                     int toIdx = logQuestion("Pick a suite’s index you want to switch to: ", false) - 1;
                     while(toIdx < 0 || toIdx >= stored.size()){
-                        toIdx = logQuestion(String.format("No such item in %s’s inventory, pick again:", getIdForObject(v)), false) - 1;
+                        toIdx = logQuestion(String.format("No such item in %s's inventory, pick again: ", getIdForObject(v)), false) - 1;
                     }
                     v.switchSuite(worn.get(fromIdx), stored.get(toIdx));
                 } catch(Exception e){
@@ -573,6 +573,8 @@ public class ProtoTestRunner {
     private static void resetState(){
         storage.clear();
         ProtoMain.ids.clear();
+        RoundManager.getInstance().getSteppables().clear();
+        RoundManager.getInstance().getVirologists().clear();
     }
 
 }

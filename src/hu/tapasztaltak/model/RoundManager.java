@@ -48,10 +48,12 @@ public class RoundManager {
      * Elindít egy új kört.
      */
     private void newRound() throws Exception {
-        for (var s : steppables) {
+        for (ISteppable s : steppables) {
             s.step();
         }
-
+        for (Virologist v : virologists){
+            v.step();
+        }
         movedCounter = 0;
     }
 
@@ -61,7 +63,6 @@ public class RoundManager {
     public void virologistMoved() throws Exception {
         movedCounter++;
         if (movedCounter == virologists.size()) {
-            movedCounter = 0;
             newRound();
         }
     }

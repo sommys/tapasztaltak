@@ -1,0 +1,14 @@
+fld1 created
+fld2 created
+vir1 created on fld1
+vir2 created on fld1
+vir3 created on fld1
+vir4 created on fld2
+Bear agent added with -1 rounds left from its effect to vir1
+axe1 [not used] added for vir2 inventory 9 spaces left
+axe1 is now worn by vir2
+vir2 can't use axe1 [can't reach]
+vir2 used axe1 on vir1
+vir1 died axe1 broke
+vir2 can't use axe1 [broken]
+vir3 doesn't have axe1

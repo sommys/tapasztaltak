@@ -18,7 +18,6 @@ public class Axe extends Suite{
      */
     @Override
     public void activate(Virologist v) {
-        //TODO fix
         setActive(true);
         ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
     }
@@ -36,7 +35,11 @@ public class Axe extends Suite{
             return;
         }
         if(used) {
-            ProtoLogger.logMessage(String.format("%s cant use %s [broken]",getIdForObject(v),getIdForObject(this)));
+            ProtoLogger.logMessage(String.format("%s can't use %s [broken]",getIdForObject(v),getIdForObject(this)));
+            return;
+        }
+        if(!v.canReach(toKill)){
+            ProtoLogger.logMessage(String.format("%s can't use %s [can't reach]",getIdForObject(v),getIdForObject(this)));
             return;
         }
         toKill.die();

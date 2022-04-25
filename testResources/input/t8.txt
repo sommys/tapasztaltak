@@ -7,9 +7,9 @@ CreateVirologist fld1
 CreateVirologist fld2
 SetNeighbours fld1 fld2
 SetNeighbours fld2 fld1
-AddSuite vir1 2 3 310
+AddSuite vir1 2 1 3
 ActivateSuite vir1 glv1
-AddSuite vir2 1 3
+AddSuite vir2 1 1
 ActivateSuite vir2 cape1
 AddEAgent vir3 2 3
 AddUAgent vir1 3 3

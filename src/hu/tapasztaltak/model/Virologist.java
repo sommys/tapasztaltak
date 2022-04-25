@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
+import static hu.tapasztaltak.proto.ProtoLogger.loggingSwitch;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
@@ -119,6 +120,8 @@ public class Virologist implements ISteppable {
 				logMessage(String.format("%s can’t use agent [stunned]", getIdForObject(this)));
 			} else if(moved){
 				logMessage(String.format("%s can’t use agent [already moved]", getIdForObject(this)));
+			} else {
+				logMessage(String.format("%s can’t use agent [can't reach]", getIdForObject(this)));
 			}
 			return;
 		}
@@ -135,8 +138,11 @@ public class Virologist implements ISteppable {
 		if(stunned||moved){
 			return;
 		}
+		loggingSwitch=false;
 		from.deactivate(this);
 		to.activate(this);
+		loggingSwitch=true;
+		logMessage(String.format("%s is now wearing %s instead of %s", getIdForObject(this), getIdForObject(to), getIdForObject(from)));
 	}
 
 	/**
@@ -314,7 +320,7 @@ public class Virologist implements ISteppable {
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
 	public void endRound() throws Exception {
-		if (RoundManager.getInstance().getMovedCounter() == RoundManager.getInstance().getVirologists().size()) {
+		if (RoundManager.getInstance().getMovedCounter()+1 == RoundManager.getInstance().getVirologists().size()) {
 			ProtoLogger.logMessage(getIdForObject(this) + " ended round. New round starts");
 		}
 		else {
@@ -325,7 +331,7 @@ public class Virologist implements ISteppable {
 
 	public void attack(Axe a, Virologist victim){
 		if(!inventory.getSuites().contains(a)){
-			logMessage(String.format("%s doesn’t have %s", getIdForObject(this), getIdForObject(a)));
+			logMessage(String.format("%s doesn't have %s", getIdForObject(this), getIdForObject(a)));
 			return;
 		}
 		a.use(this, victim);

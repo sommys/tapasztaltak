@@ -1,0 +1,25 @@
+fld1 created
+vir1 created on fld1
+vir2 created on fld1
+3 aminoacid added for vir2 inventory 7 spaces left
+3 nucleotid added for vir2 inventory 4 spaces left
+vir3 created on fld1
+vir4 created on fld1
+3 aminoacid added for vir4 inventory 7 spaces left
+3 nucleotid added for vir4 inventory 4 spaces left
+vir5 created on fld1
+vir6 created on fld1
+3 aminoacid added for vir6 inventory 7 spaces left
+3 nucleotid added for vir6 inventory 4 spaces left
+vir7 created on fld1
+vir8 created on fld1
+3 aminoacid added for vir8 inventory 7 spaces left
+3 nucleotid added for vir8 inventory 4 spaces left
+vir1 doesn’t have enough material to make dance agent
+vir2 made dnc1
+vir3 doesn’t have enough material to make forget agent
+vir4 made frgt1
+vir5 doesn’t have enough material to make protect agent
+vir6 made prot1
+vir7 doesn’t have enough material to make stun agent
+vir8 made stun1

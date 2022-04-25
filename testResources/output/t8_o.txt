@@ -1,0 +1,30 @@
+fld1 created
+fld2 created
+vir1 created on fld1
+vir2 created on fld1
+vir3 created on fld1
+vir4 created on fld1
+vir5 created on fld2
+fld2 added to fld1 neighbours
+fld1 added to fld2 neighbours
+glv1 with 3 uses left added for vir1 inventory 9 spaces left
+glv1 is now worn by vir1
+cape1 added for vir2 inventory 9 spaces left
+cape1 is now worn by vir2
+Protect agent added with 3 rounds left from its effect to vir3
+stun1 [usable for 3 rounds] added for vir1
+stun2 [usable for 3 rounds] added for vir2
+stun3 [usable for 3 rounds] added for vir3
+stun4 [usable for 3 rounds] added for vir4
+stun5 [usable for 3 rounds] added for vir1
+vir1 used stun1 on vir2
+cape1 protected
+vir2 used stun2 on vir3
+prot1 protected
+vir3 used stun3 on vir4
+Stun agent added with 3 rounds left from its effect to vir4
+vir4 used stun4 on vir1
+Do you want to use glv1 [3 uses left]? (Y/N):Y
+vir1 used stun4 on vir4
+Stun agent added with 3 rounds left from its effect to vir4
+vir1 can’t use agent [can't reach]

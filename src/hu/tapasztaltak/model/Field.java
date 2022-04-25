@@ -80,8 +80,7 @@ public class Field implements ISteppable {
      * @return random szomszédos {@link Field}
      */
     public Field getRandomNeighbour() {
-        Random random = new Random();
-        return neighbours.get(random.nextInt(neighbours.size()));
+        return neighbours.isEmpty() ? this : neighbours.get(new Random().nextInt(neighbours.size()));
     }
 
     /**

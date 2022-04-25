@@ -64,10 +64,12 @@ public class Bear extends Agent implements SpecialModifier{
         ProtoLogger.logMessage(String.format("[%s effect started]", getIdForObject(this)));
         Field f = v.getField();
         Field randField = f.getRandomNeighbour();
-        f.removeVirologist(v);
-        randField.addVirologist(v);
-        v.setField(randField);
-        ProtoLogger.logMessage(String.format("%s moved to %s", getIdForObject(v), getIdForObject(randField)));
+        if(randField != f){
+            f.removeVirologist(v);
+            randField.addVirologist(v);
+            v.setField(randField);
+            ProtoLogger.logMessage(String.format("%s moved to %s", getIdForObject(v), getIdForObject(randField)));
+        }
         //törés, zúzás
         randField.destroyStuff();
         ProtoLogger.logMessage(String.format("%s destroyed materials on %s", getIdForObject(v), getIdForObject(randField)));

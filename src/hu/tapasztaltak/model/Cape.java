@@ -71,5 +71,6 @@ public class Cape extends Suite implements IDefense {
 	public void deactivate(Virologist v) {
 		v.removeDefense(this);
 		setActive(false);
+		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 }

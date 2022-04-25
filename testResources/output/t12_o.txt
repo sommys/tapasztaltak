@@ -1,6 +1,7 @@
 fld1 created
 vir1 created on fld1
-dnc1 added with 1 rounds left from its effect to vir1
-frg1 added with 2 rounds left from its effect to vir1
+Dance agent added with 1 rounds left from its effect to vir1
+Forget agent added with 2 rounds left from its effect to vir1
 vir1 ended round. New round starts
 dnc1 expired
+[frgt1 effect] vir1 forgets their learnt genetic codes

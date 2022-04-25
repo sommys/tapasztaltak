@@ -4,10 +4,10 @@ CreateVirologist fld1
 CreateVirologist fld1
 CreateVirologist fld1
 CreateVirologist fld2
-AddEAgent vir1 4
-AddSuite vir2 3 false
+AddEAgent vir1 4 -1
+AddSuite vir2 3 1 0
 ActivateSuite vir2 axe1
-UseAxe vir2 vir1
-UseAxe vir2 vir3
-UseAxe vir2 vir4
-UseAxe vir3 vir2
+UseAxe vir2 axe1 vir4
+UseAxe vir2 axe1 vir1
+UseAxe vir2 axe1 vir3
+UseAxe vir3 axe1 vir2

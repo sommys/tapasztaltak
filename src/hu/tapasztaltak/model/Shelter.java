@@ -69,22 +69,15 @@ public class Shelter extends Field {
         switch (randomNumber) {
             case 0:
                 suite = new Bag();
-                TestSetup.storage.put("b", suite);
-                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
-
             case 1:
                 suite = new Cape();
-                TestSetup.storage.put("c", suite);
-                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
-
             case 2:
                 suite = new Gloves();
-                TestSetup.storage.put("g", suite);
-                ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getSuiteId(suite)));
                 break;
         }
+        ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getIdForObject(suite)));
     }
 
     //region GETTEREK és SETTEREK
