@@ -49,7 +49,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void move(Field f) {
 		if(stunned||moved){
-			logMessage(String.format("%s can’t move to %s [%s]", getIdForObject(this), getIdForObject(f), stunned ? "stunned" : "already moved"));
+			logMessage(String.format("%s can't move to %s [%s]", getIdForObject(this), getIdForObject(f), stunned ? "stunned" : "already moved"));
 			return;
 		}
 		if(field.isNeighbour(f)){
@@ -58,7 +58,7 @@ public class Virologist implements ISteppable {
 			field = f;
 			logMessage(String.format("%s moved to %s", getIdForObject(this), getIdForObject(f)));
 		} else {
-			logMessage(String.format("%s can’t move to %s [not neighbour]", getIdForObject(this), getIdForObject(f)));
+			logMessage(String.format("%s can't move to %s [not neighbour]", getIdForObject(this), getIdForObject(f)));
 		}
 	}
 
@@ -98,7 +98,7 @@ public class Virologist implements ISteppable {
 		if(originalMatSize != afterMatSize){
 			logMessage(String.format("%s made %s", getIdForObject(this), getIdForObject(inventory.getAgents().get(inventory.getAgents().size()-1))));
 		} else {
-			logMessage(String.format("%s doesn’t have enough material to make %s agent", getIdForObject(this), g.getAgent().getClass().getSimpleName().toLowerCase()));
+			logMessage(String.format("%s doesn't have enough material to make %s agent", getIdForObject(this), g.getAgent().getClass().getSimpleName().toLowerCase()));
 		}
 	}
 
@@ -110,11 +110,11 @@ public class Virologist implements ISteppable {
 	public void useAgent(Agent a, Virologist v) throws Exception {
 		if(stunned || moved || !canReach(v)){
 			if(stunned){
-				logMessage(String.format("%s can’t use agent [stunned]", getIdForObject(this)));
+				logMessage(String.format("%s can't use agent [stunned]", getIdForObject(this)));
 			} else if(moved){
-				logMessage(String.format("%s can’t use agent [already moved]", getIdForObject(this)));
+				logMessage(String.format("%s can't use agent [already moved]", getIdForObject(this)));
 			} else {
-				logMessage(String.format("%s can’t use agent [can't reach]", getIdForObject(this)));
+				logMessage(String.format("%s can't use agent [can't reach]", getIdForObject(this)));
 			}
 			return;
 		}
@@ -163,7 +163,7 @@ public class Virologist implements ISteppable {
 			int remaining = inventory.getSize() - inventory.getUsedSize();
 			for (IStealable a : available) {
 				if(remaining == 0){
-					logMessage("Inventory full, can’t pick up more items");
+					logMessage("Inventory full, can't pick up more items");
 					return chosen;
 				}
 				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pick up %s? (Y/N):", getIdForObject(a)), true);

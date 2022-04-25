@@ -532,7 +532,7 @@ public class ProtoTestRunner {
                     for(int i = 0; i < worn.size(); i++){
                         logMessage(String.format("%d. %s", i+1, getIdForObject(worn.get(i))));
                     }
-                    int fromIdx = logQuestion("Pick a suite’s index you want to switch from: ", false) - 1;
+                    int fromIdx = logQuestion("Pick a suite's index you want to switch from: ", false) - 1;
                     while(fromIdx < 0 || fromIdx >= worn.size()){
                         fromIdx = logQuestion(String.format("No such item in %s's inventory, pick again: ", getIdForObject(v)), false) - 1;
                     }
@@ -540,7 +540,7 @@ public class ProtoTestRunner {
                     for(int i = 0; i < stored.size(); i++){
                         logMessage(String.format("%d. %s", i+1, getIdForObject(stored.get(i))));
                     }
-                    int toIdx = logQuestion("Pick a suite’s index you want to switch to: ", false) - 1;
+                    int toIdx = logQuestion("Pick a suite's index you want to switch to: ", false) - 1;
                     while(toIdx < 0 || toIdx >= stored.size()){
                         toIdx = logQuestion(String.format("No such item in %s's inventory, pick again: ", getIdForObject(v)), false) - 1;
                     }

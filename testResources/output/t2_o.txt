@@ -59,4 +59,4 @@ vir1 doesn't have dnc9
 Stun agent added with 3 rounds left from its effect to vir4
 [stun1 effect] vir4 stunned
 dnc9 [usable for 3 rounds] added for vir4
-vir4 can’t use agent [stunned]
+vir4 can't use agent [stunned]

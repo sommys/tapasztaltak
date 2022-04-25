@@ -18,7 +18,7 @@ Do you want to pick up stuff from wrh1? (Y/N):Y
 Do you want to pick up amin1? (Y/N):N
 Do you want to pick up amin2? (Y/N):Y
 amin2 added for vir2 inventory 0 spaces left
-Inventory full, can’t pick up more items
+Inventory full, can't pick up more items
 vir3 scanned lab1 -> geneticCode: gene2[Forget] | virologists: -
 vir3 learnt Forget
 vir4 scanned ilab1 -> geneticCode: gene2[Forget] | virologists: vir5

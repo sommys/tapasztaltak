@@ -7,41 +7,41 @@ axe1 added for vir1 inventory 6 spaces left
 bag1 is now worn by vir1
 vir1 is wearing the following suites:
 1. bag1
-Pick a suite’s index you want to switch from: 1
+Pick a suite's index you want to switch from: 1
 vir1 has the following non-worn suites:
 1. cape1
 2. glv1
 3. axe1
-Pick a suite’s index you want to switch to: 1
+Pick a suite's index you want to switch to: 1
 vir1 is now wearing cape1 instead of bag1
 vir1 is wearing the following suites:
 1. cape1
-Pick a suite’s index you want to switch from: 1
+Pick a suite's index you want to switch from: 1
 vir1 has the following non-worn suites:
 1. bag1
 2. glv1
 3. axe1
-Pick a suite’s index you want to switch to: 2
+Pick a suite's index you want to switch to: 2
 vir1 is now wearing glv1 instead of cape1
 vir1 is wearing the following suites:
 1. glv1
-Pick a suite’s index you want to switch from: 1
+Pick a suite's index you want to switch from: 1
 vir1 has the following non-worn suites:
 1. bag1
 2. cape1
 3. axe1
-Pick a suite’s index you want to switch to: 5
+Pick a suite's index you want to switch to: 5
 No such item in vir1's inventory, pick again: 1
 vir1 is now wearing bag1 instead of glv1
 vir1 is wearing the following suites:
 1. bag1
-Pick a suite’s index you want to switch from: 2
+Pick a suite's index you want to switch from: 2
 No such item in vir1's inventory, pick again: 1
 vir1 has the following non-worn suites:
 1. cape1
 2. glv1
 3. axe1
-Pick a suite’s index you want to switch to: 3
+Pick a suite's index you want to switch to: 3
 vir1 is now wearing axe1 instead of bag1
 cape1 is now worn by vir1
 glv1 is now worn by vir1
@@ -49,8 +49,8 @@ vir1 is wearing the following suites:
 1. cape1
 2. glv1
 3. axe1
-Pick a suite’s index you want to switch from: 3
+Pick a suite's index you want to switch from: 3
 vir1 has the following non-worn suites:
 1. bag1
-Pick a suite’s index you want to switch to: 1
+Pick a suite's index you want to switch to: 1
 vir1 is now wearing bag1 instead of axe1

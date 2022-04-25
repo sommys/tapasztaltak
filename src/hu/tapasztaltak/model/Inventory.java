@@ -58,10 +58,10 @@ public class Inventory {
 
 		// Az exceptiont nem tudom, hogy így kéne-e, btw itt nem is kaphatok
 		try {
-			value = ProtoLogger.logQuestion("Pick an item’s index you want to steal:", false);
+			value = ProtoLogger.logQuestion("Pick an item's index you want to steal:", false);
 			while(value < 1 || value > stealableSize) {
 				ProtoLogger.logMessage(String.format("Invalid index, please give a number between 1 and %d!",stealableSize));
-				value = ProtoLogger.logQuestion("Pick an item’s index you want to steal:", false);
+				value = ProtoLogger.logQuestion("Pick an item's index you want to steal:", false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

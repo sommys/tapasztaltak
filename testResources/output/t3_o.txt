@@ -18,7 +18,7 @@ vir2 already learnt this genetic code [Dance]
 [frgt1 effect] vir2 forgets their learnt genetic codes
 vir2 learnt Dance
 [stun1 effect] vir4 stunned
-vir4 can’t move to wrh1 [stunned]
+vir4 can't move to wrh1 [stunned]
 vir3 moved to wrh1
 [bear1 effect started]
 vir5 moved to wrh1

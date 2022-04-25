@@ -15,11 +15,11 @@ vir7 created on fld1
 vir8 created on fld1
 3 aminoacid added for vir8 inventory 7 spaces left
 3 nucleotid added for vir8 inventory 4 spaces left
-vir1 doesn’t have enough material to make dance agent
+vir1 doesn't have enough material to make dance agent
 vir2 made dnc1
-vir3 doesn’t have enough material to make forget agent
+vir3 doesn't have enough material to make forget agent
 vir4 made frgt1
-vir5 doesn’t have enough material to make protect agent
+vir5 doesn't have enough material to make protect agent
 vir6 made prot1
-vir7 doesn’t have enough material to make stun agent
+vir7 doesn't have enough material to make stun agent
 vir8 made stun1

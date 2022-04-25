@@ -27,4 +27,4 @@ vir4 used stun4 on vir1
 Do you want to use glv1 [3 uses left]? (Y/N):Y
 vir1 used stun4 on vir4
 Stun agent added with 3 rounds left from its effect to vir4
-vir1 can’t use agent [can't reach]
+vir1 can't use agent [can't reach]
