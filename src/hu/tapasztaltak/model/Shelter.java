@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -30,7 +33,7 @@ public class Shelter extends Field {
         if(suite == null){
             return;
         }
-        List<IStealable> chosen = v.chooseItem(List.of(suite));
+        List<IStealable> chosen = v.chooseItem(new ArrayList<>(Arrays.asList(suite)));
         if(!chosen.isEmpty() && refreshCounter == -1){
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;

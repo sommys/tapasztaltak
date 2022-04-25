@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
@@ -37,7 +40,7 @@ public class Stun extends Agent implements SpecialModifier {
 		Aminoacid stunA1 = new Aminoacid();
 		Aminoacid stunA2 = new Aminoacid();
 		Aminoacid stunA3 = new Aminoacid();
-		return List.of(stunA1, stunA2, stunA3);
+		return new ArrayList<>(Arrays.asList(stunA1, stunA2, stunA3));
 	}
 
 	/**

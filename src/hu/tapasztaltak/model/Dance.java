@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
@@ -45,7 +48,7 @@ public class Dance extends Agent implements SpecialModifier {
 	public List<IMaterial> getRecipe() {
 		Nucleotid danceN = new Nucleotid();
 		Aminoacid danceA = new Aminoacid();
-		return List.of(danceN, danceA);
+		return new ArrayList<>(Arrays.asList(danceN, danceA));
 	}
 
 	/**

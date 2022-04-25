@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
@@ -36,7 +39,7 @@ public class Forget extends Agent implements SpecialModifier {
 		Nucleotid forgetN1 = new Nucleotid();
 		Nucleotid forgetN2 = new Nucleotid();
 		Nucleotid forgetN3 = new Nucleotid();
-		return List.of(forgetN1, forgetN2, forgetN3);
+		return new ArrayList<>(Arrays.asList(forgetN1, forgetN2, forgetN3));
 	}
 
 	/**

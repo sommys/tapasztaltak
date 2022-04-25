@@ -1,6 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
@@ -41,7 +44,7 @@ public class Protect extends Agent implements IDefense {
 		Nucleotid protectN2 = new Nucleotid();
 		Aminoacid protectA1 = new Aminoacid();
 		Aminoacid protectA2 = new Aminoacid();
-		return List.of(protectA1, protectA2, protectN1, protectN2);
+		return new ArrayList<>(Arrays.asList(protectA1, protectA2, protectN1, protectN2));
 	}
 
 	/**
