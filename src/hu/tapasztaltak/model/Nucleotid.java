@@ -1,7 +1,4 @@
 package hu.tapasztaltak.model;
-
-import hu.tapasztaltak.skeleton.Logger;
-
 /**
  * A Nucleotid anyagot reprezentáló osztály.
  */

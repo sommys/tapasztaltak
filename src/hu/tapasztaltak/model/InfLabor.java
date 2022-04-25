@@ -1,7 +1,6 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 public class InfLabor extends Labor{

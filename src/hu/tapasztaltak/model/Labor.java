@@ -1,8 +1,6 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
-
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;

@@ -1,8 +1,6 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoMain;
-import hu.tapasztaltak.skeleton.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 

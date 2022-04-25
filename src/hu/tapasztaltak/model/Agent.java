@@ -1,9 +1,6 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.skeleton.Logger;
-
 import java.util.List;
-
 
 /**
  * Az ágenseknek az összefoglaló absztrakt ősosztálya,

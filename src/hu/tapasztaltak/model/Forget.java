@@ -1,12 +1,6 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
-import hu.tapasztaltak.skeleton.TestSetup;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;

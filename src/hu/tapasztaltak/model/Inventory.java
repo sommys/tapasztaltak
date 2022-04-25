@@ -3,7 +3,6 @@ package hu.tapasztaltak.model;
 import hu.tapasztaltak.proto.ProtoLogger;
 import java.util.ArrayList;
 import java.util.List;
-
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**

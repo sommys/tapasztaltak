@@ -1,14 +1,12 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
 import hu.tapasztaltak.skeleton.TestSetup;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static hu.tapasztaltak.skeleton.Logger.LogType.*;
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A játékot reprezentáló singleton osztály.
@@ -50,35 +48,30 @@ public class Game {
         RoundManager rm = RoundManager.getInstance();
         for(int i = 1; i <= fieldNum; i++){
             Field f = new Field();
-            TestSetup.addObject(f, "f"+i);
             ProtoLogger.logMessage(String.format("%s created",getIdForObject(f)));
             fields.add(f);
             rm.addSteppable(f);
         }
         for(int i = 1; i <= laborNum; i++){
             Labor l= new Labor();
-            TestSetup.addObject(l, "l"+i);
             ProtoLogger.logMessage(String.format("%s created",getIdForObject(l)));
             fields.add(l);
             rm.addSteppable(l);
         }
         for(int i = 1; i <= warehouseNum; i++){
             Warehouse w = new Warehouse();
-            TestSetup.addObject(w,"w"+i);
             ProtoLogger.logMessage(String.format("%s created",getIdForObject(w)));
             fields.add(w);
             rm.addSteppable(w);
         }
         for(int i = 1; i <= shelterNum; i++){
             Shelter s = new Shelter();
-            TestSetup.addObject(s,"s"+i);
             ProtoLogger.logMessage(String.format("%s created",getIdForObject(s)));
             fields.add(s);
             rm.addSteppable(s);
         }
         for(int i = 1; i <= virologistNum; i++){
             Virologist v = new Virologist();
-            TestSetup.addObject(v,"v"+i);
             rm.addSteppable(v);
             rm.addVirologist(v);
             Random r = new Random();

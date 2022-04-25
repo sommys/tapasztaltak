@@ -1,7 +1,4 @@
 package hu.tapasztaltak.model;
-
-import hu.tapasztaltak.skeleton.Logger;
-
 /**
  * Az anyagok összefogó interfésze, belőlük lehet ágenseket készteni.
  * Az IStealable interfész leszármazottja.

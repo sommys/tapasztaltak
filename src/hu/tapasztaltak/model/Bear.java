@@ -1,16 +1,12 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.CALL;
-import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A medvetánc ágenset reprezentáló osztály

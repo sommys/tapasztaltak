@@ -1,15 +1,10 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
-import hu.tapasztaltak.skeleton.TestSetup;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
@@ -70,12 +65,10 @@ public class Warehouse extends Field {
             randomNumber = random.nextInt(2);
             if (randomNumber == 0) {
                 Aminoacid a = new Aminoacid();
-                TestSetup.addObject(a, "a"+i);
                 materials.add(a);
             }
             else {
                 Nucleotid n = new Nucleotid();
-                TestSetup.addObject(n, "n"+i);
                 materials.add(n);
             }
         }

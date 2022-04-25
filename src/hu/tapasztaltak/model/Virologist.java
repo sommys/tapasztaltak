@@ -3,18 +3,13 @@ package hu.tapasztaltak.model;
 import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.skeleton.Logger;
-import hu.tapasztaltak.skeleton.TestSetup;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 import java.util.stream.Collectors;
-
 import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoLogger.loggingSwitch;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.*;
+import static hu.tapasztaltak.skeleton.Logger.LogType.RETURN;
 
 /**
  * A játékosok által irányított virológusokat reprezentáló osztály.

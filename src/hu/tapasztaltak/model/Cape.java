@@ -2,12 +2,10 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
-import hu.tapasztaltak.skeleton.Logger;
+
 import java.util.Random;
-import java.util.Scanner;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.skeleton.Logger.LogType.*;
 
 /**
  * A köpeny felszerelést reprezentáló osztály.

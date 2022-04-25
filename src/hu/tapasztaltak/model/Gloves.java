@@ -1,12 +1,8 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
-import hu.tapasztaltak.skeleton.Logger;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import java.util.Scanner;
-
-import static hu.tapasztaltak.proto.ProtoMain.randomness;
-import static hu.tapasztaltak.skeleton.Logger.LogType.*;
+import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A kesztyű felszerelést reprezentáló osztály.
