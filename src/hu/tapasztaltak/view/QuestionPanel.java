@@ -2,7 +2,7 @@ package hu.tapasztaltak.view;
 
 import javax.swing.*;
 
-public class QuestionPanel {
+public class QuestionPanel extends JPanel {
 	private String question;
 	private JList chooseList;
 	private JButton yesBtn;
