@@ -1,6 +1,10 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.view.*;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,11 +14,41 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 /**
  * A játékot reprezentáló singleton osztály.
  */
-public class Game {
+public class Game extends JFrame {
+    /** kepernyo felbontasa*/
+    public static int WINDOW_WIDTH = 1920;
+    public static int WINDOW_HEIGHT = 1080;
+
+    AgentPanel agentPanel = new AgentPanel();
+    ButtonsPanel buttonsPanel = new ButtonsPanel();
+    InventoryPanel inventoryPanel = new InventoryPanel();
+    MapPanel mapPanel = new MapPanel();
+    MenuPanel menuPanel = new MenuPanel();
+    QuestionPanel questionPanel = new QuestionPanel();
     /**
      * Privát konstruktor, a singleton elvárásainak megfelelően.
      */
-    private Game() {}
+    private Game() {
+        /** ablak inicializalasa */
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+        setUndecorated(true);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setLayout(null);
+        setVisible(true);
+
+        /** panelek lathatosaganak beallitasa */
+        menuPanel.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        menuPanel.setVisible(true);
+        agentPanel.setVisible(false);
+        buttonsPanel.setVisible(false);
+        inventoryPanel.setVisible(false);
+        mapPanel.setVisible(false);
+        questionPanel.setVisible(false);
+        setContentPane(menuPanel);
+        /** zsamo */
+        //pack();
+    }
     /**
      * Az egyetlen Game példány.
      */
@@ -38,6 +72,10 @@ public class Game {
             instance = new Game();
         }
         return instance;
+    }
+
+    public static void main(String[] args){
+        instance = new Game();
     }
 
     /**

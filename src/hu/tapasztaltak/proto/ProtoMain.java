@@ -52,7 +52,7 @@ public class ProtoMain {
     /**
      * Menü felépítése, tesztfuttatások hívása
      */
-    public static void main(String[] args) {
+    public static void protoMain(String[] args) {
         geneInit();
         ProtoTestRunner.init(); //Tesztek létrehozása a megfelelő paraméterekkel
         int input;
