@@ -6,6 +6,7 @@ import hu.tapasztaltak.view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +16,7 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
  * A játékot reprezentáló singleton osztály.
  */
 public class Game extends JFrame {
+    public static HashMap<Object, View> objectViewHashMap = new HashMap<>();
     /** kepernyo felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
@@ -77,6 +79,7 @@ public class Game extends JFrame {
 
     public static void main(String[] args){
         instance = new Game();
+        System.out.println("zsamo");
     }
 
     /**
@@ -159,14 +162,14 @@ public class Game extends JFrame {
      *
      * @param field a hozzáadandó {@link Field}
      */
-    public void addField(Field field) { fields.add(field); }
+    public void addField(Field field) { fields.add(field); RoundManager.getInstance().addSteppable(field); }
 
     /**
      * Törli {@code field}-et a játék mezőinek listájából.
      *
      * @param field a törlendő {@link Field}
      */
-    public void removeField(Field field) { fields.remove(field); }
+    public void removeField(Field field) { fields.remove(field); RoundManager.getInstance().removeSteppable(field); }
 
     //endregion
 }

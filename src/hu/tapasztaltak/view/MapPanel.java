@@ -6,9 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.storage;
@@ -20,16 +19,18 @@ public class MapPanel extends JPanel {
 		super();
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
-				System.out.println("(X;Y)=("+me.getX()+";"+me.getY()+")");
+				System.out.println("clicked @ ("+me.getX()+";"+me.getY()+")");
 				int x = me.getX();
 				int y = me.getY();
 				for(FieldView fv : fields){
 					if(x > fv.getPosX() && x < fv.getPosX() + Integer.min(2, fv.getFieldNum())*161 &&
 					   y > fv.getPosY() && y < fv.getPosY() + (fv.getFieldNum() == 3 ? 322 : 161)){
-						System.out.println(fv.getField() + " has " + fv.getField().getNeighbours().size() + " neighbours:");
+						System.out.println("clicked on "+ fv.getField() + ", it has " + fv.getField().getNeighbours().size() + " neighbours:");
 						for(Field f : fv.getField().getNeighbours()){
 							System.out.println(f);
 						}
+						fv.setVisited(true);
+						repaint();
 						return;
 					}
 				}
@@ -194,29 +195,46 @@ public class MapPanel extends JPanel {
 			f.addNeighbour(n6);
 		}
 		for(FieldView fv : doubles){
+			if(fv.getFieldNum() != 1) continue;
+			FieldView disturb1 = fields.get(fields.indexOf(fv)-1);
+			FieldView disturb2 = fields.get(fields.indexOf(fv)+8);
+			if(disturb1.getFieldNum() != 1 || disturb2.getFieldNum() != 1) return;
 			fv.setFieldNum(2);
-			FieldView other = fields.remove(fields.indexOf(fv)+1);
+			FieldView other = fields.get(fields.indexOf(fv)+1);
+			other.setFieldNum(0);
 			Field f = fv.getField();
 			for(Field n : other.getField().getNeighbours()){
-				if(!f.getNeighbours().contains(n)){
+				n.removeNeighbour(other.getField());
+				if(!f.getNeighbours().contains(n) || n == f || n == other.getField()){
 					f.addNeighbour(n);
 				}
+				if(!n.getNeighbours().contains(f))n.addNeighbour(f);
 			}
+			f.removeNeighbour(other.getField());
+			f.removeNeighbour(f);
 		}
 		for(FieldView fv : triplets){
+			if(fv.getFieldNum() != 1) continue;
+			FieldView disturb = fields.get(fields.indexOf(fv)-1);
+			if(disturb.getFieldNum() != 1) return;
 			fv.setFieldNum(3);
-			FieldView other1 = fields.remove(fields.indexOf(fv)+9);
-			FieldView other2 = fields.remove(fields.indexOf(fv)+8);
+			FieldView other1 = fields.get(fields.indexOf(fv)+9);
+			FieldView other2 = fields.get(fields.indexOf(fv)+8);
+			other1.setFieldNum(0);
+			other2.setFieldNum(0);
 			Field f = fv.getField();
-			for(Field n : other1.getField().getNeighbours()){
-				if(!f.getNeighbours().contains(n)){
-					f.addNeighbour(n);
-				}
-			}for(Field n : other2.getField().getNeighbours()){
-				if(!f.getNeighbours().contains(n)){
-					f.addNeighbour(n);
-				}
+			Set<Field> neighbours = new HashSet<>(f.getNeighbours());
+			neighbours.addAll(other1.getField().getNeighbours());
+			neighbours.addAll(other2.getField().getNeighbours());
+			neighbours.remove(other1.getField());
+			neighbours.remove(other2.getField());
+			neighbours.remove(f);
+			for(Field n : neighbours){
+				n.removeNeighbour(other1.getField());
+				n.removeNeighbour(other2.getField());
+				if(!n.getNeighbours().contains(f)) n.addNeighbour(f);
 			}
+			f.setNeighbours(new ArrayList<>(neighbours));
 			fv.setPosX(other2.getPosX());
 		}
 		randomizeMap();
@@ -230,7 +248,8 @@ public class MapPanel extends JPanel {
 			do {
 				delIdx = r.nextInt(fields.size());
 			} while(fields.get(delIdx).getFieldNum() != 1);
-			FieldView fv = fields.remove(delIdx);
+			FieldView fv = fields.get(delIdx);
+			fv.setFieldNum(0);
 			Field f = fv.getField();
 			//szomszedsag kezelese
 			for(Field n : f.getNeighbours()){
