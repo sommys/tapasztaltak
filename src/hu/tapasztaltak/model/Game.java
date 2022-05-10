@@ -39,13 +39,14 @@ public class Game extends JFrame {
 
         /** panelek lathatosaganak beallitasa */
         menuPanel.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        menuPanel.setVisible(true);
+        menuPanel.setVisible(false);
         agentPanel.setVisible(false);
         buttonsPanel.setVisible(false);
         inventoryPanel.setVisible(false);
-        mapPanel.setVisible(false);
+        mapPanel.setVisible(true);
+        mapPanel.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         questionPanel.setVisible(false);
-        setContentPane(menuPanel);
+        setContentPane(mapPanel);
         /** zsamo */
         //pack();
     }
