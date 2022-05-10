@@ -1,22 +1,28 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Field;
+import hu.tapasztaltak.model.InfLabor;
+import hu.tapasztaltak.model.Labor;
+import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-import static hu.tapasztaltak.proto.ProtoMain.storage;
+import static hu.tapasztaltak.proto.ProtoMain.*;
 
 public class MapPanel extends JPanel {
 	private List<FieldView> fields = new ArrayList<>();
 
 	public MapPanel(){
 		super();
+		setFocusable(true);
 		setBackground(new Color(27, 42, 39));
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
@@ -37,6 +43,26 @@ public class MapPanel extends JPanel {
 				}
 			}
 		});
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println("NYOMOOOD");
+				for(FieldView fv : fields){
+					fv.setVisited(true);
+				}
+				repaint();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+		});
 		initComponents();
 	}
 
@@ -50,7 +76,6 @@ public class MapPanel extends JPanel {
 					x += 80;
 				}
 				FieldView fv = new FieldView();
-				storage.put(getIdForObject(fv.getField()), fv.getField());
 				fv.setPosX(x);
 				fv.setPosY(y);
 				fields.add(fv);
@@ -169,8 +194,8 @@ public class MapPanel extends JPanel {
 		for(int i = 0; i < 60; i++){
 			if(processed.contains(i)) continue;
 			int chance = r.nextInt(25);
-			if(chance == 0) triplets.add(fields.get(i)); /**sorsolja, hogy tripla field legyen-e*/
-			else if(chance == 1) doubles.add(fields.get(i)); /**sorsolja, hogy dupla field legyen-e*/
+			if(chance == 3) triplets.add(fields.get(i)); /**sorsolja, hogy tripla field legyen-e*/
+			else if(chance < 3) doubles.add(fields.get(i)); /**sorsolja, hogy dupla field legyen-e*/
 			Field f = fields.get(i).getField();
 			Field n1 = fields.get(i-9).getField();
 			f.addNeighbour(n1);
@@ -189,50 +214,133 @@ public class MapPanel extends JPanel {
 		/**
 		 * MAGIC dupla tripla generálások
 		 */
-		for(FieldView fv : doubles){
-			if(fv.getFieldNum() != 1) continue;
-			FieldView disturb1 = fields.get(fields.indexOf(fv)-1);
-			FieldView disturb2 = fields.get(fields.indexOf(fv)+8);
-			if(disturb1.getFieldNum() != 1 || disturb2.getFieldNum() != 1) continue;
-			fv.setFieldNum(2);
-			FieldView other = fields.get(fields.indexOf(fv)+1);
-			other.setFieldNum(0);
-			Field f = fv.getField();
-			for(Field n : other.getField().getNeighbours()){
-				n.removeNeighbour(other.getField());
-				if(!f.getNeighbours().contains(n) || n == f || n == other.getField()){
-					f.addNeighbour(n);
+		for(FieldView fv : fields){
+			if(doubles.contains(fv)){
+				if(fv.getFieldNum() != 1) continue;
+				FieldView disturb1 = fields.get(fields.indexOf(fv)-1);
+				FieldView disturb2 = fields.get(fields.indexOf(fv)+1);
+				FieldView disturb3 = fields.get(fields.indexOf(fv)+8);
+				if(disturb1.getFieldNum() != 1 || disturb2.getFieldNum() != 1 || disturb3.getFieldNum() != 1) continue;
+				fv.setFieldNum(2);
+				FieldView other = fields.get(fields.indexOf(fv)+1);
+				other.setFieldNum(0);
+				Field f = fv.getField();
+				for(Field n : other.getField().getNeighbours()){
+					n.removeNeighbour(other.getField());
+					if(!f.getNeighbours().contains(n) || n == f || n == other.getField()){
+						f.addNeighbour(n);
+					}
+					if(!n.getNeighbours().contains(f))n.addNeighbour(f);
 				}
-				if(!n.getNeighbours().contains(f))n.addNeighbour(f);
+				f.removeNeighbour(other.getField());
+				f.removeNeighbour(f);
+			} else if(triplets.contains(fv)){
+				if(fv.getFieldNum() != 1) continue;
+				FieldView disturb = fields.get(fields.indexOf(fv)-1);
+				if(disturb.getFieldNum() != 1) continue;
+				fv.setFieldNum(3);
+				FieldView other1 = fields.get(fields.indexOf(fv)+9);
+				FieldView other2 = fields.get(fields.indexOf(fv)+8);
+				other1.setFieldNum(0);
+				other2.setFieldNum(0);
+				Field f = fv.getField();
+				Set<Field> neighbours = new HashSet<>(f.getNeighbours());
+				neighbours.addAll(other1.getField().getNeighbours());
+				neighbours.addAll(other2.getField().getNeighbours());
+				neighbours.remove(other1.getField());
+				neighbours.remove(other2.getField());
+				neighbours.remove(f);
+				for(Field n : neighbours){
+					n.removeNeighbour(other1.getField());
+					n.removeNeighbour(other2.getField());
+					if(!n.getNeighbours().contains(f)) n.addNeighbour(f);
+				}
+				f.setNeighbours(new ArrayList<>(neighbours));
+				fv.setPosX(other2.getPosX());
 			}
-			f.removeNeighbour(other.getField());
-			f.removeNeighbour(f);
-		}
-		for(FieldView fv : triplets){
-			if(fv.getFieldNum() != 1) continue;
-			FieldView disturb = fields.get(fields.indexOf(fv)-1);
-			if(disturb.getFieldNum() != 1) return;
-			fv.setFieldNum(3);
-			FieldView other1 = fields.get(fields.indexOf(fv)+9);
-			FieldView other2 = fields.get(fields.indexOf(fv)+8);
-			other1.setFieldNum(0);
-			other2.setFieldNum(0);
-			Field f = fv.getField();
-			Set<Field> neighbours = new HashSet<>(f.getNeighbours());
-			neighbours.addAll(other1.getField().getNeighbours());
-			neighbours.addAll(other2.getField().getNeighbours());
-			neighbours.remove(other1.getField());
-			neighbours.remove(other2.getField());
-			neighbours.remove(f);
-			for(Field n : neighbours){
-				n.removeNeighbour(other1.getField());
-				n.removeNeighbour(other2.getField());
-				if(!n.getNeighbours().contains(f)) n.addNeighbour(f);
-			}
-			f.setNeighbours(new ArrayList<>(neighbours));
-			fv.setPosX(other2.getPosX());
 		}
 		randomizeMap();
+		setIndexes();
+		addSpecialFields();
+		setIndexes();
+	}
+
+	private void addSpecialFields() {
+		List<FieldView> stillExist = fields.stream().filter(it -> it.getFieldNum() != 0 && it.getFieldNum() != 3).collect(Collectors.toList());
+		int originalSize = stillExist.size();
+		Random r = new Random();
+		//random pár labor (legalább 4)
+		for(int i = 0; i < 4; i++){
+			Labor l;
+
+			int infected = r.nextInt(10);
+			int changeIdx = r.nextInt(stillExist.size());
+			FieldView toChange = stillExist.get(changeIdx);
+			FieldView lv ;
+			if(infected < 10){
+				l = new InfLabor();
+				lv = new InfLaborView((InfLabor)l, toChange.getFieldNum());
+			} else {
+				l = new Labor();
+				lv = new LaborView(l, toChange.getFieldNum());
+			}
+			l.setGene(ProtoMain.genes[i]);
+			lv.setPosX(toChange.getPosX());
+			lv.setPosY(toChange.getPosY());
+			//lecsereljuk
+			fields.set(fields.indexOf(toChange),lv);
+			stillExist.remove(toChange);
+		}
+		int lab = r.nextInt( (int)(originalSize * 0.1));
+		for(int i = 0; i < lab; i++){
+			int changeIdx = r.nextInt(stillExist.size());
+			FieldView toChange = stillExist.get(changeIdx);
+			FieldView lv ;
+			int infected = r.nextInt(10);
+			if(infected < 3){
+				lv = new InfLaborView(toChange.getFieldNum());
+			} else {
+				lv = new LaborView(toChange.getFieldNum());
+			}
+			((Labor)lv.getField()).setGene(ProtoMain.genes[r.nextInt(4)]);
+			lv.setPosX(toChange.getPosX());
+			lv.setPosY(toChange.getPosY());
+			//lecsereljuk
+			fields.set(fields.indexOf(toChange),lv);
+			stillExist.remove(toChange);
+		}
+		//random pár warehouse (legalább 2)
+		int wh = r.nextInt( (int)(originalSize * 0.1)) + 2;
+		for(int i = 0; i < wh; i++){
+			int changeIdx = r.nextInt(stillExist.size());
+			FieldView toChange = stillExist.get(changeIdx);
+			WarehouseView wv = new WarehouseView(toChange.getFieldNum());
+			wv.setPosX(toChange.getPosX());
+			wv.setPosY(toChange.getPosY());
+			//lecsereljuk
+			fields.set(fields.indexOf(toChange),wv);
+			stillExist.remove(toChange);
+		}
+		//random pár shelter (legaLább 2)
+		int sh = r.nextInt( (int)(originalSize * 0.1)) + 2;
+		for(int i = 0; i < sh; i++){
+			int changeIdx = r.nextInt(stillExist.size());
+			FieldView toChange = stillExist.get(changeIdx);
+			ShelterView sv = new ShelterView(toChange.getFieldNum());
+			sv.setPosX(toChange.getPosX());
+			sv.setPosY(toChange.getPosY());
+			//lecsereljuk
+			fields.set(fields.indexOf(toChange),sv);
+			stillExist.remove(toChange);
+		}
+	}
+
+	private void setIndexes() {
+		storage.clear();
+		ids.clear();
+		for(FieldView fv : fields.stream().filter(it -> it.getFieldNum() != 0).collect(Collectors.toList())){
+			storage.put(getIdForObject(fv.getField()), fv.getField());
+		}
 	}
 
 	/**
@@ -240,16 +348,24 @@ public class MapPanel extends JPanel {
 	 */
 	private void randomizeMap(){
 		Random r = new Random();
-		int toDelete = r.nextInt(10);
+		int toDelete = r.nextInt(15);
 		for(int i = 0; i < toDelete; i++){
 			int delIdx;
 			do {
 				delIdx = r.nextInt(fields.size());
 			} while(fields.get(delIdx).getFieldNum() != 1);
 			FieldView fv = fields.get(delIdx);
-			fv.setFieldNum(0);
 			Field f = fv.getField();
 			//szomszedsag kezelese
+			boolean canDelete = true;
+			for(Field n : f.getNeighbours()){
+				if(n.getNeighbours().size() == 1){
+					canDelete = false;
+					break;
+				}
+			}
+			if(!canDelete) continue;
+			fv.setFieldNum(0);
 			for(Field n : f.getNeighbours()){
 				n.removeNeighbour(f);
 			}

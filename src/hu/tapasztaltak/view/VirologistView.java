@@ -8,4 +8,9 @@ public class VirologistView extends View {
 	public Virologist vir;
 	public void draw(Graphics g) {
 	}
+
+	@Override
+	public void update() {
+
+	}
 }

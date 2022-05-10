@@ -11,4 +11,9 @@ public class DanceView extends AgentView {
 	
 	public void clicked(int x, int y) {
 	}
+
+	@Override
+	public void update() {
+
+	}
 }

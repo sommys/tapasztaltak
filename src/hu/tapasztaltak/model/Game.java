@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.view.*;
 
 import javax.swing.*;
@@ -49,6 +50,7 @@ public class Game extends JFrame {
         mapPanel.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         questionPanel.setVisible(false);
         setContentPane(mapPanel);
+        mapPanel.grabFocus();
         /** zsamo */
         //pack();
     }
@@ -78,6 +80,7 @@ public class Game extends JFrame {
     }
 
     public static void main(String[] args){
+        ProtoMain.geneInit();
         instance = new Game();
         System.out.println("zsamo");
     }

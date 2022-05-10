@@ -9,6 +9,7 @@ public abstract class View {
 	public abstract void draw(Graphics g);
 	public void clicked(int x, int y) {
 	}
+	public abstract void update();
 
 	public int getPosX() {
 		return posX;

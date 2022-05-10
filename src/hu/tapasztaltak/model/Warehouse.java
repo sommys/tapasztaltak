@@ -11,6 +11,9 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
  * A pályán lévő raktár mező reprezentálása.
  */
 public class Warehouse extends Field {
+    public Warehouse(){
+        refresh();
+    }
     /**
      * A raktárban található anyagok listája.
      */

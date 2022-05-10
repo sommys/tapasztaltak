@@ -8,4 +8,9 @@ public class AminoacidView extends ItemView {
 	private Aminoacid a;
 	public void draw(Graphics g) {
 	}
+
+	@Override
+	public void update() {
+
+	}
 }

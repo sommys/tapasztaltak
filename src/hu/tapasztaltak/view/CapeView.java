@@ -12,4 +12,9 @@ public class CapeView extends ItemView {
 	
 	public void clicked(int x, int y) {
 	}
+
+	@Override
+	public void update() {
+
+	}
 }

@@ -17,6 +17,9 @@ import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
  * A pályán lévő óvóhely mező reprezentálása.
  */
 public class Shelter extends Field {
+    public Shelter(){
+        refresh();
+    }
     /**
      * Az óvóhelyen található védőfelszerelés.
      */

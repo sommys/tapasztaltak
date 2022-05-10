@@ -12,19 +12,15 @@ import static hu.tapasztaltak.model.Game.objectViewHashMap;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 public class FieldView extends View {
-	private Field field;
-	private int fieldNum = 1;
+	protected Field field;
+	protected int fieldNum = 1;
 	BufferedImage fieldImg;
-	private boolean visited = false;
+	protected boolean visited = false;
 
 	public FieldView(){
 		field = new Field();
 		objectViewHashMap.put(field, this);
-		try {
-			fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/simple/hex_unk.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		reimportImage();
 	}
 
 	public boolean isVisited() {
@@ -33,26 +29,7 @@ public class FieldView extends View {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
-		if(visited){
-			try {
-				switch (fieldNum) {
-					case 0:
-						break;
-					case 1:
-						fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/simple/hex_field.png"));
-						break;
-					case 2:
-						fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/double/double_field.png"));
-						break;
-					case 3:
-						fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/triple/triple_field.png"));
-						break;
-					default: throw new IOException("Hibás oldalszám!");
-				}
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
+		reimportImage();
 	}
 
 	public int getFieldNum() {
@@ -60,22 +37,32 @@ public class FieldView extends View {
 	}
 
 	public void setFieldNum(int fieldNum) {
+		if(this.fieldNum == fieldNum) return;
 		this.fieldNum = fieldNum;
+		reimportImage();
+	}
+
+	protected void reimportImage(){
+		if(fieldNum == 0) return;
+		String imageName = "src/hu/tapasztaltak/textures/";
 		try {
 			switch (fieldNum) {
-				case 0:
-					break;
 				case 1:
-					fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/simple/hex_unk.png"));
+					imageName += "simple/hex_"+ (visited ? "field.png" : "unk.png");
 					break;
 				case 2:
-					fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/double/double_unk.png"));
+					imageName += "double/double_"+ (visited ? "field.png" : "unk.png");
 					break;
 				case 3:
-					fieldImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/triple/triple_unk.png"));
+					imageName += "triple/triple_"+ (visited ? "field.png" : "unk.png");
 					break;
 				default: throw new IOException("Hibás oldalszám!");
 			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			fieldImg = ImageIO.read(new File(imageName));
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -89,10 +76,15 @@ public class FieldView extends View {
 		this.field = f;
 	}
 
-	;
 	public void draw(Graphics g) {
 		if(fieldNum == 0) return;
 		g.drawImage(fieldImg, posX, posY, null);
 		g.drawString(getIdForObject(field), posX+50*Integer.min(2,fieldNum), posY+50*Integer.min(2,fieldNum));
+	}
+
+	@Override
+	public void update() {
+		reimportImage();
+
 	}
 }

@@ -11,4 +11,9 @@ public class AxeView extends ItemView {
 	
 	public void clicked(int x, int y) {
 	}
+
+	@Override
+	public void update() {
+
+	}
 }
