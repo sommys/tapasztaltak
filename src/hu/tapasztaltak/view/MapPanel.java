@@ -17,6 +17,7 @@ public class MapPanel extends JPanel {
 
 	public MapPanel(){
 		super();
+		setBackground(new Color(27, 42, 39));
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				System.out.println("clicked @ ("+me.getX()+";"+me.getY()+")");
@@ -40,23 +41,10 @@ public class MapPanel extends JPanel {
 	}
 
 	private void initComponents() {
-//		(k*120,j*161) k = 0,2,4,6,... és j = 0..9
-//
-//		(i*120,80+j*161) i = 1,3,5,7,... és j = 0..9
-		//paros sor
-//		for(int j = 0; j < 9; j++){
-//			for(int k = 0; k < 8; k+=2){
-//
-//				FieldView fv = new FieldView();
-//				fv.setPosX(x);
-//				fv.setPosY(y);
-//				fields.add(fv);
-//			}
-//		}
-		//ptln sor
+		//LEHELYEZES POZIBA
 		for(int k = 0; k < 7; k++){
 			for(int j = 0; j < (k % 2 == 0 ? 9 : 8); j++){
-				int x = 161*j;
+				int x = 160*j;
 				int y = 121*k;
 				if(k % 2 == 1){
 					x += 80;
@@ -71,6 +59,9 @@ public class MapPanel extends JPanel {
 		List<FieldView> triplets = new ArrayList<>();
 		List<FieldView> doubles = new ArrayList<>();
 		List<Integer> processed = new ArrayList<>();
+		/**
+		 * SZOMSZEDSAGOK
+		 */
 		//felso sor
 		for(int i = 0; i < 9; i++){
 			processed.add(i);
@@ -178,8 +169,8 @@ public class MapPanel extends JPanel {
 		for(int i = 0; i < 60; i++){
 			if(processed.contains(i)) continue;
 			int chance = r.nextInt(25);
-			if(chance == 0) triplets.add(fields.get(i));
-			else if(chance == 1) doubles.add(fields.get(i));
+			if(chance == 0) triplets.add(fields.get(i)); /**sorsolja, hogy tripla field legyen-e*/
+			else if(chance == 1) doubles.add(fields.get(i)); /**sorsolja, hogy dupla field legyen-e*/
 			Field f = fields.get(i).getField();
 			Field n1 = fields.get(i-9).getField();
 			f.addNeighbour(n1);
@@ -194,11 +185,15 @@ public class MapPanel extends JPanel {
 			Field n6 = fields.get(i+9).getField();
 			f.addNeighbour(n6);
 		}
+
+		/**
+		 * MAGIC dupla tripla generálások
+		 */
 		for(FieldView fv : doubles){
 			if(fv.getFieldNum() != 1) continue;
 			FieldView disturb1 = fields.get(fields.indexOf(fv)-1);
 			FieldView disturb2 = fields.get(fields.indexOf(fv)+8);
-			if(disturb1.getFieldNum() != 1 || disturb2.getFieldNum() != 1) return;
+			if(disturb1.getFieldNum() != 1 || disturb2.getFieldNum() != 1) continue;
 			fv.setFieldNum(2);
 			FieldView other = fields.get(fields.indexOf(fv)+1);
 			other.setFieldNum(0);
@@ -240,6 +235,9 @@ public class MapPanel extends JPanel {
 		randomizeMap();
 	}
 
+	/**
+	 * KITORLESEK (max 10, csak szingliket, mert Soma őket utálja)
+	 */
 	private void randomizeMap(){
 		Random r = new Random();
 		int toDelete = r.nextInt(10);

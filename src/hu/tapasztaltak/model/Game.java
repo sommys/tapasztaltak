@@ -34,7 +34,7 @@ public class Game extends JFrame {
         /** ablak inicializalasa */
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(Frame.MAXIMIZED_BOTH);
-        setUndecorated(true);
+        //setUndecorated(true);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLayout(null);
         setVisible(true);
