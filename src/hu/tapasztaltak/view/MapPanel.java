@@ -359,7 +359,7 @@ public class MapPanel extends JPanel {
 			//szomszedsag kezelese
 			boolean canDelete = true;
 			for(Field n : f.getNeighbours()){
-				if(n.getNeighbours().size() == 1){
+				if(n.getNeighbours().size() < 3){
 					canDelete = false;
 					break;
 				}
