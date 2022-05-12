@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class MenuPanel extends JPanel {
-	Icon newGameButton = new ImageIcon("src/hu/tapasztaltak/textures/uj_jatek_gomb.png");
+	Icon newGameButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/uj_jatek_gomb.png");
+	Icon loadGameButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuJatekbetoltesGomb");
+	Icon exitButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuKilepesGomb");
 	Game game;
 
 	transient private BufferedImage backGround;
@@ -19,7 +21,7 @@ public class MenuPanel extends JPanel {
 		super();
 		this.game = game;
 		try {
-			backGround = ImageIO.read(new File("src/hu/tapasztaltak/textures/menu_hatter.png"));
+			backGround = ImageIO.read(new File("src/hu/tapasztaltak/textures/menu/menuHatter.png"));
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
 		}
@@ -33,12 +35,12 @@ public class MenuPanel extends JPanel {
 		setButtonSettings(newGameBtn);
 		newGameBtn.addActionListener(evt -> game.showGame());
 		add(newGameBtn);
-		JButton loadBtn = new JButton(newGameButton); //todo kepcsere
-		loadBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton loadBtn = new JButton(loadGameButton);
 		setButtonSettings(loadBtn);
+		loadBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loadBtn.addActionListener(evt -> System.out.println("Jatek betoltese"));
 		add(loadBtn);
-		JButton exitBtn = new JButton(newGameButton); //todo kepcsere
+		JButton exitBtn = new JButton(exitButton);
 		exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		setButtonSettings(exitBtn);
 		exitBtn.addActionListener(evt -> System.exit(0));
