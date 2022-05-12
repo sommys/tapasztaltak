@@ -23,6 +23,8 @@ public class Game extends JFrame {
     public static int WINDOW_HEIGHT = 1080;
     private Virologist currentVirologist = new Virologist();
 
+    private ArrayList<String> virologistList = new ArrayList<>();
+
     JPanel gamePanel = new JPanel();
     JPanel rightPanel = new JPanel();
     JPanel leftPanel = new JPanel();
@@ -33,6 +35,7 @@ public class Game extends JFrame {
     MapPanel mapPanel = new MapPanel();
     MenuPanel menuPanel = new MenuPanel(this);
     QuestionPanel questionPanel = new QuestionPanel();
+    StartPanel startPanel = new StartPanel(this);
 
     /**
      * Privát konstruktor, a singleton elvárásainak megfelelően.
@@ -117,6 +120,14 @@ public class Game extends JFrame {
 
         setContentPane(gamePanel);
         gamePanel.grabFocus();
+        revalidate();
+    }
+
+    public void startGameSettings(){
+        startPanel.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        startPanel.setVisible(true);
+        setContentPane(startPanel);
+        startPanel.grabFocus();
         revalidate();
     }
     /**
@@ -245,6 +256,15 @@ public class Game extends JFrame {
     public Virologist getCurrentVirologist() {
         return currentVirologist;
     }
+
+    public ArrayList<String> getVirologistList() {
+        return virologistList;
+    }
+
+    public void setVirologistList(String v) {
+        virologistList.add(v);
+    }
+
 
     //endregion
 }

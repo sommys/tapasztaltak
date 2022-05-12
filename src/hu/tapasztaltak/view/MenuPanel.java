@@ -33,7 +33,7 @@ public class MenuPanel extends JPanel {
 		//todo szebben szethuzni a gombokat
 		JButton newGameBtn = new JButton(newGameButton);
 		setButtonSettings(newGameBtn);
-		newGameBtn.addActionListener(evt -> game.showGame());
+		newGameBtn.addActionListener(evt -> game.startGameSettings());
 		add(newGameBtn);
 		JButton loadBtn = new JButton(loadGameButton);
 		setButtonSettings(loadBtn);
