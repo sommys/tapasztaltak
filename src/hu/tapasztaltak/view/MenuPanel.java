@@ -11,8 +11,8 @@ import java.io.IOException;
 
 public class MenuPanel extends JPanel {
 	Icon newGameButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/uj_jatek_gomb.png");
-	Icon loadGameButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuJatekbetoltesGomb");
-	Icon exitButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuKilepesGomb");
+	Icon loadGameButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuJatekbetoltesGomb.png");
+	Icon exitButton = new ImageIcon("src/hu/tapasztaltak/textures/menu/menuKilepesGomb.png");
 	Game game;
 
 	transient private BufferedImage backGround;
@@ -37,11 +37,9 @@ public class MenuPanel extends JPanel {
 		add(newGameBtn);
 		JButton loadBtn = new JButton(loadGameButton);
 		setButtonSettings(loadBtn);
-		loadBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loadBtn.addActionListener(evt -> System.out.println("Jatek betoltese"));
 		add(loadBtn);
 		JButton exitBtn = new JButton(exitButton);
-		exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		setButtonSettings(exitBtn);
 		exitBtn.addActionListener(evt -> System.exit(0));
 		add(exitBtn);
