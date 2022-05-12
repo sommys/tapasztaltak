@@ -6,6 +6,8 @@ import java.awt.*;
 
 public class VirologistView extends View {
 	public Virologist vir;
+	public VirColor color;
+
 	public void draw(Graphics g) {
 	}
 
@@ -13,4 +15,8 @@ public class VirologistView extends View {
 	public void update() {
 
 	}
+}
+
+enum VirColor{
+	red, blue, green, yellow, pink, purple
 }

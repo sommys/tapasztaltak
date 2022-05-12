@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class QuestionPanel extends JPanel {
 	private String question;
@@ -9,4 +10,10 @@ public class QuestionPanel extends JPanel {
 	private JButton noBtn;
 	private JButton approveBtn;
 	private Object selected;
+
+	public QuestionPanel(){
+		super();
+		setFocusable(true);
+		setBackground(new Color(102, 180, 156));
+	}
 }

@@ -21,6 +21,11 @@ public class Game extends JFrame {
     /** ablak felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
+    private Virologist currentVirologist = new Virologist();
+
+    JPanel gamePanel = new JPanel();
+    JPanel rightPanel = new JPanel();
+    JPanel leftPanel = new JPanel();
 
     AgentPanel agentPanel = new AgentPanel();
     ButtonsPanel buttonsPanel = new ButtonsPanel();
@@ -28,6 +33,7 @@ public class Game extends JFrame {
     MapPanel mapPanel = new MapPanel();
     MenuPanel menuPanel = new MenuPanel(this);
     QuestionPanel questionPanel = new QuestionPanel();
+
     /**
      * Privát konstruktor, a singleton elvárásainak megfelelően.
      */
@@ -45,7 +51,7 @@ public class Game extends JFrame {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setResizable(false);
         setTitle("Virologusos jatek");
-        setLayout(null);
+        setLayout(new BorderLayout());
         setVisible(true);
 
         /** panelek lathatosaganak beallitasa */
@@ -64,14 +70,53 @@ public class Game extends JFrame {
      */
     public void showGame() {
         menuPanel.setVisible(false);
-        agentPanel.setVisible(false);
-        buttonsPanel.setVisible(false);
-        inventoryPanel.setVisible(false);
+        buttonsPanel.setVisible(true);
+        questionPanel.setVisible(true);
+        agentPanel.setVisible(true);
+        inventoryPanel.setVisible(true);
         mapPanel.setVisible(true);
-        mapPanel.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
-        questionPanel.setVisible(false);
-        setContentPane(mapPanel);
-        mapPanel.grabFocus();
+
+        GridBagLayout gl = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        leftPanel.setLayout(gl);
+        rightPanel.setLayout(gl);
+        gamePanel.setLayout(gl);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+
+        /**Left panel kialakítása */
+        c.weighty = 0.86;
+        c.gridy = 0;
+        leftPanel.add(mapPanel, c);
+
+        c.weighty = 0.07;
+        c.gridy = 1;
+        leftPanel.add(inventoryPanel, c);
+
+        c.gridy = 2;
+        leftPanel.add(agentPanel, c);
+
+        /**Right panel kialakítása */
+        c.weighty = 0.3;
+        c.gridy = 0;
+        rightPanel.add(buttonsPanel, c);
+
+        c.weighty = 0.7;
+        c.gridy = 1;
+        rightPanel.add(questionPanel, c);
+
+        /** Left és Right panelek elhelyezése vízszintesen */
+        c.weighty = 1;
+        c.weightx = 0.95;
+        c.gridx = 0;
+        gamePanel.add(leftPanel,c);
+        c.weightx = 0.05;
+        c.gridx = 1;
+        gamePanel.add(rightPanel,c);
+        gamePanel.setVisible(true);
+
+        setContentPane(gamePanel);
+        gamePanel.grabFocus();
         revalidate();
     }
     /**
@@ -192,6 +237,14 @@ public class Game extends JFrame {
      * @param field a törlendő {@link Field}
      */
     public void removeField(Field field) { fields.remove(field); RoundManager.getInstance().removeSteppable(field); }
+
+    public void setCurrentVirologist(Virologist Virologist) {
+        currentVirologist = Virologist;
+    }
+
+    public Virologist getCurrentVirologist() {
+        return currentVirologist;
+    }
 
     //endregion
 }

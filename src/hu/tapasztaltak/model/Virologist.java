@@ -259,6 +259,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void step() throws Exception {
 		moved=false;
+		Game.getInstance().setCurrentVirologist(this);
 
 		inventory.getAgents().forEach(a -> {
 			if(a.getTimeLeft() <= 0){
