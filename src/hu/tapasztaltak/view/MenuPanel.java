@@ -1,5 +1,7 @@
 package hu.tapasztaltak.view;
 
+import hu.tapasztaltak.model.Game;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,14 +11,13 @@ import java.io.IOException;
 
 public class MenuPanel extends JPanel {
 	Icon newGameButton = new ImageIcon("src/hu/tapasztaltak/textures/uj_jatek_gomb.png");
-	private JButton newGameBtn;
-	private JButton loadBtn;
-	private JButton exitBtn;
+	Game game;
 
 	transient private BufferedImage backGround;
 
-	public MenuPanel(){
+	public MenuPanel(Game game){
 		super();
+		this.game = game;
 		try {
 			backGround = ImageIO.read(new File("src/hu/tapasztaltak/textures/menu_hatter.png"));
 		} catch (IOException ex) {
@@ -26,38 +27,38 @@ public class MenuPanel extends JPanel {
 	}
 
 	private void initComponents() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		//todo szebben szethuzni a gombokat
-		newGameBtn = new JButton(newGameButton);
-		newGameBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		newGameBtn.setSize(newGameButton.getIconWidth(), newGameButton.getIconHeight());
-		newGameBtn.setMargin(new Insets(0,0,0,0));
-		newGameBtn.setOpaque(false);
-		newGameBtn.setContentAreaFilled(false);
-		newGameBtn.setBorderPainted(false);
-		newGameBtn.setFocusPainted(false);
-		newGameBtn.addActionListener(evt -> System.out.println("Uj jatek inditasa"));
+		JButton newGameBtn = new JButton(newGameButton);
+		setButtonSettings(newGameBtn);
+		newGameBtn.addActionListener(evt -> game.showGame());
 		add(newGameBtn);
-		loadBtn = new JButton(newGameButton); //todo kepcsere
+		JButton loadBtn = new JButton(newGameButton); //todo kepcsere
 		loadBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		loadBtn.setSize(newGameButton.getIconWidth(), newGameButton.getIconHeight());
-		loadBtn.setMargin(new Insets(0,0,0,0));
-		loadBtn.setOpaque(false);
-		loadBtn.setContentAreaFilled(false);
-		loadBtn.setBorderPainted(false);
-		loadBtn.setFocusPainted(false);
+		setButtonSettings(loadBtn);
 		loadBtn.addActionListener(evt -> System.out.println("Jatek betoltese"));
 		add(loadBtn);
-		exitBtn = new JButton(newGameButton); //todo kepcsere
+		JButton exitBtn = new JButton(newGameButton); //todo kepcsere
 		exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		exitBtn.setSize(newGameButton.getIconWidth(), newGameButton.getIconHeight());
-		exitBtn.setMargin(new Insets(0,0,0,0));
-		exitBtn.setOpaque(false);
-		exitBtn.setContentAreaFilled(false);
-		exitBtn.setBorderPainted(false);
-		exitBtn.setFocusPainted(false);
+		setButtonSettings(exitBtn);
 		exitBtn.addActionListener(evt -> System.exit(0));
 		add(exitBtn);
+		add(Box.createVerticalGlue());
+	}
+
+	/**
+	 * Egységes gomb beállítások
+	 * @param button amin a beállításokat elvégzi
+	 */
+	private void setButtonSettings(JButton button) {
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		button.setSize(newGameButton.getIconWidth(), newGameButton.getIconHeight());
+		button.setMargin(new Insets(0,0,0,0));
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setFocusPainted(false);
+		add(Box.createVerticalGlue());
 	}
 
 	/**
@@ -67,6 +68,6 @@ public class MenuPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(backGround,0,0,null);
+		g.drawImage(backGround.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
 	}
 }

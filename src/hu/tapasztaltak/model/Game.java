@@ -18,7 +18,7 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
  */
 public class Game extends JFrame {
     public static HashMap<Object, View> objectViewHashMap = new HashMap<>();
-    /** kepernyo felbontasa*/
+    /** ablak felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
 
@@ -26,22 +26,43 @@ public class Game extends JFrame {
     ButtonsPanel buttonsPanel = new ButtonsPanel();
     InventoryPanel inventoryPanel = new InventoryPanel();
     MapPanel mapPanel = new MapPanel();
-    MenuPanel menuPanel = new MenuPanel();
+    MenuPanel menuPanel = new MenuPanel(this);
     QuestionPanel questionPanel = new QuestionPanel();
     /**
      * Privát konstruktor, a singleton elvárásainak megfelelően.
      */
     private Game() {
         /** ablak inicializalasa */
+        Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
+        if (resolution.getWidth() < 1920 || resolution.getHeight() < 1080) {
+            JOptionPane.showMessageDialog(this, "Túl alacsony felbontás!", "Hiba", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } else if (resolution.getWidth() == 1920 && resolution.getHeight() == 1080) {
+            setExtendedState(Frame.MAXIMIZED_BOTH);
+        }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setExtendedState(Frame.MAXIMIZED_BOTH);
-        //setUndecorated(true);
+        // setUndecorated(true);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setResizable(false);
+        setTitle("Virologusos jatek");
         setLayout(null);
         setVisible(true);
 
         /** panelek lathatosaganak beallitasa */
         menuPanel.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        menuPanel.setVisible(true);
+        setContentPane(menuPanel);
+        menuPanel.grabFocus();
+
+        /** zsamo */
+        //pack();
+    }
+
+
+    /**
+     * Játék kirajzolása
+     */
+    public void showGame() {
         menuPanel.setVisible(false);
         agentPanel.setVisible(false);
         buttonsPanel.setVisible(false);
@@ -51,8 +72,7 @@ public class Game extends JFrame {
         questionPanel.setVisible(false);
         setContentPane(mapPanel);
         mapPanel.grabFocus();
-        /** zsamo */
-        //pack();
+        revalidate();
     }
     /**
      * Az egyetlen Game példány.
@@ -133,7 +153,6 @@ public class Game extends JFrame {
     public void checkEndGame(Virologist v) {
         if (v.getLearnt().size() == maxAgent) {
             ProtoLogger.logMessage(String.format("%s játékos győzött!",getIdForObject(v)));
-            // Todo: Peti, játék leállítása, egyéb teendők
         }
     }
 
