@@ -35,9 +35,9 @@ public class ShelterView extends FieldView {
 		if(visited) {
 			Shelter s = (Shelter) field;
 			if (s.getSuite() != null) {
-				imageName += ".png";
-			} else {
 				imageName += "_suite.png";
+			} else {
+				imageName += ".png";
 			}
 		}
 		try {
