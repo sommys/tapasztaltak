@@ -29,7 +29,7 @@ public class Game extends JFrame {
     JPanel rightPanel = new JPanel();
     JPanel leftPanel = new JPanel();
 
-    AgentPanel agentPanel = new AgentPanel();
+    ActivePanel activePanel = new ActivePanel();
     ButtonsPanel buttonsPanel = new ButtonsPanel(currentVirologist);
     InventoryPanel inventoryPanel = new InventoryPanel(currentVirologist);
     MapPanel mapPanel = new MapPanel();
@@ -75,7 +75,7 @@ public class Game extends JFrame {
         menuPanel.setVisible(false);
         buttonsPanel.setVisible(true);
         questionPanel.setVisible(true);
-        agentPanel.setVisible(true);
+        activePanel.setVisible(true);
         inventoryPanel.setVisible(true);
         mapPanel.setVisible(true);
 
@@ -97,7 +97,7 @@ public class Game extends JFrame {
         leftPanel.add(inventoryPanel, c);
 
         c.gridy = 2;
-        leftPanel.add(agentPanel, c);
+        leftPanel.add(activePanel, c);
 
         /**Right panel kialakítása */
         c.weighty = 0.3;

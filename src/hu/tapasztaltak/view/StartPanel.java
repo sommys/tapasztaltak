@@ -55,7 +55,7 @@ public class StartPanel extends JPanel implements ActionListener {
 
         setButtonSettings(newGameBtn);
         newGameBtn.setText("Játék indítása");
-        newGameBtn.addActionListener(evt -> game.showGame());
+        newGameBtn.addActionListener(evt -> game.showGame()); //TODO Generálni virológusokat, első következő virológust beállítani game.CurrentVirologistnak
         add(newGameBtn);
 
         name = new JTextField("Virológus neve");

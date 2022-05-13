@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class AgentPanel extends JPanel {
+public class ActivePanel extends JPanel {
 	private List<AgentView> agents;
 	Icon agentIcon = new ImageIcon("src/hu/tapasztaltak/textures/agensPic.png");
-	JLabel agent = new JLabel(agentIcon);
 
-	public AgentPanel(){
+
+	public ActivePanel(){
 		super();
 		setLayout(new FlowLayout());
 		setFocusable(true);
@@ -18,6 +18,11 @@ public class AgentPanel extends JPanel {
 	}
 	private void initComponents(){
 
-		//add(agent);
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		agentIcon.paintIcon(this,g,0,0);
 	}
 }

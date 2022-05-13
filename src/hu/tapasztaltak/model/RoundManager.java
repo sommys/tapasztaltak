@@ -49,10 +49,13 @@ public class RoundManager {
         for (ISteppable s : steppables) {
             s.step();
         }
+        /*
         for (Virologist v : virologists){
             v.step();
         }
+         */
         movedCounter = 0;
+        Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
     }
 
     /**
@@ -63,10 +66,12 @@ public class RoundManager {
         if (movedCounter == virologists.size()) {
             newRound();
         }
+        else{
+            Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
+        }
     }
 
     //region GETTEREK és SETTEREK
-
     /**
      * Visszaadja a körben már lépett virológusok számát.
      *

@@ -74,4 +74,6 @@ public class ButtonsPanel extends JPanel{
 		button.setFocusPainted(true);
 		button.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
 	}
+
+	//public void
 }
