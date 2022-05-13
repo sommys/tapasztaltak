@@ -1,5 +1,7 @@
 package hu.tapasztaltak.view;
 
+import hu.tapasztaltak.model.Virologist;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +13,7 @@ public class QuestionPanel extends JPanel {
 	private JButton approveBtn;
 	private Object selected;
 
-	public QuestionPanel(){
+	public QuestionPanel(Virologist v){
 		super();
 		setFocusable(true);
 		setBackground(new Color(102, 180, 156));

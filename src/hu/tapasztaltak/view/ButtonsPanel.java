@@ -1,13 +1,14 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Game;
+import hu.tapasztaltak.model.Virologist;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class ButtonsPanel extends JPanel{
 
-	Icon buttonIcon = new ImageIcon("src/hu/tapasztaltak/textures/SmallButton.png");
 	private JLabel playerText = new JLabel("Játékos következik");
 	private VirColor playerColor;
 	private JButton moveBtn = new JButton();
@@ -16,23 +17,24 @@ public class ButtonsPanel extends JPanel{
 	private JButton useAgentBtn = new JButton();
 	private JButton scanBtn = new JButton();
 	private JButton makeAgentBtn = new JButton();
+	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
 
-	public ButtonsPanel(){
+	public ButtonsPanel(Virologist v){
 		super();
 		setFocusable(true);
-		setSize(new Dimension(320,1080));
 		setBackground(new Color(125, 220, 191));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new GridLayout(8,1));
 		initComponents();
 	}
 
 	public void initComponents() {
 		//playerText =  //TODO név kiírása
 		//playerColor =  //TODO szín visszaszerzése a virologistViewból a virológuson keresztül
-		playerText.setFont(new Font("Arial",Font.BOLD,40));
+		playerText.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
 		playerText.setBorder(BorderFactory.createEmptyBorder(10, 35, 10, 10));
-		playerText.setAlignmentX(Component.CENTER_ALIGNMENT);
+		playerText.setHorizontalAlignment(SwingConstants.CENTER);
+		playerText.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(playerText);
 		setButtonSettings(scanBtn);
 		scanBtn.setText("tapogat");
@@ -41,9 +43,15 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(stealBtn);
 		stealBtn.setText("lop");
 		setButtonSettings(attackBtn);
+		attackBtn.setText("támad");
 		setButtonSettings(useAgentBtn);
+		useAgentBtn.setText("ágenst használ");
 		setButtonSettings(makeAgentBtn);
+		makeAgentBtn.setText("ágenst készít");
 		setButtonSettings(switchSuiteBtn);
+		switchSuiteBtn.setText("felszerelés csere");
+		setButtonSettings(activateSuiteBtn);
+		attackBtn.setText("felszerelés felvétel");
 		add(scanBtn);
 		add(moveBtn);
 		add(stealBtn);
@@ -51,20 +59,19 @@ public class ButtonsPanel extends JPanel{
 		add(useAgentBtn);
 		add(makeAgentBtn);
 		add(switchSuiteBtn);
+		add(attackBtn);
 	}
 
 	public void setButtonSettings(JButton button){
-		button.setFont(new Font("Arial",Font.BOLD,20));
-/*
+		button.setBackground(new Color(125, 220, 191));
+		button.setForeground(new Color(208, 253, 239));
+		button.setAlignmentX(AbstractButton.RIGHT);
+		button.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
 		button.setVerticalTextPosition(AbstractButton.CENTER);
 		button.setHorizontalTextPosition(AbstractButton.CENTER);
-		button.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		button.setSize(buttonIcon.getIconWidth(), buttonIcon.getIconHeight());
-		button.setOpaque(false);
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setFocusPainted(false);
-
- */
+		button.setOpaque(true);
+		button.setBorderPainted(true);
+		button.setFocusPainted(true);
+		button.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
 	}
 }

@@ -21,7 +21,7 @@ public class Game extends JFrame {
     /** ablak felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
-    private Virologist currentVirologist = new Virologist();
+    private Virologist currentVirologist = null;
 
     private ArrayList<String> virologistList = new ArrayList<>();
 
@@ -30,11 +30,11 @@ public class Game extends JFrame {
     JPanel leftPanel = new JPanel();
 
     AgentPanel agentPanel = new AgentPanel();
-    ButtonsPanel buttonsPanel = new ButtonsPanel();
-    InventoryPanel inventoryPanel = new InventoryPanel();
+    ButtonsPanel buttonsPanel = new ButtonsPanel(currentVirologist);
+    InventoryPanel inventoryPanel = new InventoryPanel(currentVirologist);
     MapPanel mapPanel = new MapPanel();
     MenuPanel menuPanel = new MenuPanel(this);
-    QuestionPanel questionPanel = new QuestionPanel();
+    QuestionPanel questionPanel = new QuestionPanel(currentVirologist);
     StartPanel startPanel = new StartPanel(this);
 
     /**
@@ -110,10 +110,10 @@ public class Game extends JFrame {
 
         /** Left és Right panelek elhelyezése vízszintesen */
         c.weighty = 1;
-        c.weightx = 0.95;
+        c.weightx = 0.9;
         c.gridx = 0;
         gamePanel.add(leftPanel,c);
-        c.weightx = 0.05;
+        c.weightx = 0.1;
         c.gridx = 1;
         gamePanel.add(rightPanel,c);
         gamePanel.setVisible(true);
