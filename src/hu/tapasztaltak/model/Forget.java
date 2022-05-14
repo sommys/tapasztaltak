@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,6 @@ public class Forget extends Agent implements SpecialModifier {
 	 */
 	public void effect(Virologist v) {
 		v.getLearnt().clear();
-		ProtoLogger.logMessage(String.format("[%s effect] %s forgets their learnt genetic codes", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**

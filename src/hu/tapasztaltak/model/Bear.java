@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,10 +27,7 @@ public class Bear extends Agent implements SpecialModifier{
      */
     @Override
     public void spread(Virologist v) {
-        ProtoLogger.loggingSwitch = !ProtoLogger.loggingSwitch;
         v.addModifier(this);
-        ProtoLogger.loggingSwitch = !ProtoLogger.loggingSwitch;
-        ProtoLogger.logMessage(String.format("%s infected with Bear", getIdForObject(v)));
     }
 
     /**
@@ -57,28 +53,23 @@ public class Bear extends Agent implements SpecialModifier{
         //ha béna, akkor nem történik semmi
         if(v.isStunned() || v.isMoved()) return;
         //random mozgás
-        ProtoLogger.logMessage(String.format("[%s effect started]", getIdForObject(this)));
         Field f = v.getField();
         Field randField = f.getRandomNeighbour();
         if(randField != f){
             f.removeVirologist(v);
             randField.addVirologist(v);
             v.setField(randField);
-            ProtoLogger.logMessage(String.format("%s moved to %s", getIdForObject(v), getIdForObject(randField)));
         }
         //törés, zúzás
         randField.destroyStuff();
-        ProtoLogger.logMessage(String.format("%s destroyed materials on %s", getIdForObject(v), getIdForObject(randField)));
         //fertőzés
         List<Virologist> toInfect = v.getField().getVirologists().stream().filter(it -> it != v).collect(Collectors.toList());
         for(Virologist i : toInfect){
-            ProtoLogger.logMessage(String.format("%s tries to infect %s", getIdForObject(v), getIdForObject(i)));
             v.spreadInitiation(new Bear(), i); //köszi Lilla :)
         }
         //cselekvőképtelenség és kör vége
         v.setMoved(true);
         v.endRound();
-        ProtoLogger.logMessage(String.format("[%s effect ended]", getIdForObject(this)));
     }
 
     /**

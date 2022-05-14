@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,6 @@ public class Protect extends Agent implements IDefense {
 	 * @return sikeres volt-e a támadás
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
-		ProtoLogger.logMessage(String.format("%s protected",getIdForObject(this)));
 		return true;
 	}
 
@@ -53,7 +51,6 @@ public class Protect extends Agent implements IDefense {
 	 */
 	public void spread(Virologist v) {
 		v.addDefense(this);
-		ProtoLogger.logMessage(String.format("Protect agent added with %d rounds left from its effect to %s", timeLeft, getIdForObject(v)));
 	}
 
 	/**

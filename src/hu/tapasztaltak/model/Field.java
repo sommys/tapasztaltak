@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
@@ -32,7 +31,6 @@ public class Field implements ISteppable {
      */
     public void getItem(Virologist v) throws Exception {
         String vList = virologists.size() == 1 ? "-" : virologists.stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        logMessage(String.format("%s scanned %s -> virologists: %s", getIdForObject(v), getIdForObject(this), vList));
     }
 
     /**

@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
 import hu.tapasztaltak.view.*;
 
@@ -173,25 +172,21 @@ public class Game extends JFrame {
         RoundManager rm = RoundManager.getInstance();
         for(int i = 1; i <= fieldNum; i++){
             Field f = new Field();
-            ProtoLogger.logMessage(String.format("%s created",getIdForObject(f)));
             fields.add(f);
             rm.addSteppable(f);
         }
         for(int i = 1; i <= laborNum; i++){
             Labor l= new Labor();
-            ProtoLogger.logMessage(String.format("%s created",getIdForObject(l)));
             fields.add(l);
             rm.addSteppable(l);
         }
         for(int i = 1; i <= warehouseNum; i++){
             Warehouse w = new Warehouse();
-            ProtoLogger.logMessage(String.format("%s created",getIdForObject(w)));
             fields.add(w);
             rm.addSteppable(w);
         }
         for(int i = 1; i <= shelterNum; i++){
             Shelter s = new Shelter();
-            ProtoLogger.logMessage(String.format("%s created",getIdForObject(s)));
             fields.add(s);
             rm.addSteppable(s);
         }
@@ -202,7 +197,6 @@ public class Game extends JFrame {
             Random r = new Random();
             Field f =fields.get(r.nextInt(fields.size()));
             v.setField(f);
-            ProtoLogger.logMessage(String.format("%s created on %s",getIdForObject(v),getIdForObject(f)));
         }
     }
 
@@ -213,7 +207,6 @@ public class Game extends JFrame {
      */
     public void checkEndGame(Virologist v) {
         if (v.getLearnt().size() == maxAgent) {
-            ProtoLogger.logMessage(String.format("%s játékos győzött!",getIdForObject(v)));
         }
     }
 

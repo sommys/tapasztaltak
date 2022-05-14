@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoLogger.loggingSwitch;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
@@ -49,16 +48,13 @@ public class Virologist implements ISteppable {
 	 */
 	public void move(Field f) {
 		if(stunned||moved){
-			logMessage(String.format("%s can't move to %s [%s]", getIdForObject(this), getIdForObject(f), stunned ? "stunned" : "already moved"));
 			return;
 		}
 		if(field.isNeighbour(f)){
 			field.removeVirologist(this);
 			f.addVirologist(this);
 			field = f;
-			logMessage(String.format("%s moved to %s", getIdForObject(this), getIdForObject(f)));
 		} else {
-			logMessage(String.format("%s can't move to %s [not neighbour]", getIdForObject(this), getIdForObject(f)));
 		}
 	}
 
@@ -78,8 +74,6 @@ public class Virologist implements ISteppable {
 		}
 		if(activeSuites < 3){
 			s.activate(this);
-		}else{
-			ProtoLogger.logMessage(String.format("%s is already wearing 3 suites", getIdForObject(this)));
 		}
 	}
 
@@ -96,9 +90,7 @@ public class Virologist implements ISteppable {
 		g.make(inventory);
 		int afterMatSize = inventory.getMaterials().size();
 		if(originalMatSize != afterMatSize){
-			logMessage(String.format("%s made %s", getIdForObject(this), getIdForObject(inventory.getAgents().get(inventory.getAgents().size()-1))));
 		} else {
-			logMessage(String.format("%s doesn't have enough material to make %s agent", getIdForObject(this), g.getAgent().getClass().getSimpleName().toLowerCase()));
 		}
 	}
 
@@ -110,15 +102,11 @@ public class Virologist implements ISteppable {
 	public void useAgent(Agent a, Virologist v) throws Exception {
 		if(stunned || moved || !canReach(v)){
 			if(stunned){
-				logMessage(String.format("%s can't use agent [stunned]", getIdForObject(this)));
 			} else if(moved){
-				logMessage(String.format("%s can't use agent [already moved]", getIdForObject(this)));
 			} else {
-				logMessage(String.format("%s can't use agent [can't reach]", getIdForObject(this)));
-			}
+			} // TODO itt valamit kiírni hogy mit csinált valahogy kell-e
 			return;
 		}
-		ProtoLogger.logMessage(String.format("%s used %s on %s", getIdForObject(this), getIdForObject(a),  getIdForObject(v)));
 		spreadInitiation(a, v);
 	}
 
@@ -136,7 +124,6 @@ public class Virologist implements ISteppable {
 		from.deactivate(this);
 		to.activate(this);
 		loggingSwitch=originalSwitch;
-		logMessage(String.format("%s is now wearing %s instead of %s", getIdForObject(this), getIdForObject(to), getIdForObject(from)));
 	}
 
 	/**
@@ -157,22 +144,20 @@ public class Virologist implements ISteppable {
 	public List<IStealable> chooseItem(List<IStealable> available) {
 		List<IStealable> chosen = new ArrayList<>();
 		try {
-			int pickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pick up stuff from %s? (Y/N):", getIdForObject(field)), true);
+			int pickupDecision = 0; // TODO questionpanel
 			if (pickupDecision == 0) {
 				return chosen;
 			}
 			int remaining = inventory.getSize() - inventory.getUsedSize();
 			for (IStealable a : available) {
 				if(remaining == 0){
-					logMessage("Inventory full, can't pick up more items");
 					return chosen;
 				}
-				int currentPickupDecision = ProtoLogger.logQuestion(String.format("Do you want to pick up %s? (Y/N):", getIdForObject(a)), true);
+				int currentPickupDecision = 1; // TODO questionpanel
 				if (currentPickupDecision == 1) {
 					if (remaining > 0) {
 						chosen.add(a);
 						remaining--;
-						ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left", getIdForObject(a), getIdForObject(this), remaining));
 					}
 				}
 			}
@@ -190,35 +175,27 @@ public class Virologist implements ISteppable {
 	 */
 	public void steal(Virologist from) {
 		if (stunned) {
-			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [stunned]");
 			return;
 		}
 		if (moved) {
-			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [moved]");
 			return;
 		}
 		if(!canReach(from)){
-			ProtoLogger.logMessage(getIdForObject(this) + " can't steal [can't reach]");
 			return;
 		}
 		if(!from.isStunned()) {
-			ProtoLogger.logMessage(String.format("%s can't steal from %s [not stunned]", getIdForObject(this), getIdForObject(from)));
 			return;
 		}
 
-		ProtoLogger.logMessage(getIdForObject(this) + " stealing from " + getIdForObject(from));
-		ProtoLogger.logMessage(getIdForObject(from) + " has the following items:");
 
 		Inventory inv2 = from.getInventory();
 		if(inv2.getSuites().isEmpty() && inv2.getMaterials().isEmpty()) {
-			ProtoLogger.logMessage(String.format("%s inventory empty, %s can't steal anything", getIdForObject(from), getIdForObject(this)));
 			return;
 		}
 
 		IStealable item = inv2.pickItem();
 
 		if (inventory.getUsedSize()==inventory.getSize()) {
-			ProtoLogger.logMessage("Inventory full, can't pick up more items");
 			return;
 		}
 
@@ -237,7 +214,6 @@ public class Virologist implements ISteppable {
 		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
-		ProtoLogger.logMessage("Chosen item stolen from " + getIdForObject(this));
 	}
 
 	/**
@@ -247,10 +223,8 @@ public class Virologist implements ISteppable {
 	public void learn(Gene g) {
 		if(!learnt.contains(g)){
 			learnt.add(g);
-			ProtoLogger.logMessage(getIdForObject(this) + " learnt " + g.getAgent().getClass().getSimpleName());
 			Game.getInstance().checkEndGame(this);
 		} else {
-			ProtoLogger.logMessage(getIdForObject(this) + " already learnt this genetic code ["+g.getAgent().getClass().getSimpleName()+"]");
 		}
 	}
 
@@ -262,18 +236,15 @@ public class Virologist implements ISteppable {
 
 		inventory.getAgents().forEach(a -> {
 			if(a.getTimeLeft() <= 0){
-				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(a)));
 			}
 		});
 		inventory.getAgents().removeIf(a -> a.getTimeLeft() <= 0);
 		modifiers.forEach(m -> {
 			if(!m.isActive()){
-				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(m)));
 			}
 		});
 		defenses.forEach(d -> {
 			if(!d.stillActive()){
-				ProtoLogger.logMessage(String.format("%s expired", getIdForObject(d)));
 			}
 		});
 		modifiers.removeIf(m -> !m.isActive());
@@ -319,7 +290,6 @@ public class Virologist implements ISteppable {
 
 	public void attack(Axe a, Virologist victim){
 		if(!inventory.getSuites().contains(a)){
-			logMessage(String.format("%s doesn't have %s", getIdForObject(this), getIdForObject(a)));
 			return;
 		}
 		a.use(this, victim);
@@ -425,7 +395,6 @@ public class Virologist implements ISteppable {
 	 */
 	public void addModifier(SpecialModifier m){
 		this.modifiers.add(m);
-		ProtoLogger.logMessage(String.format("%s agent added with %d rounds left from its effect to %s", m.getClass().getSimpleName(), ((Agent)m).getTimeLeft(), getIdForObject(this)));
 	}
 	/**
 	 * Törli {@code m}-et a virológusra ható modósítók közül.

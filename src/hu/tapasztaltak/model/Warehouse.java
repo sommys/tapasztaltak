@@ -27,7 +27,6 @@ public class Warehouse extends Field {
     public void getItem(Virologist v) {
         String virologists = getVirologists().size() == 1 ? "-" : getVirologists().stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         String materialsList = getMaterials().isEmpty() ? "-" : getMaterials().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        ProtoLogger.logMessage(String.format("%s scanned %s -> materials: %s | virologists: %s", getIdForObject(v), getIdForObject(this), materialsList, virologists));
         int mat = 0;
         List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
         for (IStealable m : chosen) {
@@ -75,7 +74,6 @@ public class Warehouse extends Field {
                 materials.add(n);
             }
         }
-        ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),materials.stream().map(it -> getIdForObject(it)).collect(Collectors.joining(" "))));
     }
 
     //region GETTEREK és SETTEREK

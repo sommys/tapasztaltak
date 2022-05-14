@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import java.util.Random;
 
@@ -24,7 +23,6 @@ public class Bag extends Suite {
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize + size);
 		setActive(true);
-		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
 	/**
@@ -36,7 +34,6 @@ public class Bag extends Suite {
 		int currentSize = v.getInventory().getSize();
 		v.getInventory().setSize(currentSize - size);
 		setActive(false);
-		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),  getIdForObject(v)));
 	}
 
 	/**

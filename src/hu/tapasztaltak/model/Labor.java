@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
@@ -24,7 +23,6 @@ public class Labor extends Field {
     public void getItem(Virologist v) throws Exception {
         String virologists = getVirologists().size() == 1 ? "-" : getVirologists().stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
         String code = getGene() == null ? "-" : String.format("%s[%s]", getIdForObject(gene), gene.getAgent().getClass().getSimpleName());
-        ProtoLogger.logMessage(String.format("%s scanned %s -> geneticCode: %s | virologists: %s", getIdForObject(v), getIdForObject(this), code, virologists));
         v.learn(gene);
     }
 

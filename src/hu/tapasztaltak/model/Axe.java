@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
@@ -19,7 +18,7 @@ public class Axe extends Suite{
     @Override
     public void activate(Virologist v) {
         setActive(true);
-        ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
+
     }
 
     /**
@@ -31,20 +30,15 @@ public class Axe extends Suite{
      */
     public void use(Virologist v, Virologist toKill) {
         if(!active){
-            ProtoLogger.logMessage(String.format("%s is not wearing %s", getIdForObject(v), getIdForObject(this)));
             return;
         }
         if(used) {
-            ProtoLogger.logMessage(String.format("%s can't use %s [broken]",getIdForObject(v),getIdForObject(this)));
             return;
         }
         if(!v.canReach(toKill)){
-            ProtoLogger.logMessage(String.format("%s can't use %s [can't reach]",getIdForObject(v),getIdForObject(this)));
             return;
         }
         toKill.die();
-        ProtoLogger.logMessage(String.format("%s used %s on %s",getIdForObject(v),getIdForObject(this),getIdForObject(toKill)));
-        ProtoLogger.logMessage(String.format("%s died %s broke",getIdForObject(toKill),getIdForObject(this)));
         used = true;
     }
 
@@ -56,7 +50,6 @@ public class Axe extends Suite{
     public void deactivate(Virologist v) {
         active = false;
         remove(v.getInventory());
-        ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
     }
 
     //region GETTEREK ÉS SETTEREK

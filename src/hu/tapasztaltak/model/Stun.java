@@ -19,7 +19,6 @@ public class Stun extends Agent implements SpecialModifier {
 	 */
 	public void effect(Virologist v) {
 		v.setStunned(true);
-		ProtoLogger.logMessage(String.format("[%s effect] %s stunned", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**

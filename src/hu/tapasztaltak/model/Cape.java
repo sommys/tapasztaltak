@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
 
 import java.util.Random;
@@ -24,18 +23,14 @@ public class Cape extends Suite implements IDefense {
 		double result = r.nextDouble();
 		if(ProtoMain.randomness) {
 			if (result <= 0.823) {
-				ProtoLogger.logMessage(getIdForObject(this) + " protected");
 			} else {
-				ProtoLogger.logMessage(getIdForObject(this) + " didn't protect");
 			}
 			return (result <= 0.823);
 		}else{
-			int choice = ProtoLogger.logQuestion("Do you want " + getIdForObject(this) + " to protect? (Y/N):",true);
+			int choice = 'Y'; //TODO megcsinálni hogy questionpanelből legyen
 			if(choice == 'Y'){
-				ProtoLogger.logMessage(getIdForObject(this) + " protected");
 				return true;
 			} else if(choice == 'N'){
-				ProtoLogger.logMessage(getIdForObject(this) + " didn't protect");
 				return false;
 			} else {
 				return false;
@@ -59,7 +54,6 @@ public class Cape extends Suite implements IDefense {
 	public void activate(Virologist v) {
 		v.addDefense(this);
 		setActive(true);
-		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**
@@ -69,6 +63,5 @@ public class Cape extends Suite implements IDefense {
 	public void deactivate(Virologist v) {
 		v.removeDefense(this);
 		setActive(false);
-		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 }

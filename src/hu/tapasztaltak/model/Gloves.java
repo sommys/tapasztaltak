@@ -29,12 +29,11 @@ public class Gloves extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
 		if(atc != vict && !used && useCount > 0 && !vict.isStunned()){
 			Scanner sc = new Scanner(System.in);
-			int choice = ProtoLogger.logQuestion(String.format("Do you want to use %s [%d uses left]? (Y/N):",getIdForObject(this), useCount),true);
+			int choice = 1; // TODO lekérni questionpanelből
 			if(choice == 1){
 				used = true;
 				useCount--;
 				if(useCount==0) {
-					ProtoLogger.logMessage(String.format("%s used away, you can no longer use it",getIdForObject(this)));
 					remove(vict.getInventory());
 				}
 				vict.useAgent(a,atc);
@@ -60,7 +59,6 @@ public class Gloves extends Suite implements IDefense {
 	public void activate(Virologist v) {
 		v.addDefense(this);
 		setActive(true);
-		ProtoLogger.logMessage(String.format("%s is now worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	/**
@@ -70,7 +68,6 @@ public class Gloves extends Suite implements IDefense {
 	public void deactivate(Virologist v) {
 		v.removeDefense(this);
 		setActive(false);
-		ProtoLogger.logMessage(String.format("%s is no longer worn by %s", getIdForObject(this),getIdForObject(v)));
 	}
 
 	//region GETTEREK ÉS SETTEREK

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoLogger.logMessage;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
 
@@ -32,7 +31,6 @@ public class Shelter extends Field {
      */
     public void getItem(Virologist v) throws Exception {
         String vList = virologists.size() == 1 ? "-" : virologists.stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        logMessage(String.format("%s scanned %s -> suite: %s | virologists: %s", getIdForObject(v), getIdForObject(this), suite == null ? "-" : getIdForObject(suite), vList));
         if(suite == null){
             return;
         }
@@ -44,11 +42,9 @@ public class Shelter extends Field {
                 for (IStealable s : chosen) {
                     s.add(v.getInventory());
                     int space = v.getInventory().getSize() - v.getInventory().getUsedSize();
-                    ProtoLogger.logMessage(String.format("%s added for %s inventory %d spaces left",getSuiteId(suite),getIdForObject(v),space));
                 }
             }
             else{
-                ProtoLogger.logMessage(String.format("Inventory full, can't pick up more items"));
             }
         } else{
             return;
@@ -78,7 +74,6 @@ public class Shelter extends Field {
                 suite = new Gloves();
                 break;
         }
-        ProtoLogger.logMessage(String.format("%s refreshed with %s",getIdForObject(this),getIdForObject(suite)));
     }
 
     //region GETTEREK és SETTEREK

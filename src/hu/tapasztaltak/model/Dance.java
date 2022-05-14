@@ -1,6 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,6 @@ public class Dance extends Agent implements SpecialModifier {
 				f.removeVirologist(v);
 				randField.addVirologist(v);
 				v.setField(randField);
-				ProtoLogger.logMessage(String.format("[%s effect] %s moved to %s", getIdForObject(this), getIdForObject(v), getIdForObject(randField)));
 			}
 		}
 	}
