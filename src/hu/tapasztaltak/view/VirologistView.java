@@ -57,11 +57,12 @@ public class VirologistView extends View {
 		String identifier = vir.getModifiers().stream().anyMatch(it -> it instanceof Bear) ? "bear" : "vir";
 		String colorId = color.toString();
 		for(Suite s : vir.getInventory().getSuites().stream().filter(Suite::isActive).collect(Collectors.toList())){
-			ItemView i = (ItemView) Game.getInstance().objectViewHashMap.get(s);
+			ItemView i = (ItemView) Game.objectViewHashMap.get(s);
 			stuff.add(i.getItemString());
 		}
-		String image = identifier + "_" + colorId + "_" + String.join("",stuff)+".png";
+		String image = identifier + "_" + colorId + (stuff.isEmpty()? "" : String.join("",stuff))+".png";
 		try {
+			System.out.println("virologistImage: "+image);
 			virImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/virologists/" + image));
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());

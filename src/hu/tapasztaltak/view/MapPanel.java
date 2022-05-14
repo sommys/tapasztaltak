@@ -1,8 +1,6 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.Field;
-import hu.tapasztaltak.model.InfLabor;
-import hu.tapasztaltak.model.Labor;
+import hu.tapasztaltak.model.*;
 import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
@@ -19,6 +17,7 @@ import static hu.tapasztaltak.proto.ProtoMain.*;
 
 public class MapPanel extends JPanel {
 	private List<FieldView> fields = new ArrayList<>();
+	VirologistView vv;
 
 	public MapPanel(){
 		super();
@@ -263,6 +262,18 @@ public class MapPanel extends JPanel {
 		setIndexes();
 		addSpecialFields();
 		setIndexes();
+		Virologist v = new Virologist();
+		vv = new VirologistView(v, VirologistView.VirColor.yellow);
+		Stun s = new Stun();
+		s.setTimeLeft(3);
+		v.addModifier(s);
+		try {
+			v.step();
+		} catch(Exception e){
+
+		}
+		vv.setPosX(300);
+		vv.setPosY(300);
 	}
 
 	private void addSpecialFields() {
@@ -383,5 +394,6 @@ public class MapPanel extends JPanel {
 		for(FieldView fv : fields){
 			fv.draw(g);
 		}
+		vv.draw(g);
 	}
 }

@@ -17,7 +17,7 @@ import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
  * A játékot reprezentáló singleton osztály.
  */
 public class Game extends JFrame {
-    public HashMap<Object, View> objectViewHashMap = new HashMap<>();
+    public static HashMap<Object, View> objectViewHashMap = new HashMap<>();
     /** ablak felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
@@ -270,7 +270,7 @@ public class Game extends JFrame {
         virologistList.add(v);
     }
 
-    public void addView(Object o, View view) {
+    public static void addView(Object o, View view) {
         objectViewHashMap.put(o, view);
     }
 

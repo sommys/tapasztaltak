@@ -19,7 +19,7 @@ public class FieldView extends View {
 
 	public FieldView(){
 		field = new Field();
-		Game.getInstance().addView(field, this);
+		Game.addView(field, this);
 		reimportImage();
 	}
 
