@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A medvetánc ágenset reprezentáló osztály
  */
@@ -28,6 +26,7 @@ public class Bear extends Agent implements SpecialModifier{
     @Override
     public void spread(Virologist v) {
         v.addModifier(this);
+        Game.getInstance().checkEndGame(v);
     }
 
     /**

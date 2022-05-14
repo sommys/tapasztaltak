@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A játékot reprezentáló singleton osztály.
  */
@@ -21,8 +19,6 @@ public class Game extends JFrame {
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
     private Virologist currentVirologist = null;
-
-    private ArrayList<String> virologistList = new ArrayList<>();
 
     JPanel gamePanel = new JPanel();
     JPanel rightPanel = new JPanel();
@@ -206,7 +202,12 @@ public class Game extends JFrame {
      * @param v a potenciális győztes {@link Virologist}
      */
     public void checkEndGame(Virologist v) {
+        if(RoundManager.getInstance().getVirologists().stream().allMatch(it -> it.getModifiers().stream().anyMatch(m -> m instanceof Bear))){
+            //todo mindenki medve
+            return;
+        }
         if (v.getLearnt().size() == maxAgent) {
+            //todo nyert V
         }
     }
 
@@ -253,14 +254,6 @@ public class Game extends JFrame {
 
     public Virologist getCurrentVirologist() {
         return currentVirologist;
-    }
-
-    public ArrayList<String> getVirologistList() {
-        return virologistList;
-    }
-
-    public void setVirologistList(String v) {
-        virologistList.add(v);
     }
 
     public static void addView(Object o, View view) {
