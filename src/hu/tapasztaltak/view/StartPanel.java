@@ -4,6 +4,7 @@ import hu.tapasztaltak.model.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +15,15 @@ import java.util.ArrayList;
 
 public class StartPanel extends JPanel implements ActionListener {
     Game game;
-    private JLabel playerName = new JLabel("Név");
-    private JLabel playerColor = new JLabel("Szín");
-
-    private JButton newGameBtn = new JButton();
-    private JButton b1 = new JButton();
+    private JLabel playerNameLabel = new JLabel("Név");
+    private JTextArea playerNameInput = new JTextArea();
+    private JLabel playerColorLabel = new JLabel("Szín");
+    private JOptionPane playerColorInput = new JOptionPane();
+    private JPanel middlePanel = new JPanel();
+    private JPanel virPanel = new JPanel();
+    private JButton newGameBtn = new JButton("Játék indítása");
+    private JButton addVirBtn = new JButton("Hozzáad");
+    private JLabel messageLabel = new JLabel();
 
     private DefaultListModel listModel = new DefaultListModel();
     private JList list;
@@ -28,7 +33,6 @@ public class StartPanel extends JPanel implements ActionListener {
     transient private BufferedImage backGround;
 
     public StartPanel (Game game) {
-        //Régi menubol loptam
         super();
         this.game = game;
         try {
@@ -36,54 +40,68 @@ public class StartPanel extends JPanel implements ActionListener {
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
+
+        setLayout(new BorderLayout());
+        Component rigidArea1 = Box. createRigidArea(new Dimension(400, 1080));
+        Component rigidArea2 = Box. createRigidArea(new Dimension(400, 1080));
+        add(rigidArea1,BorderLayout.EAST);
+        add(rigidArea2,BorderLayout.WEST);
+        add(middlePanel,BorderLayout.CENTER);
         initComponents();
     }
 
     private void initComponents() {
-        //Valaki ert a java layoutokhoz?
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        middlePanel.setBackground(new Color(125, 220, 191));
+        middlePanel.setLayout(new GridLayout(3,1));
 
-        playerName.setFont(new Font("Arial",Font.BOLD,40));
-        playerName.setBorder(BorderFactory.createEmptyBorder(10, 35, 10, 10));
-        playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(playerName);
+        JPanel upperPanel = new JPanel();
+        upperPanel.setLayout(new BoxLayout(upperPanel,BoxLayout.Y_AXIS));
+        upperPanel.add(new JLabel("Játék beállítások"));
+        upperPanel.add(messageLabel);
+        upperPanel.setBackground(new Color(125, 220, 191));
+        middlePanel.add(upperPanel);
 
-        playerColor.setFont(new Font("Arial",Font.BOLD,40));
-        playerColor.setBorder(BorderFactory.createEmptyBorder(10, 35, 10, 10));
-        playerColor.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(playerColor);
-
-        setButtonSettings(newGameBtn);
-        newGameBtn.setText("Játék indítása");
-        newGameBtn.addActionListener(evt -> game.showGame()); //TODO Generálni virológusokat, első következő virológust beállítani game.CurrentVirologistnak
-        add(newGameBtn);
-
-        name = new JTextField("Virológus neve");
-        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA nem mukodiiiiiiiiiik
-        //Update: mukodik xd
-        name.setMaximumSize( name.getPreferredSize() );
-        add(name);
-
-        b1 = new JButton("Hozzáad");
-        b1.addActionListener(this);
-        add(b1);
-
+        JPanel p = new JPanel();
+        p.setLayout(new GridLayout(3,2));
+        p.add(playerNameLabel);
+        p.add(playerNameInput);
+        p.add(playerColorLabel);
+        p.add(Box.createRigidArea(new Dimension(40,40)));//TODO dropdown
+        addVirBtn.addActionListener(this);
         for (int i = 0; i < game.getVirologistList().size(); i++){
             listModel.addElement(game.getVirologistList().get(i));
         }
+        p.add(addVirBtn);
+        newGameBtn.addActionListener(evt -> {
+            if(listModel.getSize() < 2){
+                messageLabel.setText(String.format("Legalább még %d virológust adj hozzá!",(2 - listModel.getSize())));
+            }
+            else {
+                game.showGame();
+            }
+        });
+        p.add(newGameBtn);
+        p.setBackground(new Color(125, 220, 191));
+        middlePanel.add(p);
 
-        list = new JList(listModel);
 
-        add(list);
+        JPanel lowerPanel = new JPanel();
+        lowerPanel.setBackground(new Color(125, 220, 191));
+        middlePanel.add(lowerPanel);
 
-        add(Box.createVerticalGlue());
     }
 
     public void actionPerformed(ActionEvent e) {
-        String s1 = name.getText();
-        game.setVirologistList(s1);
-        listModel.addElement(s1);
-        revalidate();
+        if(listModel.getSize() == 6){
+            messageLabel.setText("Elérte a maximális létszámot!");
+        }
+        else{
+            String s1 = name.getText();
+            game.setVirologistList(s1);
+            listModel.addElement(s1);
+            revalidate();
+        }
+
     }
 
     /**
@@ -91,7 +109,13 @@ public class StartPanel extends JPanel implements ActionListener {
      * @param button amin a beállításokat elvégzi
      */
     private void setButtonSettings(JButton button) {
-        button.setFont(new Font("Arial",Font.BOLD,20));
+        button.setBackground(new Color(125, 220, 191));
+        button.setForeground(new Color(208, 253, 239));
+        button.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
+        button.setOpaque(true);
+        button.setBorderPainted(true);
+        button.setFocusPainted(true);
+        button.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
     }
 
     /**
