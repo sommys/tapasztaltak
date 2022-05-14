@@ -220,7 +220,7 @@ public class Virologist implements ISteppable {
 	 * A virológus megtanulja a g genetikai kódot.
 	 * @param g a megtanulandó {@link Gene}
 	 */
-	public void learn(Gene g) {
+	public void learn(Gene g) throws Exception {
 		if(!learnt.contains(g)){
 			learnt.add(g);
 			Game.getInstance().checkEndGame(this);

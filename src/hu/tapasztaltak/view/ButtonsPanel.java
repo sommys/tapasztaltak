@@ -1,7 +1,6 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.Game;
-import hu.tapasztaltak.model.Virologist;
+import hu.tapasztaltak.model.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -19,6 +18,7 @@ public class ButtonsPanel extends JPanel{
 	private JButton makeAgentBtn = new JButton();
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
+	private Virologist currentVirologist = new Virologist(); // TODO lekérni a virológust
 
 	public ButtonsPanel(){
 		super();
@@ -41,20 +41,44 @@ public class ButtonsPanel extends JPanel{
 		add(playerText);
 		setButtonSettings(scanBtn);
 		scanBtn.setText("tapogat");
+		scanBtn.addActionListener(evt -> {
+			try {
+				currentVirologist.scanning();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		setButtonSettings(moveBtn);
 		moveBtn.setText("mozog");
+		Field f = new Field(); // TODO lekérni questionpabelből
+		moveBtn.addActionListener(evt -> currentVirologist.move(f));
 		setButtonSettings(stealBtn);
 		stealBtn.setText("lop");
+		Virologist v = new Virologist();//TODO lekérni questionpabelből
+		stealBtn.addActionListener(evt -> currentVirologist.steal(v));
 		setButtonSettings(attackBtn);
 		attackBtn.setText("támad");
+		Axe a = new Axe(); // TODO lekérni questionpanelből
+		attackBtn.addActionListener(evt ->currentVirologist.attack(a,v));
 		setButtonSettings(useAgentBtn);
-		useAgentBtn.setText("ágenst használ");
+		useAgentBtn.setText("ágenst használ");//TODO lekérniiiiiii questiongeci
+		useAgentBtn.addActionListener(evt -> {
+			try {
+				currentVirologist.useAgent(currentVirologist.getInventory().getAgents().get(0),v);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		setButtonSettings(makeAgentBtn);
+		Gene g = new Gene(); // Todo Lekérni
 		makeAgentBtn.setText("ágenst készít");
+		makeAgentBtn.addActionListener(evt -> currentVirologist.makeAgent(currentVirologist.getLearnt().get(1))); // TODO lekérni questionpannel
 		setButtonSettings(switchSuiteBtn);
-		switchSuiteBtn.setText("felszerelés csere");
+		switchSuiteBtn.setText("felszerelés csere");//Todo ezt megcsinálni questionpanelből
+		switchSuiteBtn.addActionListener(evt -> currentVirologist.switchSuite(currentVirologist.getInventory().getSuites().get(0),currentVirologist.getInventory().getSuites().get(0)));
 		setButtonSettings(activateSuiteBtn);
 		attackBtn.setText("felszerelés felvétel");
+		attackBtn.addActionListener(evt -> currentVirologist.putOnSuite(currentVirologist.getInventory().getSuites().get(0))); //TODO lekérni
 		add(scanBtn);
 		add(moveBtn);
 		add(stealBtn);

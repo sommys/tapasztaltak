@@ -844,7 +844,7 @@ public class TestSetup {
      * Bekérjük az óvóhelyek számát
      * Bekérjük a virológusok számát
      */
-    public static void playerStartsGame(){
+    public static void playerStartsGame() throws Exception {
         System.out.println("--- Setting up Test Environment for Player starts game ---");
         Game g = Game.getInstance();
         storage.put("g", g);

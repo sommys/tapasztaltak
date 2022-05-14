@@ -28,7 +28,7 @@ public class StartPanel extends JPanel implements ActionListener {
     private DefaultListModel listModel = new DefaultListModel();
     private JList list;
 
-    JTextField name;
+    JTextField name = new JTextField();
 
     transient private BufferedImage backGround;
 
