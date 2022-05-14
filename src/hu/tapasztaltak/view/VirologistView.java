@@ -37,8 +37,9 @@ public class VirologistView extends View {
 		}
 	}
 
-	public Virologist vir;
-	public VirColor color;
+	private Virologist vir;
+	private VirColor color;
+	private String playerName;
 
 	public VirologistView(){
 
@@ -48,6 +49,14 @@ public class VirologistView extends View {
 		this.vir = vir;
 		this.color = col;
 		updateImage();
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public VirColor getColor() {
+		return color;
 	}
 
 	public void updateImage(){
@@ -82,4 +91,6 @@ public class VirologistView extends View {
 	public void update() {
 
 	}
+
+
 }

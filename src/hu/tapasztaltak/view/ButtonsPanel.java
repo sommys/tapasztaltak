@@ -1,5 +1,6 @@
 package hu.tapasztaltak.view;
 
+import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.Virologist;
 
 import javax.swing.*;
@@ -7,9 +8,9 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class ButtonsPanel extends JPanel{
-
-	private JLabel playerText = new JLabel("Játékos következik");
+	private JLabel playerText = new JLabel();
 	private VirologistView.VirColor playerColor;
+	private VirologistView curVirView;
 	private JButton moveBtn = new JButton();
 	private JButton stealBtn = new JButton();
 	private JButton attackBtn = new JButton();
@@ -19,16 +20,19 @@ public class ButtonsPanel extends JPanel{
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
 
-	public ButtonsPanel(Virologist v){
+	public ButtonsPanel(){
 		super();
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
 		setLayout(new GridLayout(8,1));
+		//curVirView = (VirologistView) Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist());
 		initComponents();
 	}
 
 	public void initComponents() {
-		//playerText =  //TODO név kiírása
+		//playerText.setText(curVirView.getPlayerName() + " lép");
+		playerText.setText("Lilla lép"); //TODO megcsinálni, hogy a rendes virológust adja be
+		playerText.setForeground(new Color(215, 96, 196));
 		//playerColor =  //TODO szín visszaszerzése a virologistViewból a virológuson keresztül
 		playerText.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
 		playerText.setBorder(BorderFactory.createEmptyBorder(10, 35, 10, 10));

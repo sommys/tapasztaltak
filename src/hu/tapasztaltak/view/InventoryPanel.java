@@ -10,16 +10,14 @@ import java.util.List;
 public class InventoryPanel extends JPanel {
 	private List<ItemView> items;
 
-	public InventoryPanel(Virologist v){
+	public InventoryPanel(){
 		super();
 		setFocusable(true);
-
-		if(v == null){
-			setBackground(new Color(215, 96, 196));
-		}
+		setBackground(new Color(215, 96, 196));
 		initComponents();
 	}
 	private void initComponents(){
 
 	}
+
 }

@@ -29,11 +29,11 @@ public class Game extends JFrame {
     JPanel leftPanel = new JPanel();
 
     ActivePanel activePanel = new ActivePanel();
-    ButtonsPanel buttonsPanel = new ButtonsPanel(currentVirologist);
-    InventoryPanel inventoryPanel = new InventoryPanel(currentVirologist);
+    ButtonsPanel buttonsPanel = new ButtonsPanel();
+    InventoryPanel inventoryPanel = new InventoryPanel();
     MapPanel mapPanel = new MapPanel();
     MenuPanel menuPanel = new MenuPanel(this);
-    QuestionPanel questionPanel = new QuestionPanel(currentVirologist);
+    QuestionPanel questionPanel = new QuestionPanel();
     StartPanel startPanel = new StartPanel(this);
 
     /**

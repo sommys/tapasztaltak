@@ -13,7 +13,7 @@ public class QuestionPanel extends JPanel {
 	private JButton approveBtn;
 	private Object selected;
 
-	public QuestionPanel(Virologist v){
+	public QuestionPanel(){
 		super();
 		setFocusable(true);
 		setBackground(new Color(102, 180, 156));
