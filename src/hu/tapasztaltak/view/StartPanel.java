@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class StartPanel extends JPanel implements ActionListener {
     Game game;
@@ -68,9 +67,9 @@ public class StartPanel extends JPanel implements ActionListener {
         p.add(playerColorLabel);
         p.add(Box.createRigidArea(new Dimension(40,40)));//TODO dropdown
         addVirBtn.addActionListener(this);
-        for (int i = 0; i < game.getVirologistList().size(); i++){
-            listModel.addElement(game.getVirologistList().get(i));
-        }
+//        for (int i = 0; i < game.getVirologistList().size(); i++){
+//            listModel.addElement(game.getVirologistList().get(i));
+//        }
         p.add(addVirBtn);
         newGameBtn.addActionListener(evt -> {
             if(listModel.getSize() < 2){
@@ -97,7 +96,7 @@ public class StartPanel extends JPanel implements ActionListener {
         }
         else{
             String s1 = name.getText();
-            game.setVirologistList(s1);
+            //game.setVirologistList(s1);
             listModel.addElement(s1);
             revalidate();
         }
