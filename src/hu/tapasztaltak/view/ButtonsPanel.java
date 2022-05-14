@@ -1,6 +1,5 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.Virologist;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import java.awt.*;
 public class ButtonsPanel extends JPanel{
 
 	private JLabel playerText = new JLabel("Játékos következik");
-	private VirColor playerColor;
+	private VirologistView.VirColor playerColor;
 	private JButton moveBtn = new JButton();
 	private JButton stealBtn = new JButton();
 	private JButton attackBtn = new JButton();

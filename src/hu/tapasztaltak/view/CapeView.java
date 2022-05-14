@@ -17,4 +17,9 @@ public class CapeView extends ItemView {
 	public void update() {
 
 	}
+
+	@Override
+	public String getItemString() {
+		return "c";
+	}
 }

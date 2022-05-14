@@ -17,4 +17,9 @@ public class GlovesView extends ItemView {
 	public void update() {
 
 	}
+
+	@Override
+	public String getItemString() {
+		return "g";
+	}
 }

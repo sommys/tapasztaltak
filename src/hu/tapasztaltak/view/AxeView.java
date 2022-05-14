@@ -16,4 +16,9 @@ public class AxeView extends ItemView {
 	public void update() {
 
 	}
+
+	@Override
+	public String getItemString() {
+		return a.isUsed() ? "au" : "a";
+	}
 }

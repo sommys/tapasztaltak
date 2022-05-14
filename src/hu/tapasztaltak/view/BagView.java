@@ -17,4 +17,9 @@ public class BagView extends ItemView {
 	public void update() {
 
 	}
+
+	@Override
+	public String getItemString() {
+		return "b";
+	}
 }

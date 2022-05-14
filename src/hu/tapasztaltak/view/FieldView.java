@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Field;
+import hu.tapasztaltak.model.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static hu.tapasztaltak.model.Game.objectViewHashMap;
 import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 public class FieldView extends View {
@@ -19,7 +19,7 @@ public class FieldView extends View {
 
 	public FieldView(){
 		field = new Field();
-		objectViewHashMap.put(field, this);
+		Game.getInstance().addView(field, this);
 		reimportImage();
 	}
 
