@@ -17,7 +17,6 @@ import static hu.tapasztaltak.proto.ProtoMain.*;
 
 public class MapPanel extends JPanel {
 	private List<FieldView> fields = new ArrayList<>();
-	VirologistView vv;
 
 	public MapPanel(){
 		super();
@@ -382,6 +381,5 @@ public class MapPanel extends JPanel {
 		for(FieldView fv : fields){
 			fv.draw(g);
 		}
-		vv.draw(g);
 	}
 }
