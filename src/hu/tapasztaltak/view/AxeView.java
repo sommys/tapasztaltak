@@ -6,6 +6,9 @@ import java.awt.*;
 
 public class AxeView extends ItemView {
 	private Axe a;
+	public AxeView(Axe a){
+		this.a = a;
+	}
 	public void draw(Graphics g) {
 	}
 	

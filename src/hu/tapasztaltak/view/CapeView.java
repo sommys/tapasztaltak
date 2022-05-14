@@ -7,6 +7,11 @@ import java.awt.*;
 
 public class CapeView extends ItemView {
 	private Cape c;
+
+	public CapeView(Cape c) {
+		this.c = c;
+	}
+
 	public void draw(Graphics g) {
 	}
 	

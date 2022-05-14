@@ -1,15 +1,13 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.Bear;
-import hu.tapasztaltak.model.Game;
-import hu.tapasztaltak.model.Suite;
-import hu.tapasztaltak.model.Virologist;
+import hu.tapasztaltak.model.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -56,11 +54,15 @@ public class VirologistView extends View {
 		TreeSet<String> stuff = new TreeSet<String>();
 		String identifier = vir.getModifiers().stream().anyMatch(it -> it instanceof Bear) ? "bear" : "vir";
 		String colorId = color.toString();
-		for(Suite s : vir.getInventory().getSuites().stream().filter(Suite::isActive).collect(Collectors.toList())){
+		List<Suite> suites = vir.getInventory().getSuites().stream().filter(Suite::isActive).collect(Collectors.toList());
+		if(identifier.equals("bear")){
+			suites = suites.stream().filter(it -> it instanceof Cape).collect(Collectors.toList());
+		}
+		for(Suite s : suites){
 			ItemView i = (ItemView) Game.objectViewHashMap.get(s);
 			stuff.add(i.getItemString());
 		}
-		String image = identifier + "_" + colorId + (stuff.isEmpty()? "" : String.join("",stuff))+".png";
+		String image = identifier + "_" + colorId + (stuff.isEmpty() ? "" : "_" + String.join("",stuff))+".png";
 		try {
 			System.out.println("virologistImage: "+image);
 			virImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/virologists/" + image));

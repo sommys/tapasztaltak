@@ -7,6 +7,9 @@ import java.awt.*;
 
 public class BagView extends ItemView {
 	private Bag b;
+	public BagView(Bag b){
+		this.b = b;
+	}
 	public void draw(Graphics g) {
 	}
 	

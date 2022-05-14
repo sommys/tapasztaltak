@@ -262,18 +262,6 @@ public class MapPanel extends JPanel {
 		setIndexes();
 		addSpecialFields();
 		setIndexes();
-		Virologist v = new Virologist();
-		vv = new VirologistView(v, VirologistView.VirColor.yellow);
-		Stun s = new Stun();
-		s.setTimeLeft(3);
-		v.addModifier(s);
-		try {
-			v.step();
-		} catch(Exception e){
-
-		}
-		vv.setPosX(300);
-		vv.setPosY(300);
 	}
 
 	private void addSpecialFields() {

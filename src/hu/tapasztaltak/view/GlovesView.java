@@ -7,6 +7,11 @@ import java.awt.*;
 
 public class GlovesView extends ItemView {
 	private Gloves g;
+
+	public GlovesView(Gloves g) {
+		this.g = g;
+	}
+
 	public void draw(Graphics g) {
 	}
 	
