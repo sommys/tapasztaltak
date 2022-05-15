@@ -18,13 +18,14 @@ public class ButtonsPanel extends JPanel{
 	private JButton makeAgentBtn = new JButton();
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
+	private JButton finishRoundBtn= new JButton();
 	private Virologist currentVirologist = new Virologist(); // TODO lekérni a virológust
 
 	public ButtonsPanel(){
 		super();
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
-		setLayout(new GridLayout(8,1));
+		setLayout(new GridLayout(9,1));
 		//curVirView = (VirologistView) Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist());
 		initComponents();
 	}
@@ -79,6 +80,9 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(activateSuiteBtn);
 		attackBtn.setText("felszerelés felvétel");
 		attackBtn.addActionListener(evt -> currentVirologist.putOnSuite(currentVirologist.getInventory().getSuites().get(0))); //TODO lekérni
+		setButtonSettings(finishRoundBtn);
+		finishRoundBtn.setText("Kör vége");
+		//finishRoundBtn.addActionListener(); //TODO kövi virológus
 		add(scanBtn);
 		add(moveBtn);
 		add(stealBtn);
@@ -87,6 +91,7 @@ public class ButtonsPanel extends JPanel{
 		add(makeAgentBtn);
 		add(switchSuiteBtn);
 		add(attackBtn);
+		add(finishRoundBtn);
 	}
 
 	public void setButtonSettings(JButton button){

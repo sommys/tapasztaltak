@@ -2,6 +2,8 @@ package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoLogger;
 import hu.tapasztaltak.proto.ProtoMain;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

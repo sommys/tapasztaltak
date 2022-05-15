@@ -21,7 +21,6 @@ public class VirologistView extends View {
 			e.printStackTrace();
 		}
 	}
-
 	BufferedImage virImg;
 	public enum VirColor{
 		red("red"), blue("blu"), green("gre"), yellow("yel"), pink("pin"), purple("pur");
@@ -36,23 +35,38 @@ public class VirologistView extends View {
 			return name;
 		}
 	}
-
 	private Virologist vir;
 	private VirColor color;
-	private String playerName;
+	private String name;
 
-	public VirologistView(){
-
-	}
-
-	public VirologistView(Virologist vir, VirColor col){
+	public VirologistView(Virologist vir, String col, String name){
 		this.vir = vir;
-		this.color = col;
+		this.name = name;
+		switch (col){
+			case "kék":
+				color = VirColor.blue;
+				break;
+			case "piros":
+				color = VirColor.red;
+				break;
+			case "zöld":
+				color = VirColor.green;
+				break;
+			case "sárga":
+				color = VirColor.yellow;
+				break;
+			case "rózsaszín":
+				color = VirColor.pink;
+				break;
+			case "lila":
+				color = VirColor.purple;
+				break;
+		}
 		updateImage();
 	}
 
 	public String getPlayerName() {
-		return playerName;
+		return name;
 	}
 
 	public VirColor getColor() {
@@ -92,5 +106,32 @@ public class VirologistView extends View {
 
 	}
 
+	public BufferedImage getVirImg() {
+		return virImg;
+	}
 
+	public void setTextColortoVir(Component c){
+		switch (color){
+			case red:
+				c.setForeground(Color.RED);
+				break;
+			case blue:
+				c.setForeground(Color.BLUE);
+				break;
+			case green:
+				c.setForeground(Color.GREEN);
+				break;
+			case yellow:
+				c.setForeground(Color.YELLOW);
+				break;
+			case pink:
+				c.setForeground(Color.MAGENTA);
+				break;
+			case purple:
+				c.setForeground(new Color(153, 0, 255));
+				break;
+			default:
+				return;
+		}
+	}
 }

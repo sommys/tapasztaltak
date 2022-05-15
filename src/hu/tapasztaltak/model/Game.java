@@ -32,6 +32,8 @@ public class Game extends JFrame {
     QuestionPanel questionPanel = new QuestionPanel(this);
     StartPanel startPanel = new StartPanel(this);
 
+    ArrayList<Virologist> virologists = new ArrayList<>();
+
     /**
      * Privát konstruktor, a singleton elvárásainak megfelelően.
      */
@@ -258,6 +260,10 @@ public class Game extends JFrame {
 
     public static void addView(Object o, View view) {
         objectViewHashMap.put(o, view);
+    }
+
+    public void addVirologist(Virologist v){
+        virologists.add(v);
     }
 
     //endregion

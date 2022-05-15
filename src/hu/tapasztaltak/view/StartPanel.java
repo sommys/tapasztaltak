@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Game;
+import hu.tapasztaltak.model.Virologist;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,21 +12,26 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StartPanel extends JPanel implements ActionListener {
     Game game;
-    private JLabel playerNameLabel = new JLabel("Név");
+    private JLabel playerNameLabel = new JLabel("Név: ");
     private JTextArea playerNameInput = new JTextArea();
-    private JLabel playerColorLabel = new JLabel("Szín");
-    private JOptionPane playerColorInput = new JOptionPane();
+    private JLabel playerColorLabel = new JLabel("Szín: ");
+    ArrayList<String> usedColors = new ArrayList<>();
+    String[] colors = {"kék","lila","rózsaszín","piros","sárga","zöld"};
+    private JComboBox<String> playerColorInput = new JComboBox<String>(colors);
     private JPanel middlePanel = new JPanel();
     private JPanel virPanel = new JPanel();
     private JButton newGameBtn = new JButton("Játék indítása");
     private JButton addVirBtn = new JButton("Hozzáad");
     private JLabel messageLabel = new JLabel();
+    private JPanel lowerPanel;
 
     private DefaultListModel listModel = new DefaultListModel();
     private JList list;
+    private Color bgColor = new Color(125, 220, 191);
 
     JTextField name = new JTextField();
 
@@ -50,27 +56,41 @@ public class StartPanel extends JPanel implements ActionListener {
     }
 
     private void initComponents() {
-        middlePanel.setBackground(new Color(125, 220, 191));
+        middlePanel.setBackground(bgColor);
         middlePanel.setLayout(new GridLayout(3,1));
+        middlePanel.setBorder(BorderFactory.createLineBorder(new Color(75, 141, 124),3));
 
+        JLabel gameSetLabel = new JLabel("Játék beállítások");
+        setLabelSettings(gameSetLabel);
         JPanel upperPanel = new JPanel();
-        upperPanel.setLayout(new BoxLayout(upperPanel,BoxLayout.Y_AXIS));
-        upperPanel.add(new JLabel("Játék beállítások"));
+        upperPanel.setLayout(new GridLayout(2,1));
+        upperPanel.add(gameSetLabel);
+        setLabelSettings(messageLabel);
         upperPanel.add(messageLabel);
-        upperPanel.setBackground(new Color(125, 220, 191));
+        upperPanel.setBackground(bgColor);
         middlePanel.add(upperPanel);
 
         JPanel p = new JPanel();
         p.setLayout(new GridLayout(3,2));
+        setLabelSettings(playerNameLabel);
+        setLabelSettings(playerColorLabel);
         p.add(playerNameLabel);
+        playerNameInput.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
+        playerNameInput.setBackground(new Color(166, 241, 218));
+        playerNameInput.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
         p.add(playerNameInput);
         p.add(playerColorLabel);
-        p.add(Box.createRigidArea(new Dimension(40,40)));//TODO dropdown
+        playerColorInput.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
+        playerColorInput.setBackground(new Color(166, 241, 218));
+        playerColorInput.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
+        p.add(playerColorInput);
         addVirBtn.addActionListener(this);
 //        for (int i = 0; i < game.getVirologistList().size(); i++){
 //            listModel.addElement(game.getVirologistList().get(i));
 //        }
+        setButtonSettings(addVirBtn);
         p.add(addVirBtn);
+        setButtonSettings(newGameBtn);
         newGameBtn.addActionListener(evt -> {
             if(listModel.getSize() < 2){
                 messageLabel.setText(String.format("Legalább még %d virológust adj hozzá!",(2 - listModel.getSize())));
@@ -80,27 +100,47 @@ public class StartPanel extends JPanel implements ActionListener {
             }
         });
         p.add(newGameBtn);
-        p.setBackground(new Color(125, 220, 191));
+        p.setBackground(bgColor);
         middlePanel.add(p);
 
 
-        JPanel lowerPanel = new JPanel();
-        lowerPanel.setBackground(new Color(125, 220, 191));
+        lowerPanel = new JPanel();
+        lowerPanel.setBackground(bgColor);
+        lowerPanel.setLayout(new GridLayout(1,6));
         middlePanel.add(lowerPanel);
 
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(listModel.getSize() == 6){
-            messageLabel.setText("Elérte a maximális létszámot!");
+        if(playerNameInput.getText().isEmpty()){
+            messageLabel.setText("Adj meg egy nevet a virológus létrehozásához");
+        } else {
+            if (listModel.getSize() == 6) {
+                messageLabel.setText("Elérte a maximális létszámot!");
+            } else if (!usedColors.contains(playerColorInput.getSelectedItem().toString())){
+                usedColors.add(playerColorInput.getSelectedItem().toString());
+                String s1 = name.getText();
+                Virologist newVir = new Virologist();
+                VirologistView newVirView = new VirologistView(newVir,playerColorInput.getSelectedItem().toString(),playerNameInput.getText());
+                Image bi = newVirView.getVirImg().getScaledInstance(192,240,Image.SCALE_SMOOTH);
+                JLabel virPic = new JLabel(new ImageIcon(bi));
+                virPic.setPreferredSize(new Dimension(352,440));
+                JPanel addedPanel = new JPanel();
+                addedPanel.setLayout(new BorderLayout());
+                JLabel newName = new JLabel(playerNameInput.getText());
+                setLabelSettings(newName);
+                newVirView.setTextColortoVir(newName);
+                addedPanel.add(virPic, BorderLayout.CENTER);
+                addedPanel.add(newName, BorderLayout.NORTH);
+                addedPanel.setBackground(bgColor);
+                lowerPanel.add(addedPanel);
+                //game.setVirologistList(s1);
+                listModel.addElement(s1);
+                revalidate();
+            } else {
+                messageLabel.setText("Ez a szín már használatban van, válassz másikat!");
+            }
         }
-        else{
-            String s1 = name.getText();
-            //game.setVirologistList(s1);
-            listModel.addElement(s1);
-            revalidate();
-        }
-
     }
 
     /**
@@ -108,13 +148,19 @@ public class StartPanel extends JPanel implements ActionListener {
      * @param button amin a beállításokat elvégzi
      */
     private void setButtonSettings(JButton button) {
-        button.setBackground(new Color(125, 220, 191));
+        button.setBackground(new Color(102, 180, 156));
         button.setForeground(new Color(208, 253, 239));
         button.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
         button.setOpaque(true);
         button.setBorderPainted(true);
         button.setFocusPainted(true);
         button.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
+    }
+    private void setLabelSettings(JLabel label){
+        label.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,50));
+        label.setForeground(new Color(208, 253, 239));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setBorder(new BevelBorder(1,((new Color(75, 141, 124))),new Color(208, 253, 239)));
     }
 
     /**
@@ -126,4 +172,6 @@ public class StartPanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.drawImage(backGround.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
     }
+
+
 }
