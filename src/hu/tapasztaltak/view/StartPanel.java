@@ -10,6 +10,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,35 @@ public class StartPanel extends JPanel implements ActionListener {
 
     public StartPanel (Game game) {
         super();
+        // TODO: SZEDDKIIIIIIII
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("LETSGOOOOO");
+
+                for (String color: colors) {
+                    Virologist newVir = new Virologist();
+                    VirologistView newVirView = new VirologistView(newVir, color, "a");
+                    if (game.getVirologists().size() == 0) {
+                        game.setCurrentVirologist(newVir);
+                    }
+                    Game.objectViewHashMap.put(newVir, newVirView);
+                    RoundManager.getInstance().addVirologist(newVir);
+                    game.addVirologist(newVir);
+                }
+                game.showGame();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         this.game = game;
         try {
             backGround = ImageIO.read(new File("src/hu/tapasztaltak/textures/menu/menuHatter.png"));
