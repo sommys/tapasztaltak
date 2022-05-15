@@ -25,7 +25,7 @@ public class Game extends JFrame {
     JPanel rightPanel = new JPanel();
     JPanel leftPanel = new JPanel();
 
-    ActivePanel activePanel;
+    AgentPanel agentPanel;
     ButtonsPanel buttonsPanel;
     InventoryPanel inventoryPanel;
     MapPanel mapPanel;
@@ -71,17 +71,17 @@ public class Game extends JFrame {
      */
     public void showGame() {
         buttonsPanel = new ButtonsPanel();
-        activePanel = new ActivePanel();
+        agentPanel = new AgentPanel();
         inventoryPanel = new InventoryPanel();
         mapPanel = new MapPanel();
         menuPanel.setVisible(false);
         buttonsPanel.setVisible(true);
         questionPanel.setVisible(true);
-        activePanel.setVisible(true);
+        agentPanel.setVisible(true);
         inventoryPanel.setVisible(true);
         mapPanel.setVisible(true);
         //ActivePanel scrollable? - KURVARA NEM :((
-        JScrollPane scrollable = new JScrollPane(activePanel);
+        JScrollPane scrollable = new JScrollPane(agentPanel);
         scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         add(scrollable);
 
@@ -103,7 +103,7 @@ public class Game extends JFrame {
         leftPanel.add(inventoryPanel, c);
 
         c.gridy = 2;
-        leftPanel.add(activePanel, c);
+        leftPanel.add(agentPanel, c);
 
         /**Right panel kialakítása */
         c.weighty = 0.3;
@@ -135,8 +135,10 @@ public class Game extends JFrame {
             fview.setVisited(true);
             v.setField(f);
             f.addVirologist(v);
-
         }
+
+        updatePanels();
+
         revalidate();
     }
 
@@ -206,7 +208,7 @@ public class Game extends JFrame {
     }
 
     public void updatePanels(){
-        activePanel.update();
+        agentPanel.update();
         buttonsPanel.update();
         inventoryPanel.update();
         mapPanel.update();

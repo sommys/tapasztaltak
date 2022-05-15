@@ -272,12 +272,11 @@ public class MapPanel extends JPanel {
 		//random pár labor (legalább 4)
 		for(int i = 0; i < 4; i++){
 			Labor l;
-
 			int infected = r.nextInt(10);
 			int changeIdx = r.nextInt(stillExist.size());
 			FieldView toChange = stillExist.get(changeIdx);
 			FieldView lv ;
-			if(infected < 10){
+			if(infected < 3){
 				l = new InfLabor();
 				lv = new InfLaborView((InfLabor)l, toChange.getFieldNum());
 			} else {
