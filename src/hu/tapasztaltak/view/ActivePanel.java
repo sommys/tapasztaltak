@@ -10,6 +10,9 @@ import java.awt.*;
 import java.util.List;
 
 public class ActivePanel extends JPanel {
+
+	private JPanel usableAgentPanel = new JPanel();
+	private JPanel effectedAgentPanel = new JPanel();
 	private List<AgentView> agents;
 	Icon agentIcon = new ImageIcon("src/hu/tapasztaltak/textures/agensPic.png");
 	Icon protectIcon = new ImageIcon("src/hu/tapasztaltak/textures/agensPic.png");
@@ -21,11 +24,17 @@ public class ActivePanel extends JPanel {
 		this.game = game;
 
 		setFocusable(true);
-		setBackground(new Color(138, 122, 171));
+		setBackground(new Color(125, 220, 191));
+		setLayout(new GridLayout(1,3));
 		initComponents();
 	}
 	private void initComponents(){
 
+		usableAgentPanel.setBackground(new Color(138, 122, 171));
+		effectedAgentPanel.setBackground(new Color(162, 171, 211));
+
+		add(usableAgentPanel);
+		add(effectedAgentPanel);
 	}
 
 	@Override

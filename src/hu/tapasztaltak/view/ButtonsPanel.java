@@ -19,7 +19,7 @@ public class ButtonsPanel extends JPanel{
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
 	private JButton finishRoundBtn= new JButton();
-	private Virologist currentVirologist = new Virologist(); // TODO lekérni a virológust, most az instance hívással végtelen ciklusba kerül
+	private Virologist currentVirologist; // TODO lekérni a virológust, most az instance hívással végtelen ciklusba kerül
 
 	public ButtonsPanel(){
 		super();
