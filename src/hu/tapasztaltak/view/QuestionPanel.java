@@ -59,6 +59,7 @@ public class QuestionPanel extends JPanel {
 		buttons.add(yesBtn);
 		buttons.add(noBtn);
 		add(buttons);
+		revalidate();
 	}
 
 	public void selectQuestion(String question, List<Object> objectList) {
