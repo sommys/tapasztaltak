@@ -82,9 +82,6 @@ public class StartPanel extends JPanel implements ActionListener {
         playerColorInput.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
         p.add(playerColorInput);
         addVirBtn.addActionListener(this);
-//        for (int i = 0; i < game.getVirologistList().size(); i++){
-//            listModel.addElement(game.getVirologistList().get(i));
-//        }
         setButtonSettings(addVirBtn);
         p.add(addVirBtn);
         setButtonSettings(newGameBtn);
@@ -122,6 +119,7 @@ public class StartPanel extends JPanel implements ActionListener {
                 if(game.getVirologists().size() == 0){
                     game.setCurrentVirologist(newVir);
                 }
+                Game.objectViewHashMap.put(newVir,newVirView);
                 game.addVirologist(newVir);
                 Image bi = newVirView.getVirImg().getScaledInstance(192,240,Image.SCALE_SMOOTH);
                 JLabel virPic = new JLabel(new ImageIcon(bi));

@@ -26,13 +26,13 @@ public class ButtonsPanel extends JPanel{
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
 		setLayout(new GridLayout(9,1));
-		//currentVirologist = Game.getInstance().getCurrentVirologist();
+		currentVirologist = Game.getInstance().getCurrentVirologist();
 		initComponents();
 	}
 
 	public void initComponents() {
-		//playerText.setText(curVirView.getPlayerName() + " lép");
-		playerText.setText("Lilla lép"); //TODO megcsinálni, hogy a rendes virológust adja be
+		curVirView = (VirologistView) Game.objectViewHashMap.get(currentVirologist);
+		playerText.setText(curVirView.getPlayerName() + " lép");
 		playerText.setForeground(new Color(215, 96, 196));
 		//playerColor =  //TODO szín visszaszerzése a virologistViewból a virológuson keresztül
 		playerText.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));

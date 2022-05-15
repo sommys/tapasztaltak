@@ -24,10 +24,10 @@ public class Game extends JFrame {
     JPanel rightPanel = new JPanel();
     JPanel leftPanel = new JPanel();
 
-    ActivePanel activePanel = new ActivePanel();
-    ButtonsPanel buttonsPanel = new ButtonsPanel();
-    InventoryPanel inventoryPanel = new InventoryPanel();
-    MapPanel mapPanel = new MapPanel();
+    ActivePanel activePanel;
+    ButtonsPanel buttonsPanel;
+    InventoryPanel inventoryPanel;
+    MapPanel mapPanel;
     MenuPanel menuPanel = new MenuPanel(this);
     QuestionPanel questionPanel = new QuestionPanel(this);
     StartPanel startPanel = new StartPanel(this);
@@ -69,6 +69,10 @@ public class Game extends JFrame {
      * Játék kirajzolása
      */
     public void showGame() {
+        buttonsPanel = new ButtonsPanel();
+        activePanel = new ActivePanel();
+        inventoryPanel = new InventoryPanel();
+        mapPanel = new MapPanel();
         menuPanel.setVisible(false);
         buttonsPanel.setVisible(true);
         questionPanel.setVisible(true);
