@@ -10,11 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 public class FieldView extends View {
 	protected Field field;
 	protected int fieldNum = 1;
+	protected int fieldIdx;
 	BufferedImage fieldImg;
 	protected boolean visited = false;
 
@@ -77,10 +76,21 @@ public class FieldView extends View {
 		this.field = f;
 	}
 
+	public int getFieldIdx() {
+		return fieldIdx;
+	}
+
+	public void setFieldIdx(int fieldIdx) {
+		this.fieldIdx = fieldIdx;
+	}
+
 	public void draw(Graphics g) {
 		if(fieldNum == 0) return;
 		g.drawImage(fieldImg, posX, posY, null);
-		g.drawString(getIdForObject(field), posX+50*Integer.min(2,fieldNum), posY+50*Integer.min(2,fieldNum));
+		g.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,20));
+		g.setColor(Color.WHITE);
+		int offset = (fieldNum == 3 ? 100 : 50);
+		g.drawString(""+fieldIdx, posX+offset, posY+offset);
 		int i = 0;
 		for (Virologist v: field.getVirologists()) {
 			VirologistView view = (VirologistView) Game.objectViewHashMap.get(v);
@@ -89,7 +99,6 @@ public class FieldView extends View {
 			view.setPosY(viry);
 			i++;
 			view.draw(g);
-
 		}
 	}
 

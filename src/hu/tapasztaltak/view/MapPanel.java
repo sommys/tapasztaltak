@@ -1,6 +1,8 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.*;
+import hu.tapasztaltak.model.Field;
+import hu.tapasztaltak.model.InfLabor;
+import hu.tapasztaltak.model.Labor;
 import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
@@ -12,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static hu.tapasztaltak.proto.ProtoMain.*;
 
 public class MapPanel extends JPanel {
 	private List<FieldView> fields = new ArrayList<>();
@@ -335,10 +335,12 @@ public class MapPanel extends JPanel {
 	}
 
 	private void setIndexes() {
-		storage.clear();
-		ids.clear();
+		//storage.clear();
+		//ids.clear();
+		int i = 1;
 		for(FieldView fv : fields.stream().filter(it -> it.getFieldNum() != 0).collect(Collectors.toList())){
-			storage.put(getIdForObject(fv.getField()), fv.getField());
+			//storage.put(getIdForObject(fv.getField()), fv.getField());
+			fv.setFieldIdx(i++);
 		}
 	}
 
