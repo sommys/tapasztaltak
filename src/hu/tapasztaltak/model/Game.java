@@ -29,7 +29,7 @@ public class Game extends JFrame {
     InventoryPanel inventoryPanel = new InventoryPanel();
     MapPanel mapPanel = new MapPanel();
     MenuPanel menuPanel = new MenuPanel(this);
-    QuestionPanel questionPanel = new QuestionPanel();
+    QuestionPanel questionPanel = new QuestionPanel(this);
     StartPanel startPanel = new StartPanel(this);
 
     /**
