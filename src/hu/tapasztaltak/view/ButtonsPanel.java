@@ -5,6 +5,7 @@ import hu.tapasztaltak.model.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.util.stream.Collectors;
 
 public class ButtonsPanel extends JPanel{
 	private JLabel playerText = new JLabel();
@@ -50,7 +51,11 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(moveBtn);
 		moveBtn.setText("mozog");
 		Field f = new Field(); // TODO lekérni questionpabelből
-		moveBtn.addActionListener(evt -> currentVirologist.move(f));
+		moveBtn.addActionListener(evt -> {
+			QuestionPanel q = Game.getInstance().getquestionpanel();
+			q.selectQuestion("Hova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hovaHova hova?", Game.getInstance().getCurrentVirologist().getField().getNeighbours().stream().collect(Collectors.toList()));
+			currentVirologist.move(f);
+		});
 		setButtonSettings(stealBtn);
 		stealBtn.setText("lop");
 		Virologist v = new Virologist();//TODO lekérni questionpabelből

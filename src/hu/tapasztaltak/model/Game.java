@@ -278,6 +278,9 @@ public class Game extends JFrame {
     public ArrayList<Virologist> getVirologists() {
         return virologists;
     }
+    public QuestionPanel getquestionpanel(){
+        return  questionPanel;
+    }
 
     //endregion
 }
