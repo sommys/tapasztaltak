@@ -5,7 +5,6 @@ import hu.tapasztaltak.model.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.stream.Collectors;
 
 public class ButtonsPanel extends JPanel{
@@ -169,6 +168,7 @@ public class ButtonsPanel extends JPanel{
 			disableallBtn();
 			finishRoundBtn.setEnabled(true);
 		}
+		finishRoundBtn.setEnabled(true); /*teszteleshez!!!*/
 	}
 	public void setButtonSettings(JButton button){
 		button.setBackground(new Color(125, 220, 191));
@@ -184,7 +184,9 @@ public class ButtonsPanel extends JPanel{
 	}
 
 	public void update(){
-
+		curVirView = Game.getCurrentVirologistView();
+		curVirView.setTextColortoVir(playerText);
+		revalidate();
 	}
 	public void disableallBtn(){
 		scanBtn.setEnabled(false);

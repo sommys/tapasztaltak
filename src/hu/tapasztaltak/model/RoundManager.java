@@ -55,7 +55,6 @@ public class RoundManager {
         }
          */
         movedCounter = 0;
-        Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
     }
 
     /**
@@ -66,10 +65,8 @@ public class RoundManager {
         if (movedCounter == virologists.size()) {
             newRound();
         }
-        else{
-            Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
-        }
-        System.out.println(Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist()));
+        Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
+        Game.getInstance().updatePanels();
     }
 
     //region GETTEREK és SETTEREK

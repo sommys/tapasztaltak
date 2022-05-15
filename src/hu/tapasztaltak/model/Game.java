@@ -19,7 +19,7 @@ public class Game extends JFrame {
     /** ablak felbontasa*/
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
-    private Virologist currentVirologist = null;
+    private static Virologist currentVirologist = null;
 
     JPanel gamePanel = new JPanel();
     JPanel rightPanel = new JPanel();
@@ -273,8 +273,12 @@ public class Game extends JFrame {
         currentVirologist = Virologist;
     }
 
-    public Virologist getCurrentVirologist() {
+    public static Virologist getCurrentVirologist() {
         return currentVirologist;
+    }
+
+    public static VirologistView getCurrentVirologistView(){
+        return (VirologistView) objectViewHashMap.get(currentVirologist);
     }
 
     public static void addView(Object o, View view) {
