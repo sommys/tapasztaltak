@@ -116,10 +116,10 @@ public class Game extends JFrame {
 
         /** Left és Right panelek elhelyezése vízszintesen */
         c.weighty = 1;
-        c.weightx = 0.9;
+        c.weightx = 0.865;
         c.gridx = 0;
         gamePanel.add(leftPanel,c);
-        c.weightx = 0.1;
+        c.weightx = 0.135;
         c.gridx = 1;
         gamePanel.add(rightPanel,c);
         gamePanel.setVisible(true);
