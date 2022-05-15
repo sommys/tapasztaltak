@@ -334,12 +334,7 @@ public class MapPanel extends JPanel {
 			stillExist.remove(toChange);
 		}
 	}
-	private void viewvir(){
-		for (Virologist v : Game.getInstance().getVirologists())
-		{
 
-		}
-	}
 	private void setIndexes() {
 		storage.clear();
 		ids.clear();
@@ -388,5 +383,9 @@ public class MapPanel extends JPanel {
 		for(FieldView fv : fields){
 			fv.draw(g);
 		}
+	}
+
+	public List<FieldView> getFields() {
+		return fields;
 	}
 }

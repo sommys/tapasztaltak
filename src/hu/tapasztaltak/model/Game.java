@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * A játékot reprezentáló singleton osztály.
@@ -125,6 +126,17 @@ public class Game extends JFrame {
 
         setContentPane(gamePanel);
         gamePanel.grabFocus();
+        List<FieldView> flist = mapPanel.getFields().stream().filter(it -> it.getFieldNum() != 0 &&!(it instanceof InfLaborView)).collect(Collectors.toList());
+        for(int i = 0; i < virologists.size(); i++){
+            Virologist v = virologists.get(i);
+            Random r = new Random();
+            FieldView fview =flist.get(r.nextInt(flist.size()));
+            Field f =fview.getField();
+            fview.setVisited(true);
+            v.setField(f);
+            f.addVirologist(v);
+
+        }
         revalidate();
     }
 
@@ -191,14 +203,8 @@ public class Game extends JFrame {
             fields.add(s);
             rm.addSteppable(s);
         }
-        for(int i = 1; i <= virologistNum; i++){
-            Virologist v = new Virologist();
-            rm.addSteppable(v);
-            rm.addVirologist(v);
-            Random r = new Random();
-            Field f =fields.get(r.nextInt(fields.size()));
-            v.setField(f);
-        }
+
+
     }
 
     /**
