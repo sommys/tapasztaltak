@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 
+import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.Shelter;
 
 import javax.imageio.ImageIO;
@@ -11,6 +12,7 @@ public class ShelterView extends FieldView {
 	public ShelterView(int fieldNum){
 		field = new Shelter();
 		this.fieldNum = fieldNum;
+		Game.addView(field, this);
 		reimportImage();
 	}
 

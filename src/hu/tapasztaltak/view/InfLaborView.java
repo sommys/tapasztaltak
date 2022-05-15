@@ -1,5 +1,6 @@
 package hu.tapasztaltak.view;
 
+import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.InfLabor;
 import hu.tapasztaltak.model.Labor;
 
@@ -11,12 +12,14 @@ public class InfLaborView extends FieldView {
 	public InfLaborView(int fieldNum){
 		field = new InfLabor();
 		this.fieldNum = fieldNum;
+		Game.addView(field, this);
 		reimportImage();
 	}
 
 	public InfLaborView(InfLabor l, int fieldNum){
 		field = l;
 		this.fieldNum = fieldNum;
+		Game.addView(field, this);
 		reimportImage();
 	}
 

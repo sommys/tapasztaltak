@@ -1,5 +1,6 @@
 package hu.tapasztaltak.view;
 
+import hu.tapasztaltak.model.Game;
 import hu.tapasztaltak.model.Labor;
 
 import javax.imageio.ImageIO;
@@ -10,12 +11,14 @@ public class LaborView extends FieldView {
 	public LaborView(int fieldNum){
 		field = new Labor();
 		this.fieldNum = fieldNum;
+		Game.addView(field, this);
 		reimportImage();
 	}
 
 	public LaborView(Labor l, int fieldNum){
 		field = l;
 		this.fieldNum = fieldNum;
+		Game.addView(field, this);
 		reimportImage();
 	}
 

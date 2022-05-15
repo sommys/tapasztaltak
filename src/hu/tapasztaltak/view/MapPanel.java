@@ -286,6 +286,11 @@ public class MapPanel extends JPanel {
 			lv.setPosY(toChange.getPosY());
 			//lecsereljuk
 			fields.set(fields.indexOf(toChange),lv);
+			for(Field n : toChange.getField().getNeighbours()){
+				n.removeNeighbour(toChange.getField());
+				lv.getField().addNeighbour(n);
+				n.addNeighbour(lv.getField());
+			}
 			stillExist.remove(toChange);
 		}
 		int lab = r.nextInt( (int)(originalSize * 0.1));
@@ -304,6 +309,11 @@ public class MapPanel extends JPanel {
 			lv.setPosY(toChange.getPosY());
 			//lecsereljuk
 			fields.set(fields.indexOf(toChange),lv);
+			for(Field n : toChange.getField().getNeighbours()){
+				n.removeNeighbour(toChange.getField());
+				lv.getField().addNeighbour(n);
+				n.addNeighbour(lv.getField());
+			}
 			stillExist.remove(toChange);
 		}
 		//random pár warehouse (legalább 2)
@@ -316,6 +326,11 @@ public class MapPanel extends JPanel {
 			wv.setPosY(toChange.getPosY());
 			//lecsereljuk
 			fields.set(fields.indexOf(toChange),wv);
+			for(Field n : toChange.getField().getNeighbours()){
+				n.removeNeighbour(toChange.getField());
+				wv.getField().addNeighbour(n);
+				n.addNeighbour(wv.getField());
+			}
 			stillExist.remove(toChange);
 		}
 		//random pár shelter (legaLább 2)
@@ -328,6 +343,11 @@ public class MapPanel extends JPanel {
 			sv.setPosY(toChange.getPosY());
 			//lecsereljuk
 			fields.set(fields.indexOf(toChange),sv);
+			for(Field n : toChange.getField().getNeighbours()){
+				n.removeNeighbour(toChange.getField());
+				sv.getField().addNeighbour(n);
+				n.addNeighbour(sv.getField());
+			}
 			stillExist.remove(toChange);
 		}
 	}
@@ -379,6 +399,7 @@ public class MapPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		System.out.println("MAP PANEL REPAINT");
 		for(FieldView fv : fields){
 			fv.draw(g);
 		}
