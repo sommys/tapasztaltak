@@ -203,8 +203,16 @@ public class Game extends JFrame {
             fields.add(s);
             rm.addSteppable(s);
         }
+    }
 
-
+    public void updatePanels(){
+        activePanel.update();
+        buttonsPanel.update();
+        inventoryPanel.update();
+        mapPanel.update();
+        //menuPanel.update(); //ez kell?
+        //questionPanel.update(); //ez kell?
+        //startPanel.update(); //ez kell?
     }
 
     /**

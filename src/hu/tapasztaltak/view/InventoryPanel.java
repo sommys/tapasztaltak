@@ -37,4 +37,8 @@ public class InventoryPanel extends JPanel {
 		add(invPanel, c);
 	}
 
+	public void update(){
+
+	}
+
 }

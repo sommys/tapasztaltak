@@ -385,6 +385,10 @@ public class MapPanel extends JPanel {
 		}
 	}
 
+	public void update(){
+
+	}
+
 	public List<FieldView> getFields() {
 		return fields;
 	}
