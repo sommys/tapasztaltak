@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Game;
+import hu.tapasztaltak.model.Nucleotid;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -76,7 +77,7 @@ public class QuestionPanel extends JPanel {
 
 
 		for(Object o : objectList) {
-			Game.addView(o, new NucleotidView());
+			Game.addView(o, new NucleotidView(new Nucleotid()));
 			ItemView i = (ItemView) Game.objectViewHashMap.get(o);
 			JButton btn = new JButton(i.getItemImage());
 			btn.setBackground(new Color(36, 140, 130));
