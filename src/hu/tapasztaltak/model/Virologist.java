@@ -288,6 +288,7 @@ public class Virologist implements ISteppable {
 	 */
 	public void endRound() throws Exception {
 		RoundManager.getInstance().virologistMoved();
+
 	}
 
 	public void attack(Axe a, Virologist victim){

@@ -80,6 +80,16 @@ public class ButtonsPanel extends JPanel{
 		attackBtn.addActionListener(evt -> currentVirologist.putOnSuite(currentVirologist.getInventory().getSuites().get(0))); //TODO lekérni
 		setButtonSettings(finishRoundBtn);
 		finishRoundBtn.setText("Kör vége");
+		finishRoundBtn.addActionListener(evt -> {
+			try {
+				currentVirologist.endRound();
+				playerText.setText(((VirologistView)Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist())).getPlayerName()+ " lép");
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		//finishRoundBtn.addActionListener(); //TODO kövi virológus
 		add(scanBtn);
 		add(moveBtn);

@@ -69,6 +69,7 @@ public class RoundManager {
         else{
             Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));
         }
+        System.out.println(Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist()));
     }
 
     //region GETTEREK és SETTEREK

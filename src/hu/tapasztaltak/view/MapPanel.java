@@ -261,6 +261,8 @@ public class MapPanel extends JPanel {
 		setIndexes();
 		addSpecialFields();
 		setIndexes();
+
+		
 	}
 
 	private void addSpecialFields() {
@@ -332,7 +334,12 @@ public class MapPanel extends JPanel {
 			stillExist.remove(toChange);
 		}
 	}
+	private void viewvir(){
+		for (Virologist v : Game.getInstance().getVirologists())
+		{
 
+		}
+	}
 	private void setIndexes() {
 		storage.clear();
 		ids.clear();

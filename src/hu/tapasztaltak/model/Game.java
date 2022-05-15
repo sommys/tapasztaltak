@@ -79,7 +79,6 @@ public class Game extends JFrame {
         activePanel.setVisible(true);
         inventoryPanel.setVisible(true);
         mapPanel.setVisible(true);
-
         //ActivePanel scrollable? - KURVARA NEM :((
         JScrollPane scrollable = new JScrollPane(activePanel);
         scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

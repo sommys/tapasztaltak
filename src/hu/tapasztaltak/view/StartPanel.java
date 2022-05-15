@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.Game;
+import hu.tapasztaltak.model.RoundManager;
 import hu.tapasztaltak.model.Virologist;
 
 import javax.imageio.ImageIO;
@@ -120,6 +121,7 @@ public class StartPanel extends JPanel implements ActionListener {
                     game.setCurrentVirologist(newVir);
                 }
                 Game.objectViewHashMap.put(newVir,newVirView);
+                RoundManager.getInstance().addVirologist(newVir);
                 game.addVirologist(newVir);
                 Image bi = newVirView.getVirImg().getScaledInstance(192,240,Image.SCALE_SMOOTH);
                 JLabel virPic = new JLabel(new ImageIcon(bi));
