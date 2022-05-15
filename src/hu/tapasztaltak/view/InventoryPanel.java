@@ -22,14 +22,15 @@ public class InventoryPanel extends JPanel {
 		initComponents();
 	}
 	private void initComponents(){
+		currentVirologist = Game.getInstance().getCurrentVirologist();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 0.3;
 		c.weighty = 1;
 		c.gridx = 0;
-		suitePanel.setBackground(new Color(234, 192, 139));
-		invPanel.setBackground(new Color(215, 96, 196)); //TODO Virológus színének lekérése
+		suitePanel.setBackground(new Color(250, 187, 94));
+		invPanel.setBackground(((VirologistView)Game.objectViewHashMap.get(currentVirologist)).getColor().getColor()); //TODO Virológus színének lekérése
 		add(suitePanel, c);
 		c.weightx = 0.7;
 		c.gridx = 1;

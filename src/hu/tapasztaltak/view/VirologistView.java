@@ -23,16 +23,21 @@ public class VirologistView extends View {
 	}
 	BufferedImage virImg;
 	public enum VirColor{
-		red("red"), blue("blu"), green("gre"), yellow("yel"), pink("pin"), purple("pur");
+		red("red",Color.RED), blue("blu", new Color(69, 125, 229)), green("gre",Color.GREEN), yellow("yel",Color.YELLOW), pink("pin", Color.MAGENTA), purple("pur", new Color(153, 0, 255));
 		private final String name;
-
-		VirColor(String s) {
+		private final Color color;
+		VirColor(String s, Color c) {
 			name = s;
+			color = c;
 		}
 
 		@Override
 		public String toString() {
 			return name;
+		}
+
+		public Color getColor() {
+			return color;
 		}
 	}
 	private Virologist vir;
@@ -109,6 +114,7 @@ public class VirologistView extends View {
 	public BufferedImage getVirImg() {
 		return virImg;
 	}
+
 
 	public void setTextColortoVir(Component c){
 		switch (color){

@@ -29,12 +29,19 @@ public class ActivePanel extends JPanel {
 		initComponents();
 	}
 	private void initComponents(){
-
-		usableAgentPanel.setBackground(new Color(138, 122, 171));
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 0.3;
+		c.weighty = 1;
+		c.gridx = 0;
+		usableAgentPanel.setBackground(new Color(155, 140, 185));
 		effectedAgentPanel.setBackground(new Color(162, 171, 211));
 
-		add(usableAgentPanel);
-		add(effectedAgentPanel);
+		add(usableAgentPanel,c);
+		c.weightx = 0.7;
+		c.gridx = 1;
+		add(effectedAgentPanel, c);
 	}
 
 	@Override

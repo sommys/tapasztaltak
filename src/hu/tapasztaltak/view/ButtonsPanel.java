@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class ButtonsPanel extends JPanel{
 	private JLabel playerText = new JLabel();
-	private VirologistView.VirColor playerColor;
 	private VirologistView curVirView;
 	private JButton moveBtn = new JButton();
 	private JButton stealBtn = new JButton();
@@ -33,8 +32,7 @@ public class ButtonsPanel extends JPanel{
 	public void initComponents() {
 		curVirView = (VirologistView) Game.objectViewHashMap.get(currentVirologist);
 		playerText.setText(curVirView.getPlayerName() + " lép");
-		playerText.setForeground(new Color(215, 96, 196));
-		//playerColor =  //TODO szín visszaszerzése a virologistViewból a virológuson keresztül
+		curVirView.setTextColortoVir(playerText);
 		playerText.setFont(new Font("Berlin Sans FB Demi",Font.PLAIN,30));
 		playerText.setBorder(BorderFactory.createEmptyBorder(10, 35, 10, 10));
 		playerText.setHorizontalAlignment(SwingConstants.CENTER);
