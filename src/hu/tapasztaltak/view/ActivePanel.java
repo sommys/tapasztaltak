@@ -51,8 +51,8 @@ public class ActivePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		agentIcon.paintIcon(this,g,0,0);
-		for(AgentView av : agents){
+	/*	for(AgentView av : agents){
 			av.draw(g);
-		}
+		}*/
 	}
 }

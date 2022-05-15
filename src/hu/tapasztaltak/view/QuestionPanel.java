@@ -83,7 +83,6 @@ public class QuestionPanel extends JPanel {
 			btn.addActionListener(evt -> {
 				removeAll();
 				revalidate();
-				// Todo: eredmény visszaadása
 			});
 			c.gridx = xCounter;
 			c.gridy = yCounter;
