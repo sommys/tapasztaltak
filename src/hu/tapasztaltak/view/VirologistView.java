@@ -23,7 +23,7 @@ public class VirologistView extends View {
 	}
 	BufferedImage virImg;
 	public enum VirColor{
-		red("red",Color.RED), blue("blu", new Color(69, 125, 229)), green("gre",Color.GREEN), yellow("yel",Color.YELLOW), pink("pin", Color.MAGENTA), purple("pur", new Color(153, 0, 255));
+		red("red", new Color(215, 75, 75)), blue("blu", new Color(96, 148, 215)), green("gre",new Color(83, 168, 75)), yellow("yel",new Color(245, 226, 116)), pink("pin", new Color(215, 96, 196)), purple("pur", new Color(167, 96, 215));
 		private final String name;
 		private final Color color;
 		VirColor(String s, Color c) {
@@ -115,29 +115,8 @@ public class VirologistView extends View {
 		return virImg;
 	}
 
-
 	public void setTextColortoVir(Component c){
-		switch (color){
-			case red:
-				c.setForeground(Color.RED);
-				break;
-			case blue:
-				c.setForeground(Color.BLUE);
-				break;
-			case green:
-				c.setForeground(Color.GREEN);
-				break;
-			case yellow:
-				c.setForeground(Color.YELLOW);
-				break;
-			case pink:
-				c.setForeground(Color.MAGENTA);
-				break;
-			case purple:
-				c.setForeground(new Color(153, 0, 255));
-				break;
-			default:
-				return;
-		}
+		c.setForeground(this.getColor().getColor());
+		return;
 	}
 }
