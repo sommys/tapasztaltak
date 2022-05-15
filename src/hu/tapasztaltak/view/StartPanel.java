@@ -28,9 +28,6 @@ public class StartPanel extends JPanel implements ActionListener {
     private JButton addVirBtn = new JButton("Hozzáad");
     private JLabel messageLabel = new JLabel();
     private JPanel lowerPanel;
-
-    private DefaultListModel listModel = new DefaultListModel();
-    private JList list;
     private Color bgColor = new Color(125, 220, 191);
 
     JTextField name = new JTextField();
@@ -92,8 +89,8 @@ public class StartPanel extends JPanel implements ActionListener {
         p.add(addVirBtn);
         setButtonSettings(newGameBtn);
         newGameBtn.addActionListener(evt -> {
-            if(listModel.getSize() < 2){
-                messageLabel.setText(String.format("Legalább még %d virológust adj hozzá!",(2 - listModel.getSize())));
+            if(game.getVirologists().size() < 2){
+                messageLabel.setText(String.format("Legalább még %d virológust adj hozzá!",(2 - game.getVirologists().size())));
             }
             else {
                 game.showGame();
@@ -115,13 +112,17 @@ public class StartPanel extends JPanel implements ActionListener {
         if(playerNameInput.getText().isEmpty()){
             messageLabel.setText("Adj meg egy nevet a virológus létrehozásához");
         } else {
-            if (listModel.getSize() == 6) {
+            if (game.getVirologists().size() == 6) {
                 messageLabel.setText("Elérte a maximális létszámot!");
             } else if (!usedColors.contains(playerColorInput.getSelectedItem().toString())){
                 usedColors.add(playerColorInput.getSelectedItem().toString());
                 String s1 = name.getText();
                 Virologist newVir = new Virologist();
                 VirologistView newVirView = new VirologistView(newVir,playerColorInput.getSelectedItem().toString(),playerNameInput.getText());
+                if(game.getVirologists().size() == 0){
+                    game.setCurrentVirologist(newVir);
+                }
+                game.addVirologist(newVir);
                 Image bi = newVirView.getVirImg().getScaledInstance(192,240,Image.SCALE_SMOOTH);
                 JLabel virPic = new JLabel(new ImageIcon(bi));
                 virPic.setPreferredSize(new Dimension(352,440));
@@ -134,8 +135,6 @@ public class StartPanel extends JPanel implements ActionListener {
                 addedPanel.add(newName, BorderLayout.NORTH);
                 addedPanel.setBackground(bgColor);
                 lowerPanel.add(addedPanel);
-                //game.setVirologistList(s1);
-                listModel.addElement(s1);
                 revalidate();
             } else {
                 messageLabel.setText("Ez a szín már használatban van, válassz másikat!");

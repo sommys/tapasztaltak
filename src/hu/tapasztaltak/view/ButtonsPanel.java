@@ -19,14 +19,14 @@ public class ButtonsPanel extends JPanel{
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
 	private JButton finishRoundBtn= new JButton();
-	private Virologist currentVirologist = new Virologist(); // TODO lekérni a virológust
+	private Virologist currentVirologist = new Virologist(); // TODO lekérni a virológust, most az instance hívással végtelen ciklusba kerül
 
 	public ButtonsPanel(){
 		super();
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
 		setLayout(new GridLayout(9,1));
-		//curVirView = (VirologistView) Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist());
+		//currentVirologist = Game.getInstance().getCurrentVirologist();
 		initComponents();
 	}
 

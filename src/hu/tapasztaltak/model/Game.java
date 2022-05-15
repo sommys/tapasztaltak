@@ -266,5 +266,9 @@ public class Game extends JFrame {
         virologists.add(v);
     }
 
+    public ArrayList<Virologist> getVirologists() {
+        return virologists;
+    }
+
     //endregion
 }
