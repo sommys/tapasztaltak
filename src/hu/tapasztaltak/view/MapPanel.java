@@ -261,8 +261,6 @@ public class MapPanel extends JPanel {
 		setIndexes();
 		addSpecialFields();
 		setIndexes();
-
-		
 	}
 
 	private void addSpecialFields() {
@@ -387,7 +385,8 @@ public class MapPanel extends JPanel {
 	}
 
 	public void update(){
-
+		revalidate();
+		repaint();
 	}
 
 	public List<FieldView> getFields() {

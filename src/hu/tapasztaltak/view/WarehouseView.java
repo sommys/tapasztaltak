@@ -4,6 +4,7 @@ package hu.tapasztaltak.view;
 import hu.tapasztaltak.model.Warehouse;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,6 +13,11 @@ public class WarehouseView extends FieldView {
 		field = new Warehouse();
 		this.fieldNum = fieldNum;
 		reimportImage();
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		super.draw(g);
 	}
 
 	@Override

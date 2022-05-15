@@ -5,7 +5,8 @@ import hu.tapasztaltak.model.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ButtonsPanel extends JPanel{
 	private JLabel playerText = new JLabel();
@@ -55,11 +56,15 @@ public class ButtonsPanel extends JPanel{
 		});
 		setButtonSettings(moveBtn);
 		moveBtn.setText("mozog");
-		Field f = new Field(); // TODO lekérni questionpabelből
 		moveBtn.addActionListener(evt -> {
 			QuestionPanel q = Game.getInstance().getquestionpanel();
-			q.selectQuestion("Hova hova?", Game.getInstance().getCurrentVirologist().getField().getNeighbours().stream().collect(Collectors.toList()));
-			currentVirologist.move(f);
+			//q.selectQuestion("Hova hova?", Game.getInstance().getCurrentVirologist().getField().getNeighbours().stream().collect(Collectors.toList()));
+			//currentVirologist.move(f);
+			List<FieldView> neighbours = new ArrayList<>();
+			for(Field n : Game.getCurrentVirologist().getField().getNeighbours()){
+				neighbours.add((FieldView)Game.objectViewHashMap.get(n));
+			}
+			q.moveQuestion(neighbours);
 			disableallBtn();
 			movebool = true;
 			activeCounter++;

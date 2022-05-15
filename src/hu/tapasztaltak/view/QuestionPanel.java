@@ -63,6 +63,62 @@ public class QuestionPanel extends JPanel {
 		revalidate();
 	}
 
+	//MOVE, STEAL_VIROLOGIST_PICK, STEAL_ITEM_PICK, AGENT_USE, AGENT_CRAFT, SUITE_SWITCH_FROM, SUITE_SWITCH_TO, SUITE_PUT_ON, AXE_USE, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
+
+	public void moveQuestion(List<FieldView> neighbours){
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+
+		for(FieldView fv : neighbours){
+			JButton btn = new JButton(""+fv.getFieldIdx());
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				System.out.println(fv.getFieldIdx());
+				Game.getCurrentVirologist().move(fv.getField());
+				fv.setVisited(true);
+				removeAll();
+				revalidate();
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 3 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+
+		}
+		JScrollPane scrollPane = new JScrollPane(buttons, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setMinimumSize(new Dimension(50, 500));
+		textField.setText("Hova-hova?");
+
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(textField, c);
+
+		c.weightx = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(scrollPane, c);
+		revalidate();
+	}
+
 	public void selectQuestion(String question, List<Object> objectList) {
 
 		setLayout(new GridBagLayout());

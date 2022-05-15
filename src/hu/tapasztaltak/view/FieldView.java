@@ -105,6 +105,5 @@ public class FieldView extends View {
 	@Override
 	public void update() {
 		reimportImage();
-
 	}
 }
