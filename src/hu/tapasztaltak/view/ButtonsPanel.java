@@ -244,9 +244,10 @@ public class ButtonsPanel extends JPanel{
 				stealBtn.setEnabled(false);
 			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> it instanceof Axe && it.isActive() && !((Axe) it).isUsed()))
 				attackBtn.setEnabled(false);
-			if (Game.getCurrentVirologist().getInventory().getAgents().isEmpty())
+			if (Game.getCurrentVirologist().getInventory().getAgents().isEmpty()){
 				useAgentBtn.setEnabled(false);
 				makeAgentBtn.setEnabled(false);
+			}
 			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(Suite::isActive) || Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
 				switchSuiteBtn.setEnabled(false);
 			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
