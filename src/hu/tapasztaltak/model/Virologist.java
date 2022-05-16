@@ -75,6 +75,7 @@ public class Virologist implements ISteppable {
 		}
 		if(activeSuites < 3){
 			s.activate(this);
+			((VirologistView)Game.objectViewHashMap.get(this)).updateImage();
 		}
 	}
 
@@ -90,8 +91,8 @@ public class Virologist implements ISteppable {
 		int originalMatSize = inventory.getMaterials().size();
 		g.make(inventory);
 		int afterMatSize = inventory.getMaterials().size();
-		if(originalMatSize != afterMatSize){
-		} else {
+		if(originalMatSize == afterMatSize){
+			JOptionPane.showMessageDialog(Game.getInstance().questionPanel,"Cuccok is kellenek hozzá...", "Nana", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -102,10 +103,6 @@ public class Virologist implements ISteppable {
 	 */
 	public void useAgent(Agent a, Virologist v) {
 		if(stunned || moved || !canReach(v)){
-			if(stunned){
-			} else if(moved){
-			} else {
-			} // TODO itt valamit kiírni hogy mit csinált valahogy kell-e
 			return;
 		}
 		spreadInitiation(a, v);
@@ -221,7 +218,7 @@ public class Virologist implements ISteppable {
 	 * A virológus megtanulja a g genetikai kódot.
 	 * @param g a megtanulandó {@link Gene}
 	 */
-	public void learn(Gene g) throws Exception {
+	public void learn(Gene g){
 		if(!learnt.contains(g)){
 			learnt.add(g);
 			Game.getInstance().checkEndGame(this);

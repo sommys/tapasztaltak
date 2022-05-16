@@ -85,7 +85,7 @@ public class AgentPanel extends JPanel {
 		usableAgentPanel.setUsableAgents(usableAgentViews);
 
 		List<AgentView> effectedAgentViews = new ArrayList<>();
-		for(SpecialModifier sm : Game.getInstance().getCurrentVirologist().getModifiers()){
+		for(SpecialModifier sm : Game.getInstance().getCurrentVirologist().getModifiers().stream().filter(it -> !(it instanceof Bear)).collect(Collectors.toList())){
 			effectedAgentViews.add((AgentView)Game.objectViewHashMap.get(sm));
 		}
 

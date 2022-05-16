@@ -1,11 +1,11 @@
 package hu.tapasztaltak.model;
 
 
+import hu.tapasztaltak.view.DanceView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A játékban lévő vitustánc ágens reprezentációja.
@@ -64,6 +64,7 @@ public class Dance extends Agent implements SpecialModifier {
 	public Agent clone(){
 		Dance newAgent = new Dance();
 		newAgent.setTimeLeft(3);
+		Game.addView(newAgent, new DanceView(newAgent));
 		return newAgent;
 	}
 }

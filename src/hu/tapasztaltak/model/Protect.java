@@ -1,10 +1,11 @@
 package hu.tapasztaltak.model;
 
 
+import hu.tapasztaltak.view.ProtectView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A védő ágenst reprezentáló osztály.
@@ -60,6 +61,7 @@ public class Protect extends Agent implements IDefense {
 	public Agent clone(){
 		Protect newAgent = new Protect();
 		newAgent.setTimeLeft(3);
+		Game.addView(newAgent, new ProtectView(newAgent));
 		return newAgent;
 	}
 }

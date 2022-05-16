@@ -1,6 +1,7 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.*;
+import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+
+import static hu.tapasztaltak.model.Game.addView;
 
 public class QuestionPanel extends JPanel {
 	private final Game game;
@@ -71,7 +74,7 @@ public class QuestionPanel extends JPanel {
 		return result.get();
 	}
 
-	//AGENT_USE, AGENT_CRAFT, SUITE_SWITCH_FROM, SUITE_SWITCH_TO, SUITE_PUT_ON, AXE_USE, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
+	//SUITE_SWITCH_FROM, SUITE_SWITCH_TO, SUITE_PUT_ON, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
 
 	public void moveQuestion(List<FieldView> neighbours){
 		setLayout(new GridBagLayout());
@@ -283,16 +286,102 @@ public class QuestionPanel extends JPanel {
 			btn.addActionListener(evt -> {
 				removeAll();
 				revalidate();
-				Gloves gloves = new Gloves();
-
-				GlovesView glovesView = new GlovesView(gloves);
-				Game.addView(gloves, glovesView);
-				gloves.add(vw.getVir().getInventory());
-				gloves.activate(vw.getVir());
-
-				Game.getInstance().updatePanels();
-
 				Game.getCurrentVirologist().useAgent(av.a, vw.getVir());
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 3 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+		}
+		setPanelAndStuff(c, buttons, "Melyiket?");
+	}
+
+	public void pickAgentCraftQuestion(){
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+
+		for(Gene g : ProtoMain.genes){
+			JButton btn = new JButton(g.getAgent().getClass().getSimpleName());
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				removeAll();
+				revalidate();
+				if(Game.getCurrentVirologist().getLearnt().contains(g)){
+					Game.getCurrentVirologist().makeAgent(g);
+				} else {
+					ButtonsPanel.activeCounter--;
+					JOptionPane.showMessageDialog(this,"Előbb meg kéne tanulni haver...", "Nana", JOptionPane.WARNING_MESSAGE);
+				}
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 3 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+		}
+		setPanelAndStuff(c, buttons, "Melyiket?");
+	}
+
+	public void putOnSuiteQuestion(){
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+		Axe axe = new Axe();
+		Bag bag = new Bag();
+		Cape cape = new Cape();
+		Gloves gloves = new Gloves();
+		AxeView axeView = new AxeView(axe);
+		BagView bagView = new BagView(bag);
+		CapeView capeView = new CapeView(cape);
+		GlovesView glovesView = new GlovesView(gloves);
+		addView(axe, axeView);
+		addView(bag, bagView);
+		addView(cape, capeView);
+		addView(gloves, glovesView);
+		axe.add(Game.getCurrentVirologist().getInventory());
+		bag.add(Game.getCurrentVirologist().getInventory());
+		cape.add(Game.getCurrentVirologist().getInventory());
+		gloves.add(Game.getCurrentVirologist().getInventory());
+		Game.getInstance().updatePanels();
+		for(Suite s : Game.getCurrentVirologist().getInventory().getSuites().stream().filter(it -> !it.isActive()).collect(Collectors.toList())){
+			JButton btn = new JButton(((SuiteView)Game.objectViewHashMap.get(s)).icon);
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				removeAll();
+				revalidate();
+				Game.getCurrentVirologist().putOnSuite(s);
 				Game.getInstance().updatePanels();
 			});
 
@@ -326,7 +415,7 @@ public class QuestionPanel extends JPanel {
 
 
 		for(Object o : objectList) {
-			Game.addView(o, new NucleotidView(new Nucleotid()));
+			addView(o, new NucleotidView(new Nucleotid()));
 			ItemView i = (ItemView) Game.objectViewHashMap.get(o);
 			JButton btn = new JButton(i.getItemImage());
 			btn.setBackground(new Color(36, 140, 130));

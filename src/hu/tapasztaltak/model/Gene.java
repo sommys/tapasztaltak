@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoMain;
+
 import java.util.ArrayList;
 import java.util.List;
 

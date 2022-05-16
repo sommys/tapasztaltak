@@ -22,7 +22,7 @@ public class ButtonsPanel extends JPanel{
 	private JButton switchSuiteBtn= new JButton();
 	private JButton finishRoundBtn= new JButton();
 	private Virologist currentVirologist; // TODO lekérni a virológust, most az instance hívással végtelen ciklusba kerül
-	private int activeCounter = 0;
+	public static int activeCounter = 0;
 	private boolean movebool = false;
 
 	public ButtonsPanel(){
@@ -151,11 +151,6 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(attackBtn);
 		attackBtn.setText("támad");
 		attackBtn.addActionListener(evt ->{
-			Axe a = new Axe();
-			AxeView av = new AxeView(a);
-			Game.addView(a, av);
-			a.add(currentVirologist.getInventory());
-			a.activate(currentVirologist);
 			List<VirologistView> possibleVictims = new ArrayList<>();
 			for(Virologist vict : currentVirologist.getField().getVirologists()){
 				if(vict == currentVirologist) continue;
@@ -168,44 +163,19 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(useAgentBtn);
 		useAgentBtn.setText("ágenst használ");
 		useAgentBtn.addActionListener(evt -> {
-			Dance d = new Dance();
-			Forget f = new Forget();
-			Protect p = new Protect();
-			Stun s = new Stun();
-
-			d.setTimeLeft(3);
-			f.setTimeLeft(3);
-			p.setTimeLeft(3);
-			s.setTimeLeft(3);
-
-			DanceView dv = new DanceView(d);
-			ForgetView fv = new ForgetView(f);
-			ProtectView pv = new ProtectView(p);
-			StunView sv = new StunView(s);
-
-			Game.addView(d, dv);
-			Game.addView(f, fv);
-			Game.addView(p, pv);
-			Game.addView(s, sv);
-
-			currentVirologist.getInventory().getAgents().add(d);
-			currentVirologist.getInventory().getAgents().add(f);
-			currentVirologist.getInventory().getAgents().add(p);
-			currentVirologist.getInventory().getAgents().add(s);
 			Game.getInstance().getquestionpanel().pickAgentUseAgentQuestion();
 			activeCounter++;
 			buttonview();
 		});
 		setButtonSettings(makeAgentBtn);
-		Gene g = new Gene(); // Todo Lekérni
 		makeAgentBtn.setText("ágenst készít");
 		makeAgentBtn.addActionListener(evt -> {
-			currentVirologist.makeAgent(currentVirologist.getLearnt().get(1));
+			Game.getInstance().getquestionpanel().pickAgentCraftQuestion();
 			activeCounter++;
 			buttonview();
-		}); // TODO lekérni questionpannel
+		});
 		setButtonSettings(switchSuiteBtn);
-		switchSuiteBtn.setText("felszerelés csere");//Todo ezt megcsinálni questionpanelből
+		switchSuiteBtn.setText("felszerelés csere");
 		switchSuiteBtn.addActionListener(evt -> {
 			currentVirologist.switchSuite(currentVirologist.getInventory().getSuites().get(0),currentVirologist.getInventory().getSuites().get(0));
 			activeCounter++;
@@ -214,10 +184,10 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(activateSuiteBtn);
 		activateSuiteBtn.setText("felszerelés felvétel");
 		activateSuiteBtn.addActionListener(evt -> {
-			currentVirologist.putOnSuite(currentVirologist.getInventory().getSuites().get(0));
+			Game.getInstance().getquestionpanel().putOnSuiteQuestion();
 			activeCounter++;
 			buttonview();
-		}); //TODO lekérni
+		});
 		setButtonSettings(finishRoundBtn);
 		finishRoundBtn.setText("Kör vége");
 		finishRoundBtn.addActionListener(evt -> {

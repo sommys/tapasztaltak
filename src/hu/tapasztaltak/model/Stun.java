@@ -1,12 +1,10 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.view.StunView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A bénító ágenst reprezentáló osztály.
@@ -57,6 +55,7 @@ public class Stun extends Agent implements SpecialModifier {
 	public Agent clone(){
 		Stun newAgent = new Stun();
 		newAgent.setTimeLeft(3);
+		Game.addView(newAgent, new StunView(newAgent));
 		return newAgent;
 	}
 }

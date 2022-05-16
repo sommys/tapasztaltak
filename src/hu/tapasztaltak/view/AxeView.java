@@ -16,7 +16,9 @@ public class AxeView extends SuiteView {
 
 	@Override
 	public void update() {
-
+		if(((Axe)s).isUsed()){
+			icon = new ImageIcon("src/hu/tapasztaltak/textures/inventoryItems/axe_used.png");
+		}
 	}
 
 	@Override

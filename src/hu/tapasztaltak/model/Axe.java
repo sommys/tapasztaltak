@@ -1,8 +1,6 @@
 package hu.tapasztaltak.model;
 
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A baltát reprezentáló osztály
  */
@@ -40,6 +38,8 @@ public class Axe extends Suite{
         }
         toKill.die();
         used = true;
+        Game.objectViewHashMap.get(this).update();
+        Game.objectViewHashMap.get(this).update();
     }
 
     /**

@@ -1,11 +1,11 @@
 package hu.tapasztaltak.model;
 
 
+import hu.tapasztaltak.view.ForgetView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A játékban lévő felejtő ágens reprezentációja.
@@ -55,6 +55,7 @@ public class Forget extends Agent implements SpecialModifier {
 	public Agent clone(){
 		Forget newAgent = new Forget();
 		newAgent.setTimeLeft(3);
+		Game.addView(newAgent, new ForgetView(newAgent));
 		return newAgent;
 	}
 }

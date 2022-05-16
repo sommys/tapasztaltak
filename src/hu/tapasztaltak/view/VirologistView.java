@@ -108,7 +108,7 @@ public class VirologistView extends View {
 
 	@Override
 	public void update() {
-
+		updateImage();
 	}
 
 	public Virologist getVir() {
