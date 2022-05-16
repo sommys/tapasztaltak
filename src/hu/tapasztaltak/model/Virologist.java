@@ -75,7 +75,7 @@ public class Virologist implements ISteppable {
 		}
 		if(activeSuites < 3){
 			s.activate(this);
-			((VirologistView)Game.objectViewHashMap.get(this)).updateImage();
+			Game.objectViewHashMap.get(this).update();
 		}
 	}
 
@@ -211,7 +211,7 @@ public class Virologist implements ISteppable {
 		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
-		((VirologistView)Game.objectViewHashMap.get(this)).updateImage();
+		Game.objectViewHashMap.get(this).update();
 	}
 
 	/**
