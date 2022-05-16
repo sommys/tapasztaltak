@@ -77,6 +77,8 @@ public class QuestionPanel extends JPanel {
 	//SUITE_SWITCH_FROM, SUITE_SWITCH_TO, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
 
 	public void moveQuestion(List<FieldView> neighbours){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -105,7 +107,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}
@@ -115,6 +117,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void stealPickVirologistQuestion(List<VirologistView> victims){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -152,6 +156,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void stealPickItemQuestion(Virologist stolenFrom){
+		removeAll();
+		revalidate();
 		VirologistView victim = (VirologistView) Game.objectViewHashMap.get(stolenFrom);
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
@@ -193,6 +199,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void attackQuestion(List<VirologistView> possibleVictims){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -231,6 +239,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void pickAgentUseAgentQuestion(){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -260,7 +270,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}
@@ -269,6 +279,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	private void pickAgentUseVirologistQuestion(AgentView av) {
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -307,6 +319,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void pickAgentCraftQuestion(){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -340,7 +354,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}
@@ -349,6 +363,8 @@ public class QuestionPanel extends JPanel {
 	}
 
 	public void putOnSuiteQuestion(){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -377,7 +393,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}
@@ -413,7 +429,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}
@@ -421,7 +437,111 @@ public class QuestionPanel extends JPanel {
 		setPanelAndStuff(c, buttons, "Melyiket?");
 	}
 
+	public void pickUpStuffFromShelterQuestion(Shelter sh){
+		removeAll();
+		revalidate();
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+		Inventory inv = Game.getCurrentVirologist().getInventory();
+		JButton btn = new JButton(((ItemView)Game.objectViewHashMap.get(sh.getSuite())).icon);
+		btn.setBackground(new Color(36, 140, 130));
+		btn.addActionListener(evt -> {
+			if(inv.getSize() == inv.getUsedSize()){
+				JOptionPane.showMessageDialog(this,"Már tele a tárhely...", "Nana", JOptionPane.WARNING_MESSAGE);
+			} else {
+				sh.getSuite().add(inv);
+				sh.setSuite(null);
+				buttons.remove(btn);
+			}
+			Game.getInstance().updatePanels();
+		});
+
+		c.gridx = xCounter;
+		c.gridy = yCounter;
+		c.weightx = 0.2;
+
+		buttons.add(btn, c);
+
+		JButton doneBtn = new JButton("Kész vagyok");
+		doneBtn.setBackground(new Color(36, 140, 130));
+		doneBtn.addActionListener(evt -> {
+			sh.endPickup();
+			removeAll();
+			revalidate();
+			Game.getInstance().updatePanels();
+		});
+		yCounter++;
+		c.gridy=yCounter;
+		c.weightx=0.2;
+		buttons.add(doneBtn, c);
+		setPanelAndStuff(c, buttons, "Viszed?");
+	}
+
+	public void pickUpStuffFromWarehouseQuestion(Warehouse w){
+		removeAll();
+		revalidate();
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+		Inventory inv = Game.getCurrentVirologist().getInventory();
+		for(IMaterial m : w.getMaterials()){
+			JButton btn = new JButton(((MaterialView)Game.objectViewHashMap.get(m)).icon);
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				if(inv.getSize() == inv.getUsedSize()){
+					JOptionPane.showMessageDialog(this,"Már tele a tárhely...", "Nana", JOptionPane.WARNING_MESSAGE);
+				} else {
+					m.add(inv);
+					w.removeMaterials(m);
+					buttons.remove(btn);
+				}
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 2 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+		}
+		JButton doneBtn = new JButton("Kész vagyok");
+		doneBtn.setBackground(new Color(36, 140, 130));
+		doneBtn.addActionListener(evt -> {
+			w.endPickup();
+			removeAll();
+			revalidate();
+			Game.getInstance().updatePanels();
+		});
+		yCounter++;
+		c.gridy=yCounter;
+		c.weightx=0.2;
+		buttons.add(doneBtn, c);
+		setPanelAndStuff(c, buttons, "Viszed?");
+	}
+
 	private void switchSuiteToQuestion(Suite from){
+		removeAll();
+		revalidate();
 		setLayout(new GridBagLayout());
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridBagLayout());
@@ -451,7 +571,7 @@ public class QuestionPanel extends JPanel {
 			c.weightx = 0;
 
 			xCounter++;
-			if (xCounter % 3 == 0) {
+			if (xCounter % 2 == 0) {
 				xCounter = 0;
 				yCounter++;
 			}

@@ -21,7 +21,7 @@ public class ButtonsPanel extends JPanel{
 	private JButton activateSuiteBtn = new JButton();
 	private JButton switchSuiteBtn= new JButton();
 	private JButton finishRoundBtn= new JButton();
-	private Virologist currentVirologist; // TODO lekérni a virológust, most az instance hívással végtelen ciklusba kerül
+	private Virologist currentVirologist;
 	public static int activeCounter = 0;
 	private boolean movebool = false;
 
@@ -30,7 +30,7 @@ public class ButtonsPanel extends JPanel{
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
 		setLayout(new GridLayout(10,1));
-		currentVirologist = Game.getInstance().getCurrentVirologist();
+		currentVirologist = Game.getCurrentVirologist();
 		initComponents();
 	}
 
@@ -47,7 +47,7 @@ public class ButtonsPanel extends JPanel{
 		scanBtn.setText("tapogat");
 		scanBtn.addActionListener(evt -> {
 			try {
-				currentVirologist.scanning(); //todo kerdesek feltetele
+				currentVirologist.scanning();
 				FieldView fv = (FieldView)Game.objectViewHashMap.get(Game.getCurrentVirologist().getField());
 				fv.setVisited(true);
 				Game.getInstance().updatePanels();
@@ -191,14 +191,18 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(finishRoundBtn);
 		finishRoundBtn.setText("Kör vége");
 		finishRoundBtn.addActionListener(evt -> {
-			try {
-				currentVirologist.endRound();
-				playerText.setText(((VirologistView)Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist())).getPlayerName()+ " lép");
-				activeCounter = 0;
-				buttonview();
-
-			} catch (Exception e) {
-				e.printStackTrace();
+			Game.getInstance().getquestionpanel().removeAll();
+			Game.getInstance().getquestionpanel().revalidate();
+			currentVirologist.endRound();
+			playerText.setText(((VirologistView)Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist())).getPlayerName()+ " lép");
+			activeCounter = 0;
+			buttonview();
+			//todo kivenni, tesztelesre van!!!
+			for(int i = 0;i < 11; i++){
+				Nucleotid nucleo = new Nucleotid();
+				NucleotidView nucleoView = new NucleotidView(nucleo);
+				Game.addView(nucleo, nucleoView);
+				nucleo.add(currentVirologist.getInventory());
 			}
 		});
 		add(scanBtn);
@@ -211,7 +215,6 @@ public class ButtonsPanel extends JPanel{
 		add(activateSuiteBtn);
 		add(finishRoundBtn);
 		buttonview();
-
 	}
 	public void buttonview() {
 		if(activeCounter == 0){
@@ -236,11 +239,24 @@ public class ButtonsPanel extends JPanel{
 			switchSuiteBtn.setEnabled(true);
 			attackBtn.setEnabled(true);
 			activateSuiteBtn.setEnabled(true);
-			finishRoundBtn.setEnabled(true);
 		}
 		else{
 			disableallBtn();
-			finishRoundBtn.setEnabled(true);
+		}
+
+		if(Game.getCurrentVirologist() != null && Game.getCurrentVirologist().getField() != null) {
+			if (Game.getCurrentVirologist().isStunned())
+				moveBtn.setEnabled(false);
+			if (Game.getCurrentVirologist().getField().getVirologists().stream().noneMatch(it -> it != Game.getCurrentVirologist() && it.isStunned()))
+				stealBtn.setEnabled(false);
+			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> it instanceof Axe && it.isActive() && !((Axe) it).isUsed()))
+				attackBtn.setEnabled(false);
+			if (Game.getCurrentVirologist().getInventory().getAgents().isEmpty())
+				useAgentBtn.setEnabled(false);
+			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(Suite::isActive) || Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
+				switchSuiteBtn.setEnabled(false);
+			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
+				activateSuiteBtn.setEnabled(false);
 		}
 		finishRoundBtn.setEnabled(true); /*teszteleshez!!!*/
 	}
@@ -261,7 +277,6 @@ public class ButtonsPanel extends JPanel{
 		curVirView = Game.getCurrentVirologistView();
 		curVirView.setTextColortoVir(playerText);
 		currentVirologist = Game.getCurrentVirologist();
-		//todo disable buttonok amiket nem nyomhatunk bizonyos feltetelekre
 		revalidate();
 	}
 	public void disableallBtn(){

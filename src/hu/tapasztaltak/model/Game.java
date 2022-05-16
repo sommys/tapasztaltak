@@ -224,11 +224,11 @@ public class Game extends JFrame {
      */
     public void checkEndGame(Virologist v) {
         if(RoundManager.getInstance().getVirologists().stream().allMatch(it -> it.getModifiers().stream().anyMatch(m -> m instanceof Bear))){
-            //todo mindenki medve
+            JOptionPane.showMessageDialog(this,"Mindenki maci lett :(( brumm", "MedveGang rise up", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (v.getLearnt().size() == maxAgent) {
-            //todo nyert V
+            JOptionPane.showMessageDialog(this,Game.getCurrentVirologistView().getPlayerName()+"nyert!!! GGWP", "VAN EGY NYERTES", JOptionPane.WARNING_MESSAGE);
         }
     }
 

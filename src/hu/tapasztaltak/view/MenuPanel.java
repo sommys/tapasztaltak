@@ -30,7 +30,6 @@ public class MenuPanel extends JPanel {
 
 	private void initComponents() {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		//todo szebben szethuzni a gombokat
 		JButton newGameBtn = new JButton(newGameButton);
 		setButtonSettings(newGameBtn);
 		newGameBtn.addActionListener(evt -> game.startGameSettings());

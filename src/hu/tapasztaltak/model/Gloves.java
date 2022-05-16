@@ -24,16 +24,6 @@ public class Gloves extends Suite implements IDefense {
 	 */
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		if(atc != vict && !used && useCount > 0 && !vict.isStunned()){
-			//todo valahogy meg kene varni...
-//			AtomicBoolean result = new AtomicBoolean(false);
-//			Game.getInstance().questionPanel.yesNoQuestion("Akarod?", result);
-//			synchronized (Game.getInstance().getquestionpanel().yesBtn){
-//				try {
-//					Game.getInstance().getquestionpanel().yesBtn.wait();
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
 			used = true;
 			useCount--;
 			if(useCount==0) {
@@ -43,10 +33,6 @@ public class Gloves extends Suite implements IDefense {
 			return true;
 		}
 		return false;
-	}
-
-	public void block(){
-
 	}
 
 	/**

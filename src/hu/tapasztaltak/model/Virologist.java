@@ -135,39 +135,6 @@ public class Virologist implements ISteppable {
 	}
 
 	/**
-	 * A virológus kiválasztja, az[oka]t a dolgo[ka]t, amiket felvenne a mezőről
-	 * @param available a mezőn elérhető tárgyak ({@link IStealable}), amik közül választani kell
-	 * @return a kiválaszott tárgyak ({@link IStealable})
-	 */
-	public List<IStealable> chooseItem(List<IStealable> available) {
-		List<IStealable> chosen = new ArrayList<>();
-		try {
-			int pickupDecision = 0; // TODO questionpanel
-			if (pickupDecision == 0) {
-				return chosen;
-			}
-			int remaining = inventory.getSize() - inventory.getUsedSize();
-			for (IStealable a : available) {
-				if(remaining == 0){
-					return chosen;
-				}
-				int currentPickupDecision = 1; // TODO questionpanel
-				if (currentPickupDecision == 1) {
-					if (remaining > 0) {
-						chosen.add(a);
-						remaining--;
-					}
-				}
-			}
-		}
-		catch (Exception e) {e.printStackTrace();}
-
-		moved = !chosen.isEmpty();
-
-		return chosen;
-	}
-
-	/**
 	 * A virológus megpróbál lopni {@code from} virológustól.
 	 * @param from a {@link Virologist}, akitől lopni akar
 	 */

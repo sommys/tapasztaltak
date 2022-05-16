@@ -1,14 +1,11 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
+import hu.tapasztaltak.view.BagView;
+import hu.tapasztaltak.view.CapeView;
+import hu.tapasztaltak.view.GlovesView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
 
 
@@ -29,25 +26,18 @@ public class Shelter extends Field {
      *
      * @param v a {@link Virologist}, aki a védőfelszerelést kapja.
      */
-    public void getItem(Virologist v) throws Exception {
-        String vList = virologists.size() == 1 ? "-" : virologists.stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
+    public void getItem(Virologist v) {
         if(suite == null){
             return;
         }
-        List<IStealable> chosen = v.chooseItem(new ArrayList<>(Arrays.asList(suite)));
-        if(!chosen.isEmpty() && refreshCounter == -1){
+        Game.getInstance().questionPanel.pickUpStuffFromShelterQuestion(this);
+    }
+
+    public void endPickup(){
+        if(suite == null && refreshCounter == -1){
+            Game.objectViewHashMap.get(this).update();
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
-            if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
-                for (IStealable s : chosen) {
-                    s.add(v.getInventory());
-                    int space = v.getInventory().getSize() - v.getInventory().getUsedSize();
-                }
-            }
-            else{
-            }
-        } else{
-            return;
         }
     }
 
@@ -66,12 +56,15 @@ public class Shelter extends Field {
         switch (randomNumber) {
             case 0:
                 suite = new Bag();
+                Game.addView(suite, new BagView ((Bag)suite));
                 break;
             case 1:
                 suite = new Cape();
+                Game.addView(suite, new CapeView((Cape)suite));
                 break;
             case 2:
                 suite = new Gloves();
+                Game.addView(suite, new GlovesView((Gloves)suite));
                 break;
         }
     }

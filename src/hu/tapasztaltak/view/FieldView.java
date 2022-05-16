@@ -96,7 +96,7 @@ public class FieldView extends View {
 		for (Virologist v: field.getVirologists()) {
 			VirologistView view = (VirologistView) Game.objectViewHashMap.get(v);
 			view.setPosX(posX + 5 + i*24);
-			int viry = posY + 80 + (fieldNum == 3 ? 93 : 0); // TODO finomhangolni
+			int viry = posY + 80 + (fieldNum == 3 ? 93 : 0);
 			view.setPosY(viry);
 			i++;
 			view.draw(g);

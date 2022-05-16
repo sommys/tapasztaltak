@@ -1,10 +1,12 @@
 package hu.tapasztaltak.model;
 
+import hu.tapasztaltak.view.AminoacidView;
+import hu.tapasztaltak.view.NucleotidView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A pályán lévő raktár mező reprezentálása.
@@ -24,18 +26,12 @@ public class Warehouse extends Field {
      * @param v a {@link Virologist}, aki az anyagokat kapja.
      */
     public void getItem(Virologist v) {
-        String virologists = getVirologists().size() == 1 ? "-" : getVirologists().stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        String materialsList = getMaterials().isEmpty() ? "-" : getMaterials().stream().map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        int mat = 0;
-        List<IStealable> chosen = v.chooseItem(new ArrayList<>(materials));
-        for (IStealable m : chosen) {
-            if (v.getInventory().getSize() - v.getInventory().getUsedSize() > 0) {
-                m.add(v.getInventory());
-                materials.remove(m);
-                mat++;
-            }
-        }
+        Game.getInstance().questionPanel.pickUpStuffFromWarehouseQuestion(this);
+    }
+
+    public void endPickup(){
         if(materials.isEmpty() && refreshCounter == -1){
+            Game.objectViewHashMap.get(this).update();
             Random random = new Random();
             refreshCounter = random.nextInt(5) + 4;
         }
@@ -66,10 +62,12 @@ public class Warehouse extends Field {
             randomNumber = random.nextInt(2);
             if (randomNumber == 0) {
                 Aminoacid a = new Aminoacid();
+                Game.addView(a, new AminoacidView(a));
                 materials.add(a);
             }
             else {
                 Nucleotid n = new Nucleotid();
+                Game.addView(n, new NucleotidView(n));
                 materials.add(n);
             }
         }

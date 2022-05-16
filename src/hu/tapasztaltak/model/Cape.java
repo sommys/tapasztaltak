@@ -1,7 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoMain;
-
 import java.util.Random;
 
 /**
@@ -19,21 +17,7 @@ public class Cape extends Suite implements IDefense {
 	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Random r = new Random();
 		double result = r.nextDouble();
-		if(ProtoMain.randomness) {
-			if (result <= 0.823) {
-			} else {
-			}
-			return (result <= 0.823);
-		}else{
-			int choice = 'Y'; //TODO megcsinálni hogy questionpanelből legyen
-			if(choice == 'Y'){
-				return true;
-			} else if(choice == 'N'){
-				return false;
-			} else {
-				return false;
-			}
-		}
+		return (result <= 0.823);
 	}
 
 	/**

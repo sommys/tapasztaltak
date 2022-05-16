@@ -1,9 +1,7 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
 import java.util.ArrayList;
 import java.util.List;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A virológus tárhelyét reprezentáló osztály.
@@ -25,50 +23,6 @@ public class Inventory {
 	 * A felhasználható ágensek listája.
 	 */
 	private List<Agent> agents = new ArrayList<>();
-
-	/**
-	 * Elem kiválasztása lopásnál.
-	 * @return kiválasztott {@link IStealable} vagy null, ha nincs ellopható elem
-	 */
-	public IStealable pickItem() {
-		if (materials.isEmpty() && suites.isEmpty()) {
-			return null;
-		}
-
-		int id = 1;
-
-		for (Suite s : suites) {
-			if (s.isActive()) {
-			}
-			else {
-			}
-			id++;
-		}
-
-		for (IMaterial m : materials) {
-			id++;
-		}
-
-		int stealableSize = materials.size() + suites.size();
-
-		int value = 0;
-
-		// Az exceptiont nem tudom, hogy így kéne-e, btw itt nem is kaphatok
-		try {
-			value = 2; // TODO lekérni questionpanelből
-			while(value < 1 || value > stealableSize) {
-				value = 2; //TODO lekérni questionpanelből
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		IStealable selected = value > suites.size()
-				? materials.get(value - suites.size() - 1)
-				: suites.get(value - 1);
-
-		return selected;
-	}
 
 	//region GETTEREK és SETTEREK
 

@@ -30,11 +30,6 @@ public class ProtoTestRunner {
         }
 
         public void run(){
-            // todo
-            //  input megnyitasa
-            //  soronkent beolvassuk a parancsokat, meghivjuk a runCommand-ot
-            //  kiirjuk az outputFile-ba az eredmenyt: ProtoLogger.actOutput.toString, majd ProtoLogger.actOutput = new StringBuilder();
-            //  ellenőrizzük az eredményt okosba
             try {
                 BufferedReader br = new BufferedReader(new FileReader(inputFile));
                 String line;
