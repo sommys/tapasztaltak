@@ -76,7 +76,5 @@ public class Gloves extends Suite implements IDefense {
 
 	public void setUseCount(int useCount) { this.useCount = useCount; }
 
-	@Override
-	public String toString() { return super.toString() + "[" + useCount + "]"; }
 	//endregion
 }

@@ -3,8 +3,6 @@ package hu.tapasztaltak.model;
 
 import java.util.Random;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A zsák felszerelést reprezentáló osztály.
  * Aktív viselésével megnő az inventory tároló mérete.

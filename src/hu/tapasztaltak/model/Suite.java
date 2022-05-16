@@ -1,7 +1,5 @@
 package hu.tapasztaltak.model;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A felszereléseknek az összefoglaló absztrakt ősosztálya,
  * ebből származnak le a különböző felszerelések.
@@ -56,9 +54,6 @@ public abstract class Suite implements IStealable {
 	 * @param active aktívan viselt-e?
 	 */
 	public void setActive(boolean active) { this.active = active; }
-
-	@Override
-	public String toString(){ return getIdForObject(this); }
 
 	//endregion
 }

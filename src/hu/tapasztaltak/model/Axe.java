@@ -58,8 +58,5 @@ public class Axe extends Suite{
 
     public void setUsed(boolean used) { this.used = used; }
 
-    @Override
-    public String toString() { return super.toString() + "[" + (used ? 1 : 0) + "]"; }
-
     //endregion
 }

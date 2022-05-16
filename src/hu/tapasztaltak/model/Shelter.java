@@ -6,8 +6,6 @@ import hu.tapasztaltak.view.GlovesView;
 
 import java.util.Random;
 
-import static hu.tapasztaltak.proto.ProtoMain.getSuiteId;
-
 
 /**
  * A pályán lévő óvóhely mező reprezentálása.
@@ -84,10 +82,5 @@ public class Shelter extends Field {
      * @param suite az óvóhelyen tárolt {@link  Suite}
      */
     public void setSuite(Suite suite) { this.suite = suite; }
-
-    @Override
-    public String toString() {
-        return super.toString() + getSuiteId(suite) + "[" + refreshCounter + "]";
-    }
     //endregion
 }

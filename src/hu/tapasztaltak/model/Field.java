@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A játék alapmezőit reprezentáló osztály.
  */
@@ -178,11 +176,6 @@ public class Field implements ISteppable {
      */
     public void removeVirologist(Virologist virologist) {
         this.virologists.remove(virologist);
-    }
-
-    @Override
-    public String toString() {
-        return getIdForObject(this);
     }
 
     //endregion

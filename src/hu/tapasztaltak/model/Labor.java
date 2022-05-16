@@ -1,7 +1,5 @@
 package hu.tapasztaltak.model;
 
-import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
-
 /**
  * A pályán lévő laboratórium mező reprezentálása.
  */
@@ -36,11 +34,6 @@ public class Labor extends Field {
      * @param gene a laborban található {@link Gene}
      */
     public void setGene(Gene gene) { this.gene = gene; }
-
-    @Override
-    public String toString() {
-        return super.toString() + " " + getGeneId(gene);
-    }
 
     //endregion
 }

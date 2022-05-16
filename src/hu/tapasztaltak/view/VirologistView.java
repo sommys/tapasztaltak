@@ -92,7 +92,6 @@ public class VirologistView extends View {
 		}
 		String image = identifier + "_" + colorId + (stuff.isEmpty() ? "" : "_" + String.join("",stuff))+".png";
 		try {
-			System.out.println("virologistImage: "+image);
 			virImg = ImageIO.read(new File("src/hu/tapasztaltak/textures/virologists/" + image));
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
