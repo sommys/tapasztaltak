@@ -34,10 +34,6 @@ public class MenuPanel extends JPanel {
 		setButtonSettings(newGameBtn);
 		newGameBtn.addActionListener(evt -> game.startGameSettings());
 		add(newGameBtn);
-		JButton loadBtn = new JButton(loadGameButton);
-		setButtonSettings(loadBtn);
-		loadBtn.addActionListener(evt -> System.out.println("Jatek betoltese"));
-		add(loadBtn);
 		JButton exitBtn = new JButton(exitButton);
 		setButtonSettings(exitBtn);
 		exitBtn.addActionListener(evt -> System.exit(0));
