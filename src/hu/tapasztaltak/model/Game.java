@@ -60,9 +60,6 @@ public class Game extends JFrame {
         menuPanel.setVisible(true);
         setContentPane(menuPanel);
         menuPanel.grabFocus();
-
-        /** zsamo */
-        //pack();
     }
 
 
@@ -177,7 +174,6 @@ public class Game extends JFrame {
     public static void main(String[] args){
         ProtoMain.geneInit();
         instance = new Game();
-        System.out.println("zsamo");
     }
 
     /**

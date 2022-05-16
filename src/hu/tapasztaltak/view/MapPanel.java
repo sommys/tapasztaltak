@@ -7,10 +7,6 @@ import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,41 +18,6 @@ public class MapPanel extends JPanel {
 		super();
 		setFocusable(true);
 		setBackground(new Color(27, 42, 39));
-		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent me) {
-				System.out.println("clicked @ ("+me.getX()+";"+me.getY()+")");
-				int x = me.getX();
-				int y = me.getY();
-				for(FieldView fv : fields){
-					if(x > fv.getPosX() && x < fv.getPosX() + Integer.min(2, fv.getFieldNum())*161 &&
-					   y > fv.getPosY() && y < fv.getPosY() + (fv.getFieldNum() == 3 ? 322 : 161)){
-						fv.setVisited(true);
-						repaint();
-						return;
-					}
-				}
-			}
-		});
-		addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println("NYOMOOOD");
-				for(FieldView fv : fields){
-					fv.setVisited(true);
-				}
-				repaint();
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-			}
-		});
 		initComponents();
 	}
 
