@@ -197,13 +197,6 @@ public class ButtonsPanel extends JPanel{
 			playerText.setText(((VirologistView)Game.objectViewHashMap.get(Game.getInstance().getCurrentVirologist())).getPlayerName()+ " lép");
 			activeCounter = 0;
 			buttonview();
-			//todo kivenni, tesztelesre van!!!
-			for(int i = 0;i < 11; i++){
-				Nucleotid nucleo = new Nucleotid();
-				NucleotidView nucleoView = new NucleotidView(nucleo);
-				Game.addView(nucleo, nucleoView);
-				nucleo.add(currentVirologist.getInventory());
-			}
 		});
 		add(scanBtn);
 		add(moveBtn);
@@ -253,10 +246,13 @@ public class ButtonsPanel extends JPanel{
 				attackBtn.setEnabled(false);
 			if (Game.getCurrentVirologist().getInventory().getAgents().isEmpty())
 				useAgentBtn.setEnabled(false);
+				makeAgentBtn.setEnabled(false);
 			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(Suite::isActive) || Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
 				switchSuiteBtn.setEnabled(false);
 			if (Game.getCurrentVirologist().getInventory().getSuites().stream().noneMatch(it -> !it.isActive()))
 				activateSuiteBtn.setEnabled(false);
+			//if (Game.getCurrentVirologist().getLearnt().stream().noneMatch(it -> ))
+				//makeAgentBtn.setEnabled(false);
 		}
 		finishRoundBtn.setEnabled(true); /*teszteleshez!!!*/
 	}
