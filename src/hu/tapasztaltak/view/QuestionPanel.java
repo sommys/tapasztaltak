@@ -1,7 +1,6 @@
 package hu.tapasztaltak.view;
 
 import hu.tapasztaltak.model.*;
-import hu.tapasztaltak.proto.ProtoMain;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static hu.tapasztaltak.model.Game.addView;
+import static hu.tapasztaltak.model.Game.getCurrentVirologist;
 
 public class QuestionPanel extends JPanel {
 	private final Game game;
@@ -331,31 +331,47 @@ public class QuestionPanel extends JPanel {
 		int xCounter = 0;
 		int yCounter = 0;
 
-		for(Gene g : ProtoMain.genes){
-			JButton btn = new JButton(g.getAgent().getClass().getSimpleName());
-			btn.setBackground(new Color(36, 140, 130));
-			btn.addActionListener(evt -> {
-				removeAll();
-				revalidate();
-				if(Game.getCurrentVirologist().getLearnt().contains(g)){
-					Game.getCurrentVirologist().makeAgent(g);
-				} else {
-					ButtonsPanel.activeCounter--;
-					JOptionPane.showMessageDialog(this,"Előbb meg kéne tanulni haver...", "Nana", JOptionPane.WARNING_MESSAGE);
+		for(Gene g : getCurrentVirologist().getLearnt()){
+			boolean canMake = false;
+			List<IMaterial> needed = g.getMaterials();
+			List<IMaterial> have = new ArrayList<>(Game.getCurrentVirologist().getInventory().getMaterials());
+			int i = 0;
+			ArrayList<IMaterial> found = new ArrayList<>();
+
+			for (IMaterial m : needed) {
+				while (i < have.size() && !m.isCompatible(have.get(i))) {
+					i++;
 				}
-				Game.getInstance().updatePanels();
-			});
+				if (i != have.size()) {
+					found.add(have.get(i));
+					have.remove(i);
+					i=0;
+				} else {
+					break;
+				}
+			}
+			if(needed.size() == found.size()){
+				canMake = true;
+				break;
+			}
+			if(canMake){
+				JButton btn = new JButton(g.getAgent().getClass().getSimpleName());
+				btn.setBackground(new Color(36, 140, 130));
+				btn.addActionListener(evt -> {
+					removeAll();
+					revalidate();
+					if(Game.getCurrentVirologist().getLearnt().contains(g)){
+						Game.getCurrentVirologist().makeAgent(g);
+					}
+					Game.getInstance().updatePanels();
+				});
 
-			c.gridx = xCounter;
-			c.gridy = yCounter;
-			c.weightx = 0.2;
+				c.gridx = xCounter;
+				c.gridy = yCounter;
+				c.weightx = 0.2;
 
-			buttons.add(btn, c);
-			c.weightx = 0;
-
-			xCounter++;
-			if (xCounter % 2 == 0) {
-				xCounter = 0;
+				buttons.add(btn, c);
+				c.weightx = 0;
 				yCounter++;
 			}
 		}

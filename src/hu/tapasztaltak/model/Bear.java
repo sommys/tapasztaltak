@@ -1,6 +1,8 @@
 package hu.tapasztaltak.model;
 
 
+import hu.tapasztaltak.view.FieldView;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,7 @@ public class Bear extends Agent implements SpecialModifier{
     public void spread(Virologist v) {
         v.addModifier(this);
         Game.getInstance().checkEndGame(v);
+        RoundManager.getInstance().removeSteppable(v);
         Game.objectViewHashMap.get(v).update();
     }
 
@@ -59,6 +62,7 @@ public class Bear extends Agent implements SpecialModifier{
             f.removeVirologist(v);
             randField.addVirologist(v);
             v.setField(randField);
+            ((FieldView)Game.objectViewHashMap.get(randField)).setVisited(true);
         }
         //törés, zúzás
         randField.destroyStuff();

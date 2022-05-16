@@ -33,7 +33,7 @@ public class Axe extends Suite{
         if(used) {
             return;
         }
-        if(!v.canReach(toKill)){
+        if(v.cantReach(toKill)){
             return;
         }
         toKill.die();

@@ -1,6 +1,7 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoMain;
+import hu.tapasztaltak.view.ButtonsPanel;
 import hu.tapasztaltak.view.VirologistView;
 
 import javax.swing.*;
@@ -43,6 +44,10 @@ public class Virologist implements ISteppable {
 	 * A virológust ágenskenéstől védelmező védőfelszerelések listája.
 	 */
 	private List<IDefense> defenses = new ArrayList<>();
+
+	public Virologist(){
+		RoundManager.getInstance().addSteppable(this);
+	}
 
 	/**
 	 * A virológus az {@code f} mezőre mozog, ha szomszédos a jelenlegi mezővel és nincs lebénulva.
@@ -93,6 +98,7 @@ public class Virologist implements ISteppable {
 		int afterMatSize = inventory.getMaterials().size();
 		if(originalMatSize == afterMatSize){
 			JOptionPane.showMessageDialog(Game.getInstance().questionPanel,"Cuccok is kellenek hozzá...", "Nana", JOptionPane.WARNING_MESSAGE);
+			Game.getInstance().buttonsPanel.buttonview(ButtonsPanel.Action.SCAN);
 		}
 	}
 
@@ -102,7 +108,7 @@ public class Virologist implements ISteppable {
 	 * @param v a megkent {@link Virologist}
 	 */
 	public void useAgent(Agent a, Virologist v) {
-		if(stunned || moved || !canReach(v)){
+		if(stunned || moved || cantReach(v)){
 			return;
 		}
 		spreadInitiation(a, v);
@@ -127,7 +133,7 @@ public class Virologist implements ISteppable {
 	/**
 	 * Tapogatózás, a virológus megismeri a mezőn lévő virológusokat és tárgyakat/genetikai kódot.
 	 */
-	public void scanning() throws Exception {
+	public void scanning(){
 		if(stunned||moved){
 			return;
 		}
@@ -145,7 +151,7 @@ public class Virologist implements ISteppable {
 		if (moved) {
 			return;
 		}
-		if(!canReach(from)){
+		if(cantReach(from)){
 			return;
 		}
 		if(!from.isStunned()) {
@@ -162,7 +168,6 @@ public class Virologist implements ISteppable {
 			return;
 		}
 
-		//IStealable item = inv2.pickItem();
 		Game.getInstance().getquestionpanel().stealPickItemQuestion(from);
 	}
 
@@ -188,8 +193,8 @@ public class Virologist implements ISteppable {
 	public void learn(Gene g){
 		if(!learnt.contains(g)){
 			learnt.add(g);
+			JOptionPane.showMessageDialog(Game.getInstance().mapPanel,((VirologistView)Game.objectViewHashMap.get(this)).getPlayerName()+" játékos megtanulta a "+g.getAgent().getClass().getSimpleName()+" ágens genetikai kódját!", "Info", JOptionPane.INFORMATION_MESSAGE);
 			Game.getInstance().checkEndGame(this);
-		} else {
 		}
 	}
 
@@ -205,15 +210,6 @@ public class Virologist implements ISteppable {
 			}
 		});
 		inventory.getAgents().removeIf(a -> a.getTimeLeft() <= 0);
-
-		modifiers.forEach(m -> {
-			if(!m.isActive()){
-			}
-		});
-		defenses.forEach(d -> {
-			if(!d.stillActive()){
-			}
-		});
 		modifiers.removeIf(m -> !m.isActive());
 		defenses.removeIf(d -> !d.stillActive());
 
@@ -227,8 +223,8 @@ public class Virologist implements ISteppable {
 	 * @param v a megérinteni kívánt {@link Virologist}
 	 * @return érinthető-e
 	 */
-	public boolean canReach(Virologist v) {
-		return v.getField() == field;
+	public boolean cantReach(Virologist v) {
+		return v.getField() != field;
 	}
 
 	/**

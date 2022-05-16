@@ -1,9 +1,6 @@
 package hu.tapasztaltak.model;
 
-import java.util.stream.Collectors;
-
 import static hu.tapasztaltak.proto.ProtoMain.getGeneId;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
 
 /**
  * A pályán lévő laboratórium mező reprezentálása.
@@ -20,9 +17,7 @@ public class Labor extends Field {
      *
      * @param v a {@link Virologist}, aki a genetikai kódot kapja.
      */
-    public void getItem(Virologist v) throws Exception {
-        String virologists = getVirologists().size() == 1 ? "-" : getVirologists().stream().filter(it -> it != v).map(it -> getIdForObject(it)).collect(Collectors.joining(", "));
-        String code = getGene() == null ? "-" : String.format("%s[%s]", getIdForObject(gene), gene.getAgent().getClass().getSimpleName());
+    public void getItem(Virologist v) {
         v.learn(gene);
     }
 

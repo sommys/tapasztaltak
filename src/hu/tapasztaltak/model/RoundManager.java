@@ -62,7 +62,7 @@ public class RoundManager {
      */
     public void virologistMoved(){
         movedCounter++;
-        if (movedCounter == virologists.size()) {
+        if (movedCounter >= virologists.size()) {
             newRound();
         }
         Game.getInstance().setCurrentVirologist(virologists.get(movedCounter));

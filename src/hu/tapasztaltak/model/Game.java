@@ -20,6 +20,8 @@ public class Game extends JFrame {
     public static int WINDOW_WIDTH = 1920;
     public static int WINDOW_HEIGHT = 1080;
     private static Virologist currentVirologist = null;
+    public static Gene[] genes = {new Gene(), new Gene(), new Gene(), new Gene()};
+    public static boolean running = true;
 
     JPanel gamePanel = new JPanel();
     JPanel rightPanel = new JPanel();
@@ -48,7 +50,7 @@ public class Game extends JFrame {
             setExtendedState(Frame.MAXIMIZED_BOTH);
         }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // setUndecorated(true);
+        setUndecorated(true);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setResizable(false);
         setTitle("Virologusos jatek");
@@ -60,6 +62,11 @@ public class Game extends JFrame {
         menuPanel.setVisible(true);
         setContentPane(menuPanel);
         menuPanel.grabFocus();
+
+        genes[0].setAgent(new Dance());
+        genes[1].setAgent(new Forget());
+        genes[2].setAgent(new Protect());
+        genes[3].setAgent(new Stun());
     }
 
 
@@ -219,12 +226,16 @@ public class Game extends JFrame {
      * @param v a potenciális győztes {@link Virologist}
      */
     public void checkEndGame(Virologist v) {
+        if(!running) return;
         if(RoundManager.getInstance().getVirologists().stream().allMatch(it -> it.getModifiers().stream().anyMatch(m -> m instanceof Bear))){
+            running = false;
             JOptionPane.showMessageDialog(this,"Mindenki maci lett :(( brumm", "MedveGang rise up", JOptionPane.WARNING_MESSAGE);
+            buttonsPanel.disableallBtn();
             return;
         }
         if (v.getLearnt().size() == maxAgent) {
-            JOptionPane.showMessageDialog(this,Game.getCurrentVirologistView().getPlayerName()+"nyert!!! GGWP", "VAN EGY NYERTES", JOptionPane.WARNING_MESSAGE);
+            running = false;
+            JOptionPane.showMessageDialog(this,Game.getCurrentVirologistView().getPlayerName()+" játékos nyert!!! GGWP", "VAN EGY NYERTES", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -265,8 +276,11 @@ public class Game extends JFrame {
      */
     public void removeField(Field field) { fields.remove(field); RoundManager.getInstance().removeSteppable(field); }
 
-    public void setCurrentVirologist(Virologist Virologist) {
-        currentVirologist = Virologist;
+    public void setCurrentVirologist(Virologist virologist) {
+        currentVirologist = virologist;
+        if(currentVirologist.getModifiers().stream().anyMatch(it -> it instanceof Bear)){
+            currentVirologist.step();
+        }
     }
 
     public static Virologist getCurrentVirologist() {

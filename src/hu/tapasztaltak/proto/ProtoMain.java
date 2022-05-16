@@ -19,7 +19,7 @@ public class ProtoMain {
 
     public static HashMap<String, Integer> ids = new HashMap<>();
 
-    public static Gene[] genes = {new Gene(), new Gene(), new Gene(), new Gene()};
+    //public static Gene[] genes = {new Gene(), new Gene(), new Gene(), new Gene()};
 
     public static boolean randomness = true;
 
@@ -84,14 +84,14 @@ public class ProtoMain {
     }
 
     public static void geneInit() {
-        genes[0].setAgent(new Dance());
+        /*genes[0].setAgent(new Dance());
         genes[1].setAgent(new Forget());
         genes[2].setAgent(new Protect());
         genes[3].setAgent(new Stun());
         storage.put(getIdForObject(genes[0]), genes[0]);
         storage.put(getIdForObject(genes[1]), genes[1]);
         storage.put(getIdForObject(genes[2]), genes[2]);
-        storage.put(getIdForObject(genes[3]), genes[3]);
+        storage.put(getIdForObject(genes[3]), genes[3]);*/
     }
 
     private static void runTests() throws Exception {
@@ -199,11 +199,11 @@ public class ProtoMain {
                 if(line.startsWith("lab")){
                     if(infos.length != 2) throw new Exception();
                     f = new Labor();
-                    ((Labor)f).setGene(genes[parseInt(infos[1])]);
+                    ((Labor)f).setGene(Game.genes[parseInt(infos[1])]);
                 } else if(line.startsWith("ilab")){
                     if(infos.length != 2) throw new Exception();
                     f = new InfLabor();
-                    ((InfLabor)f).setGene(genes[parseInt(infos[1])]);
+                    ((InfLabor)f).setGene(Game.genes[parseInt(infos[1])]);
                 } else if(line.startsWith("shlt")){
                     if(infos.length < 2 || infos.length > 3) throw new Exception();
                     f = new Shelter();

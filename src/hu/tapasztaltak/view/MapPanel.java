@@ -1,9 +1,6 @@
 package hu.tapasztaltak.view;
 
-import hu.tapasztaltak.model.Field;
-import hu.tapasztaltak.model.InfLabor;
-import hu.tapasztaltak.model.Labor;
-import hu.tapasztaltak.proto.ProtoMain;
+import hu.tapasztaltak.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -238,7 +235,7 @@ public class MapPanel extends JPanel {
 				l = new Labor();
 				lv = new LaborView(l, toChange.getFieldNum());
 			}
-			l.setGene(ProtoMain.genes[i]);
+			l.setGene(Game.genes[i]);
 			lv.setPosX(toChange.getPosX());
 			lv.setPosY(toChange.getPosY());
 			//lecsereljuk
@@ -261,7 +258,7 @@ public class MapPanel extends JPanel {
 			} else {
 				lv = new LaborView(toChange.getFieldNum());
 			}
-			((Labor)lv.getField()).setGene(ProtoMain.genes[r.nextInt(4)]);
+			((Labor)lv.getField()).setGene(Game.genes[r.nextInt(4)]);
 			lv.setPosX(toChange.getPosX());
 			lv.setPosY(toChange.getPosY());
 			//lecsereljuk
@@ -310,11 +307,9 @@ public class MapPanel extends JPanel {
 	}
 
 	private void setIndexes() {
-		//storage.clear();
-		//ids.clear();
 		int i = 1;
 		for(FieldView fv : fields.stream().filter(it -> it.getFieldNum() != 0).collect(Collectors.toList())){
-			//storage.put(getIdForObject(fv.getField()), fv.getField());
+			RoundManager.getInstance().addSteppable(fv.getField());
 			fv.setFieldIdx(i++);
 		}
 	}
@@ -362,6 +357,9 @@ public class MapPanel extends JPanel {
 	}
 
 	public void update(){
+		for(FieldView fv : fields.stream().filter(it -> it.getFieldNum() != 0).collect(Collectors.toList())){
+			fv.update();
+		}
 		revalidate();
 		repaint();
 	}

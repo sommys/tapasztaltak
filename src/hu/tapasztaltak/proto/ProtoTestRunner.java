@@ -155,7 +155,7 @@ public class ProtoTestRunner {
                     }
                     int geneType = parseInt(args[0]);
                     if(geneType < 0 || geneType > 3) throw new Exception();
-                    l.setGene(genes[geneType]);
+                    l.setGene(Game.genes[geneType]);
                     storage.put(getIdForObject(l), l);
                     RoundManager.getInstance().addSteppable(l);
                     logMessage(String.format("%s created: genetic code: %s", getIdForObject(l), l.getGene().getAgent().getClass().getSimpleName()));
@@ -344,7 +344,7 @@ public class ProtoTestRunner {
                     if(v == null) throw new Exception();
                     int geneId = parseInt(args[1]);
                     if(geneId < 0 || geneId > 3) throw new Exception();
-                    v.learn(genes[geneId]);
+                    v.learn(Game.genes[geneId]);
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }
@@ -480,7 +480,7 @@ public class ProtoTestRunner {
                     if(v == null) throw new Exception();
                     int geneId = parseInt(args[1]);
                     if(geneId < 0 || geneId > 3) throw new Exception();
-                    v.makeAgent(genes[geneId]);
+                    v.makeAgent(Game.genes[geneId]);
                 } catch(Exception e){
                     throw new Exception("Hiba történt [hibás paraméter]");
                 }
