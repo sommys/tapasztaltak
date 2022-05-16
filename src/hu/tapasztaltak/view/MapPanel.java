@@ -30,10 +30,6 @@ public class MapPanel extends JPanel {
 				for(FieldView fv : fields){
 					if(x > fv.getPosX() && x < fv.getPosX() + Integer.min(2, fv.getFieldNum())*161 &&
 					   y > fv.getPosY() && y < fv.getPosY() + (fv.getFieldNum() == 3 ? 322 : 161)){
-						System.out.println("clicked on "+ fv.getField() + ", it has " + fv.getField().getNeighbours().size() + " neighbours:");
-						for(Field f : fv.getField().getNeighbours()){
-							System.out.println(f);
-						}
 						fv.setVisited(true);
 						repaint();
 						return;
@@ -399,7 +395,6 @@ public class MapPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("MAP PANEL REPAINT");
 		for(FieldView fv : fields){
 			fv.draw(g);
 		}

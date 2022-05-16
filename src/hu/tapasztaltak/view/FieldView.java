@@ -91,6 +91,7 @@ public class FieldView extends View {
 		g.setColor(Color.WHITE);
 		int offset = (fieldNum == 3 ? 100 : 50);
 		g.drawString(""+fieldIdx, posX+offset, posY+offset);
+		if(!visited) return;
 		int i = 0;
 		for (Virologist v: field.getVirologists()) {
 			VirologistView view = (VirologistView) Game.objectViewHashMap.get(v);

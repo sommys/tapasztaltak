@@ -71,10 +71,10 @@ public class AgentPanel extends JPanel {
 		usableAgentPanel.setBackground(new Color(155, 140, 185));
 		effectedAgentPanel.setBackground(new Color(162, 171, 211));
 
-		add(usableAgentPanel,c);
+		add(effectedAgentPanel, c);
 		c.weightx = 0.7;
 		c.gridx = 1;
-		add(effectedAgentPanel, c);
+		add(usableAgentPanel,c);
 	}
 
 	public void update(){
@@ -94,8 +94,8 @@ public class AgentPanel extends JPanel {
 			effectedAgentViews.add((AgentView) Game.objectViewHashMap.get(d));
 		}
 		effectedAgentPanel.setEffectedAgents(effectedAgentViews);
-
 		revalidate();
+		repaint();
 	}
 
 	@Override

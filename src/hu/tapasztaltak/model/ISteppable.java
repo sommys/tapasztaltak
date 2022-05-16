@@ -7,5 +7,5 @@ public interface ISteppable {
     /**
      * A léptetést megvalósító függvény.
      */
-    void step() throws Exception;
+    void step();
 }

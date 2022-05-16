@@ -93,6 +93,8 @@ public class InventoryPanel extends JPanel {
 		}
 		storagePanel.setItems(storedItemViews);
 
+		storagePanel.repaint();
+		activeSuitePanel.repaint();
 		revalidate();
 	}
 

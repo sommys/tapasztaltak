@@ -111,6 +111,10 @@ public class VirologistView extends View {
 
 	}
 
+	public Virologist getVir() {
+		return vir;
+	}
+
 	public BufferedImage getVirImg() {
 		return virImg;
 	}

@@ -7,6 +7,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ButtonsPanel extends JPanel{
 	private JLabel playerText = new JLabel();
@@ -28,7 +29,7 @@ public class ButtonsPanel extends JPanel{
 		super();
 		setFocusable(true);
 		setBackground(new Color(125, 220, 191));
-		setLayout(new GridLayout(9,1));
+		setLayout(new GridLayout(10,1));
 		currentVirologist = Game.getInstance().getCurrentVirologist();
 		initComponents();
 	}
@@ -46,7 +47,10 @@ public class ButtonsPanel extends JPanel{
 		scanBtn.setText("tapogat");
 		scanBtn.addActionListener(evt -> {
 			try {
-				currentVirologist.scanning();
+				currentVirologist.scanning(); //todo kerdesek feltetele
+				FieldView fv = (FieldView)Game.objectViewHashMap.get(Game.getCurrentVirologist().getField());
+				fv.setVisited(true);
+				Game.getInstance().updatePanels();
 				activeCounter++;
 				movebool = false;
 				buttonview();
@@ -58,8 +62,6 @@ public class ButtonsPanel extends JPanel{
 		moveBtn.setText("mozog");
 		moveBtn.addActionListener(evt -> {
 			QuestionPanel q = Game.getInstance().getquestionpanel();
-			//q.selectQuestion("Hova hova?", Game.getInstance().getCurrentVirologist().getField().getNeighbours().stream().collect(Collectors.toList()));
-			//currentVirologist.move(f);
 			List<FieldView> neighbours = new ArrayList<>();
 			for(Field n : Game.getCurrentVirologist().getField().getNeighbours()){
 				neighbours.add((FieldView)Game.objectViewHashMap.get(n));
@@ -72,30 +74,127 @@ public class ButtonsPanel extends JPanel{
 		});
 		setButtonSettings(stealBtn);
 		stealBtn.setText("lop");
-		Virologist v = new Virologist();//TODO lekérni questionpabelből
+		Virologist v = new Virologist();
 		stealBtn.addActionListener(evt -> {
-			currentVirologist.steal(v);
+			List<VirologistView> victims = new ArrayList<>();
+//			Axe axe = new Axe();
+//			Bag bag = new Bag();
+//			Cape cape = new Cape();
+//			Gloves gloves = new Gloves();
+//			Aminoacid amino = new Aminoacid();
+//			Nucleotid nucleo = new Nucleotid();
+//			Nucleotid nucleo2 = new Nucleotid();
+//			Nucleotid nucleo3 = new Nucleotid();
+//			Nucleotid nucleo4 = new Nucleotid();
+//			Nucleotid nucleo5 = new Nucleotid();
+//			Nucleotid nucleo6 = new Nucleotid();
+//			Nucleotid nucleo7 = new Nucleotid();
+//			Nucleotid nucleo8 = new Nucleotid();
+//
+//			AxeView axeView = new AxeView(axe);
+//			BagView bagView = new BagView(bag);
+//			CapeView capeView = new CapeView(cape);
+//			GlovesView glovesView = new GlovesView(gloves);
+//			AminoacidView aminoView = new AminoacidView(amino);
+//			NucleotidView nucleoView = new NucleotidView(nucleo);
+//			NucleotidView nucleoView2 = new NucleotidView(nucleo2);
+//			NucleotidView nucleoView3 = new NucleotidView(nucleo3);
+//			NucleotidView nucleoView4 = new NucleotidView(nucleo4);
+//			NucleotidView nucleoView5 = new NucleotidView(nucleo5);
+//			NucleotidView nucleoView6 = new NucleotidView(nucleo6);
+//			NucleotidView nucleoView7 = new NucleotidView(nucleo7);
+//			NucleotidView nucleoView8 = new NucleotidView(nucleo8);
+//
+//			Game.addView(axe, axeView);
+//			Game.addView(bag, bagView);
+//			Game.addView(cape, capeView);
+//			Game.addView(gloves, glovesView);
+//			Game.addView(amino, aminoView);
+//			Game.addView(nucleo, nucleoView);
+//			Game.addView(nucleo2, nucleoView2);
+//			Game.addView(nucleo3, nucleoView3);
+//			Game.addView(nucleo4, nucleoView4);
+//			Game.addView(nucleo5, nucleoView5);
+//			Game.addView(nucleo6, nucleoView6);
+//			Game.addView(nucleo7, nucleoView7);
+//			Game.addView(nucleo8, nucleoView8);
+
+//			for(Virologist toStun : Game.getCurrentVirologist().getField().getVirologists().stream().filter(it -> it != Game.getCurrentVirologist()).collect(Collectors.toList())){
+//				toStun.setStunned(true);
+//				axe.add(toStun.getInventory());
+//				bag.add(toStun.getInventory());
+//				cape.add(toStun.getInventory());
+//				gloves.add(toStun.getInventory());
+//				amino.add(toStun.getInventory());
+//				nucleo.add(toStun.getInventory());
+//				nucleo2.add(toStun.getInventory());
+//				nucleo3.add(toStun.getInventory());
+//				nucleo4.add(toStun.getInventory());
+//				nucleo5.add(toStun.getInventory());
+//				nucleo6.add(toStun.getInventory());
+//				nucleo7.add(toStun.getInventory());
+//				nucleo8.add(toStun.getInventory());
+//
+//				axe.activate(toStun);
+//				bag.activate(toStun);
+//				cape.activate(toStun);
+//				((VirologistView)Game.objectViewHashMap.get(toStun)).updateImage();
+//			}
+//			Game.getInstance().updatePanels();
+			for(Virologist victim : Game.getCurrentVirologist().getField().getVirologists().stream().filter(it -> it != Game.getCurrentVirologist() && it.isStunned()).collect(Collectors.toList())){
+				victims.add((VirologistView) Game.objectViewHashMap.get(victim));
+			}
+			Game.getInstance().getquestionpanel().stealPickVirologistQuestion(victims);
 			activeCounter++;
 			buttonview();
 		});
 		setButtonSettings(attackBtn);
 		attackBtn.setText("támad");
-		Axe a = new Axe(); // TODO lekérni questionpanelből
 		attackBtn.addActionListener(evt ->{
-			currentVirologist.attack(a,v);
+			Axe a = new Axe();
+			AxeView av = new AxeView(a);
+			Game.addView(a, av);
+			a.add(currentVirologist.getInventory());
+			a.activate(currentVirologist);
+			List<VirologistView> possibleVictims = new ArrayList<>();
+			for(Virologist vict : currentVirologist.getField().getVirologists()){
+				if(vict == currentVirologist) continue;
+				possibleVictims.add((VirologistView) Game.objectViewHashMap.get(vict));
+			}
+			Game.getInstance().getquestionpanel().attackQuestion(possibleVictims);
 			activeCounter++;
 			buttonview();
 		});
 		setButtonSettings(useAgentBtn);
-		useAgentBtn.setText("ágenst használ");//TODO lekérniiiiiii questiongeci
+		useAgentBtn.setText("ágenst használ");
 		useAgentBtn.addActionListener(evt -> {
-			try {
-				currentVirologist.useAgent(currentVirologist.getInventory().getAgents().get(0),v);
-				activeCounter++;
-				buttonview();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Dance d = new Dance();
+			Forget f = new Forget();
+			Protect p = new Protect();
+			Stun s = new Stun();
+
+			d.setTimeLeft(3);
+			f.setTimeLeft(3);
+			p.setTimeLeft(3);
+			s.setTimeLeft(3);
+
+			DanceView dv = new DanceView(d);
+			ForgetView fv = new ForgetView(f);
+			ProtectView pv = new ProtectView(p);
+			StunView sv = new StunView(s);
+
+			Game.addView(d, dv);
+			Game.addView(f, fv);
+			Game.addView(p, pv);
+			Game.addView(s, sv);
+
+			currentVirologist.getInventory().getAgents().add(d);
+			currentVirologist.getInventory().getAgents().add(f);
+			currentVirologist.getInventory().getAgents().add(p);
+			currentVirologist.getInventory().getAgents().add(s);
+			Game.getInstance().getquestionpanel().pickAgentUseAgentQuestion();
+			activeCounter++;
+			buttonview();
 		});
 		setButtonSettings(makeAgentBtn);
 		Gene g = new Gene(); // Todo Lekérni
@@ -113,8 +212,8 @@ public class ButtonsPanel extends JPanel{
 			buttonview();
 		});
 		setButtonSettings(activateSuiteBtn);
-		attackBtn.setText("felszerelés felvétel");
-		attackBtn.addActionListener(evt -> {
+		activateSuiteBtn.setText("felszerelés felvétel");
+		activateSuiteBtn.addActionListener(evt -> {
 			currentVirologist.putOnSuite(currentVirologist.getInventory().getSuites().get(0));
 			activeCounter++;
 			buttonview();
@@ -139,8 +238,7 @@ public class ButtonsPanel extends JPanel{
 		add(useAgentBtn);
 		add(makeAgentBtn);
 		add(switchSuiteBtn);
-		add(attackBtn);
-		add(finishRoundBtn);
+		add(activateSuiteBtn);
 		add(finishRoundBtn);
 		buttonview();
 
@@ -191,6 +289,8 @@ public class ButtonsPanel extends JPanel{
 	public void update(){
 		curVirView = Game.getCurrentVirologistView();
 		curVirView.setTextColortoVir(playerText);
+		currentVirologist = Game.getCurrentVirologist();
+		//todo disable buttonok amiket nem nyomhatunk bizonyos feltetelekre
 		revalidate();
 	}
 	public void disableallBtn(){

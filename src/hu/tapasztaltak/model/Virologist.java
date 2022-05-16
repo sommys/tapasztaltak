@@ -1,7 +1,9 @@
 package hu.tapasztaltak.model;
 
 import hu.tapasztaltak.proto.ProtoMain;
+import hu.tapasztaltak.view.VirologistView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +100,7 @@ public class Virologist implements ISteppable {
 	 * @param a a felhasznált {@link Agent}
 	 * @param v a megkent {@link Virologist}
 	 */
-	public void useAgent(Agent a, Virologist v) throws Exception {
+	public void useAgent(Agent a, Virologist v) {
 		if(stunned || moved || !canReach(v)){
 			if(stunned){
 			} else if(moved){
@@ -192,13 +194,12 @@ public class Virologist implements ISteppable {
 			return;
 		}
 
-		IStealable item = inv2.pickItem();
-
 		if (inventory.getUsedSize()==inventory.getSize()) {
 			return;
 		}
 
-		from.stolen(this, item);
+		//IStealable item = inv2.pickItem();
+		Game.getInstance().getquestionpanel().stealPickItemQuestion(from);
 	}
 
 	/**
@@ -213,6 +214,7 @@ public class Virologist implements ISteppable {
 		}
 		what.remove(inventory);
 		what.add(stealer.getInventory());
+		((VirologistView)Game.objectViewHashMap.get(this)).updateImage();
 	}
 
 	/**
@@ -230,7 +232,7 @@ public class Virologist implements ISteppable {
 	/**
 	 * Újra engedélyezi a virológusnak, hogy léphessen az új körben, a lejárt ágenseket megszűnteti
 	 */
-	public void step() throws Exception {
+	public void step() {
 		moved=false;
 
 		inventory.getAgents().forEach(a -> {
@@ -268,7 +270,7 @@ public class Virologist implements ISteppable {
 	 * @param a a használt {@link Agent}
 	 * @param v a megkenni kívánt {@link Virologist}
 	 */
-	public void spreadInitiation(Agent a, Virologist v) throws Exception {
+	public void spreadInitiation(Agent a, Virologist v) {
 		inventory.removeAgent(a);
 		for(IDefense d : v.getDefenses()){
 			if(d.tryToBlock(this, v, a)){
@@ -283,9 +285,8 @@ public class Virologist implements ISteppable {
 	/**
 	 * Szól a {@link RoundManager}-nek, hogy vége van a körének, és léptetheti tovább a köröket.
 	 */
-	public void endRound() throws Exception {
+	public void endRound() {
 		RoundManager.getInstance().virologistMoved();
-
 	}
 
 	public void attack(Axe a, Virologist victim){
@@ -300,8 +301,13 @@ public class Virologist implements ISteppable {
 	 * A virológus meghal, így irányíthatóvá válik.
 	 */
 	public void die(){
+		field.removeVirologist(this);
+		if(RoundManager.getInstance().getVirologists().get(0) == this && RoundManager.getInstance().getMovedCounter()==RoundManager.getInstance().getVirologists().size()-1){
+			RoundManager.getInstance().setMovedCounter(RoundManager.getInstance().getMovedCounter()-1);
+		}
 		RoundManager.getInstance().removeSteppable(this);
 		RoundManager.getInstance().removeVirologist(this);
+		JOptionPane.showMessageDialog(Game.getInstance().mapPanel,((VirologistView)Game.objectViewHashMap.get(this)).getPlayerName()+" játékos meghalt és kiesett a játékból!", "Info", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	//region GETTEREK ÉS SETTEREK

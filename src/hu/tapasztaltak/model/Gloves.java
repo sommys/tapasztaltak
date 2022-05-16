@@ -1,9 +1,5 @@
 package hu.tapasztaltak.model;
 
-import hu.tapasztaltak.proto.ProtoLogger;
-import java.util.Scanner;
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A kesztyű felszerelést reprezentáló osztály.
  * Aktív viselésével egy éppen kenésben lévő ágens visszakenhető a folyamatot indító virológusra.
@@ -26,21 +22,31 @@ public class Gloves extends Suite implements IDefense {
 	 * @param a a használt {@link Agent}
 	 * @return az, hogy visszakenjük-e a támadóra
 	 */
-	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
+	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		if(atc != vict && !used && useCount > 0 && !vict.isStunned()){
-			Scanner sc = new Scanner(System.in);
-			int choice = 1; // TODO lekérni questionpanelből
-			if(choice == 1){
-				used = true;
-				useCount--;
-				if(useCount==0) {
-					remove(vict.getInventory());
-				}
-				vict.useAgent(a,atc);
-				return true;
+			//todo valahogy meg kene varni...
+//			AtomicBoolean result = new AtomicBoolean(false);
+//			Game.getInstance().questionPanel.yesNoQuestion("Akarod?", result);
+//			synchronized (Game.getInstance().getquestionpanel().yesBtn){
+//				try {
+//					Game.getInstance().getquestionpanel().yesBtn.wait();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+			used = true;
+			useCount--;
+			if(useCount==0) {
+				remove(vict.getInventory());
 			}
+			vict.useAgent(a,atc);
+			return true;
 		}
 		return false;
+	}
+
+	public void block(){
+
 	}
 
 	/**

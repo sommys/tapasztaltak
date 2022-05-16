@@ -4,8 +4,6 @@ import hu.tapasztaltak.proto.ProtoMain;
 
 import java.util.Random;
 
-import static hu.tapasztaltak.proto.ProtoMain.getIdForObject;
-
 /**
  * A köpeny felszerelést reprezentáló osztály.
  * Aktív viselésével a virológusra kent ágensek hatásba lépését 82,3% valószínűséggel kivédi.
@@ -18,7 +16,7 @@ public class Cape extends Suite implements IDefense {
 	 * @param a a használt {@link Agent}
 	 * @return a védés sikeressége
 	 */
-	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) throws Exception {
+	public boolean tryToBlock(Virologist atc, Virologist vict, Agent a) {
 		Random r = new Random();
 		double result = r.nextDouble();
 		if(ProtoMain.randomness) {
