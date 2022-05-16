@@ -201,9 +201,11 @@ public class Virologist implements ISteppable {
 
 		inventory.getAgents().forEach(a -> {
 			if(a.getTimeLeft() <= 0){
+			RoundManager.getInstance().removeSteppable(a);
 			}
 		});
 		inventory.getAgents().removeIf(a -> a.getTimeLeft() <= 0);
+
 		modifiers.forEach(m -> {
 			if(!m.isActive()){
 			}

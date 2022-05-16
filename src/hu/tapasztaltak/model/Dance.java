@@ -55,6 +55,7 @@ public class Dance extends Agent implements SpecialModifier {
 	 */
 	public void spread(Virologist v) {
 		v.addModifier(this);
+		Game.objectViewHashMap.get(v).update();
 	}
 
 	/**
@@ -65,6 +66,7 @@ public class Dance extends Agent implements SpecialModifier {
 		Dance newAgent = new Dance();
 		newAgent.setTimeLeft(3);
 		Game.addView(newAgent, new DanceView(newAgent));
+		RoundManager.getInstance().addSteppable(newAgent);
 		return newAgent;
 	}
 }

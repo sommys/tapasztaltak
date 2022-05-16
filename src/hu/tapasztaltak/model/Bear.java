@@ -27,6 +27,7 @@ public class Bear extends Agent implements SpecialModifier{
     public void spread(Virologist v) {
         v.addModifier(this);
         Game.getInstance().checkEndGame(v);
+        Game.objectViewHashMap.get(v).update();
     }
 
     /**

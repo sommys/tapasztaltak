@@ -46,6 +46,7 @@ public class Forget extends Agent implements SpecialModifier {
 	 */
 	public void spread(Virologist v) {
 		v.addModifier(this);
+		Game.objectViewHashMap.get(v).update();
 	}
 
 	/**
@@ -56,6 +57,7 @@ public class Forget extends Agent implements SpecialModifier {
 		Forget newAgent = new Forget();
 		newAgent.setTimeLeft(3);
 		Game.addView(newAgent, new ForgetView(newAgent));
+		RoundManager.getInstance().addSteppable(newAgent);
 		return newAgent;
 	}
 }

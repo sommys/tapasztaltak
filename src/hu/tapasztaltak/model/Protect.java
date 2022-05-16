@@ -52,6 +52,7 @@ public class Protect extends Agent implements IDefense {
 	 */
 	public void spread(Virologist v) {
 		v.addDefense(this);
+		Game.objectViewHashMap.get(v).update();
 	}
 
 	/**
@@ -62,6 +63,7 @@ public class Protect extends Agent implements IDefense {
 		Protect newAgent = new Protect();
 		newAgent.setTimeLeft(3);
 		Game.addView(newAgent, new ProtectView(newAgent));
+		RoundManager.getInstance().addSteppable(newAgent);
 		return newAgent;
 	}
 }
