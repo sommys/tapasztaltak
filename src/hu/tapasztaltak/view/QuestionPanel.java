@@ -74,7 +74,7 @@ public class QuestionPanel extends JPanel {
 		return result.get();
 	}
 
-	//SUITE_SWITCH_FROM, SUITE_SWITCH_TO, SUITE_PUT_ON, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
+	//SUITE_SWITCH_FROM, SUITE_SWITCH_TO, FIELD_PICKUP_SUITE, FIELD_PICKUP_MATERIAL
 
 	public void moveQuestion(List<FieldView> neighbours){
 		setLayout(new GridBagLayout());
@@ -358,23 +358,7 @@ public class QuestionPanel extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		int xCounter = 0;
 		int yCounter = 0;
-		Axe axe = new Axe();
-		Bag bag = new Bag();
-		Cape cape = new Cape();
-		Gloves gloves = new Gloves();
-		AxeView axeView = new AxeView(axe);
-		BagView bagView = new BagView(bag);
-		CapeView capeView = new CapeView(cape);
-		GlovesView glovesView = new GlovesView(gloves);
-		addView(axe, axeView);
-		addView(bag, bagView);
-		addView(cape, capeView);
-		addView(gloves, glovesView);
-		axe.add(Game.getCurrentVirologist().getInventory());
-		bag.add(Game.getCurrentVirologist().getInventory());
-		cape.add(Game.getCurrentVirologist().getInventory());
-		gloves.add(Game.getCurrentVirologist().getInventory());
-		Game.getInstance().updatePanels();
+
 		for(Suite s : Game.getCurrentVirologist().getInventory().getSuites().stream().filter(it -> !it.isActive()).collect(Collectors.toList())){
 			JButton btn = new JButton(((SuiteView)Game.objectViewHashMap.get(s)).icon);
 			btn.setBackground(new Color(36, 140, 130));
@@ -382,6 +366,80 @@ public class QuestionPanel extends JPanel {
 				removeAll();
 				revalidate();
 				Game.getCurrentVirologist().putOnSuite(s);
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 3 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+		}
+		setPanelAndStuff(c, buttons, "Melyiket?");
+	}
+
+	public void switchSuiteFromQuestion(){
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+		for(Suite s : Game.getCurrentVirologist().getInventory().getSuites().stream().filter(Suite::isActive).collect(Collectors.toList())){
+			JButton btn = new JButton(((SuiteView)Game.objectViewHashMap.get(s)).icon);
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				removeAll();
+				revalidate();
+				switchSuiteToQuestion(s);
+				Game.getInstance().updatePanels();
+			});
+
+			c.gridx = xCounter;
+			c.gridy = yCounter;
+			c.weightx = 0.2;
+
+			buttons.add(btn, c);
+			c.weightx = 0;
+
+			xCounter++;
+			if (xCounter % 3 == 0) {
+				xCounter = 0;
+				yCounter++;
+			}
+		}
+		setPanelAndStuff(c, buttons, "Melyiket?");
+	}
+
+	private void switchSuiteToQuestion(Suite from){
+		setLayout(new GridBagLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridBagLayout());
+		buttons.setBackground(new Color(102, 180, 156));
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int xCounter = 0;
+		int yCounter = 0;
+
+		for(Suite s : Game.getCurrentVirologist().getInventory().getSuites().stream().filter(it -> !it.isActive()).collect(Collectors.toList())){
+			JButton btn = new JButton(((SuiteView)Game.objectViewHashMap.get(s)).icon);
+			btn.setBackground(new Color(36, 140, 130));
+			btn.addActionListener(evt -> {
+				removeAll();
+				revalidate();
+				Game.getCurrentVirologist().switchSuite(from, s);
+				Game.getCurrentVirologistView().update();
 				Game.getInstance().updatePanels();
 			});
 

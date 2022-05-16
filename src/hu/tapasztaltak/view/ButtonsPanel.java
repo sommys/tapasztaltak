@@ -177,7 +177,7 @@ public class ButtonsPanel extends JPanel{
 		setButtonSettings(switchSuiteBtn);
 		switchSuiteBtn.setText("felszerelés csere");
 		switchSuiteBtn.addActionListener(evt -> {
-			currentVirologist.switchSuite(currentVirologist.getInventory().getSuites().get(0),currentVirologist.getInventory().getSuites().get(0));
+			Game.getInstance().getquestionpanel().switchSuiteFromQuestion();
 			activeCounter++;
 			buttonview();
 		});
@@ -235,6 +235,7 @@ public class ButtonsPanel extends JPanel{
 			makeAgentBtn.setEnabled(true);
 			switchSuiteBtn.setEnabled(true);
 			attackBtn.setEnabled(true);
+			activateSuiteBtn.setEnabled(true);
 			finishRoundBtn.setEnabled(true);
 		}
 		else{
@@ -272,6 +273,7 @@ public class ButtonsPanel extends JPanel{
 		makeAgentBtn.setEnabled(false);
 		switchSuiteBtn.setEnabled(false);
 		attackBtn.setEnabled(false);
+		activateSuiteBtn.setEnabled(false);
 		finishRoundBtn.setEnabled(false);
 	}
 }
